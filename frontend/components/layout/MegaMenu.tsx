@@ -168,6 +168,8 @@ export default function MegaMenu({ navLinks, locale }: MegaMenuProps) {
               <ProductsMegaMenu items={activeNavItem.children} locale={locale} />
             ) : activeNavItem.href === '/applications' ? (
               <ApplicationsMegaMenu items={activeNavItem.children} locale={locale} />
+            ) : activeNavItem.href === '/about' ? (
+              <AboutMegaMenu items={activeNavItem.children} locale={locale} />
             ) : (
               <SupportMegaMenu items={activeNavItem.children} locale={locale} />
             )}
@@ -270,20 +272,6 @@ function ProductsMegaMenu({ items, locale }: { items: NonNullable<NavItem['child
                   </div>
                 </Link>
               ))}
-              {/* More products card */}
-              <Link
-                href={`/${locale}${currentKey?.href ?? '/products'}`}
-                className="group flex flex-col items-center justify-center rounded-xl border border-dashed border-neutral-700/50 bg-neutral-800/20 hover:border-primary-500/30 hover:bg-neutral-800/40 transition-all duration-300 min-h-[180px]"
-              >
-                <div className="w-10 h-10 rounded-full bg-neutral-700/40 flex items-center justify-center mb-2 group-hover:bg-primary-500/10 transition-colors">
-                  <svg className="w-5 h-5 text-neutral-500 group-hover:text-primary-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </div>
-                <span className="text-xs text-neutral-500 group-hover:text-primary-400 transition-colors font-medium">
-                  查看全部
-                </span>
-              </Link>
             </div>
           </>
         ) : (
@@ -303,6 +291,7 @@ function ProductsMegaMenu({ items, locale }: { items: NonNullable<NavItem['child
 type ApplicationEntry = { title: string; image: string };
 
 const APPLICATION_CATEGORIES: Record<string, ApplicationEntry> = {
+  // Chinese keys (zh locale nav labels)
   '智能智造': {
     image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_0cw9.jpg',
     title: '智能智造',
@@ -335,17 +324,53 @@ const APPLICATION_CATEGORIES: Record<string, ApplicationEntry> = {
     image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1458617833_oq6g.jpg',
     title: '智能柜体',
   },
+  // English aliases (en locale nav labels)
+  'Smart Manufacturing': {
+    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_0cw9.jpg',
+    title: 'Smart Manufacturing',
+  },
+  'Warehouse & Logistics': {
+    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_ehv8.png',
+    title: 'Warehouse & Logistics',
+  },
+  'Archive & Library': {
+    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/5.webp',
+    title: 'Archive & Library',
+  },
+  'Asset Management': {
+    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_5oov_u61r.jpg',
+    title: 'Asset Management',
+  },
+  'Anti-counterfeit & Traceability': {
+    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1458614250_kwa3.jpg',
+    title: 'Anti-counterfeit & Traceability',
+  },
+  'Retail & Supply Chain': {
+    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_dfym_3f0c.jpg',
+    title: 'Retail & Supply Chain',
+  },
+  'Smart City': {
+    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/jucg.png',
+    title: 'Smart City',
+  },
+  'Smart Cabinet': {
+    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1458617833_oq6g.jpg',
+    title: 'Smart Cabinet',
+  },
 };
 
 function getAppIcon(label: string): React.ReactNode {
-  if (label.includes('智造') || label.includes('物流') || label.includes('零售')) {
+  if (
+    label.includes('智造') || label.includes('物流') || label.includes('零售') ||
+    label.includes('Manufacturing') || label.includes('Logistics') || label.includes('Retail')
+  ) {
     return (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
       </svg>
     );
   }
-  if (label.includes('城市')) {
+  if (label.includes('城市') || label.includes('City')) {
     return (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
@@ -362,7 +387,17 @@ function getAppIcon(label: string): React.ReactNode {
 function ApplicationsMegaMenu({ items, locale }: { items: NonNullable<NavItem['children']>; locale: string }) {
   const [activeLabel, setActiveLabel] = useState<string>(items[0]?.label ?? '');
 
-  const appData = APPLICATION_CATEGORIES[activeLabel] || APPLICATION_CATEGORIES[items[0]?.label ?? ''];
+  const appData = APPLICATION_CATEGORIES[activeLabel] || Object.values(APPLICATION_CATEGORIES)[0];
+
+  const allOthers = items
+    .filter((item) => item.label !== activeLabel)
+    .map((item) => ({
+      item,
+      entry: APPLICATION_CATEGORIES[item.label] || Object.values(APPLICATION_CATEGORIES)[0],
+    }));
+
+  const leftCard = allOthers[0];
+  const rightCards = allOthers.slice(1, 4);
 
   return (
     <div className="flex gap-8">
@@ -396,114 +431,167 @@ function ApplicationsMegaMenu({ items, locale }: { items: NonNullable<NavItem['c
             );
           })}
         </div>
-        <Link
-          href={`/${locale}/applications`}
-          className="mt-4 flex items-center gap-2 px-4 py-2.5 text-xs font-medium text-neutral-500 hover:text-primary-400 transition-colors rounded-lg hover:bg-neutral-800/50"
-        >
-          查看全部应用
-          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-        </Link>
       </div>
 
       {/* Right: image cards grid */}
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0 self-start">
         <div className="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-4">
           {activeLabel}
         </div>
-        <div className="grid grid-cols-3 gap-4">
-          {/* Featured large card */}
-          <Link
-            href={`/${locale}/applications`}
-            className="group rounded-xl overflow-hidden border border-neutral-700/50 bg-neutral-800/40 hover:border-primary-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/5 col-span-1 row-span-2"
-          >
-            <div className="aspect-[3/4] bg-neutral-800 overflow-hidden relative">
+        <div className="flex gap-4" style={{ height: '420px' }}>
+          {/* Left column: featured + 1 */}
+          <div className="w-1/2 flex flex-col gap-3">
+            {/* Featured card */}
+            <Link
+              href={`/${locale}/applications`}
+              className="group flex-[3] relative rounded-2xl overflow-hidden border border-neutral-700/30 bg-neutral-800/30 hover:border-primary-500/20 transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/10 min-h-0"
+            >
               <img
                 src={appData.image}
                 alt={appData.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/80 via-neutral-900/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-4">
-                <div className="text-sm font-semibold text-white">{appData.title}</div>
-                <div className="text-xs text-neutral-300 mt-1">RFID智能解决方案</div>
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-900/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-primary-400 bg-primary-500/10 rounded-full border border-primary-500/20">
+                    Featured
+                  </span>
+                </div>
+                <div className="text-base font-bold text-white">{appData.title}</div>
+                <div className="text-xs text-neutral-400 mt-1">RFID智能解决方案</div>
               </div>
-            </div>
-          </Link>
+            </Link>
 
-          {/* Secondary cards */}
-          <Link
-            href={`/${locale}/applications`}
-            className="group rounded-xl overflow-hidden border border-neutral-700/50 bg-neutral-800/40 hover:border-primary-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/5"
-          >
-            <div className="aspect-video bg-neutral-800 overflow-hidden relative">
-              <img
-                src="https://pmtdb1c40-pic17.websiteonline.cn/upload/4.webp"
-                alt="RFID技术应用"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-3">
-                <div className="text-[12px] font-medium text-white line-clamp-2">RFID技术应用场景</div>
-              </div>
-            </div>
-          </Link>
+            {/* Secondary card */}
+            {leftCard && (
+              <Link
+                href={`/${locale}/applications`}
+                className="group flex-1 relative rounded-xl overflow-hidden border border-neutral-700/30 bg-neutral-800/30 hover:border-primary-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/5 min-h-0"
+              >
+                <img
+                  src={leftCard.entry.image}
+                  alt={leftCard.entry.title}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-3">
+                  <div className="text-[12px] font-medium text-white/90">{leftCard.entry.title}</div>
+                </div>
+              </Link>
+            )}
+          </div>
 
-          <Link
-            href={`/${locale}/applications`}
-            className="group rounded-xl overflow-hidden border border-neutral-700/50 bg-neutral-800/40 hover:border-primary-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/5"
-          >
-            <div className="aspect-video bg-neutral-800 overflow-hidden relative">
-              <img
-                src="https://pmtdb1c40-pic17.websiteonline.cn/upload/1458629182_l5g8.jpg"
-                alt="工业自动化"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-3">
-                <div className="text-[12px] font-medium text-white line-clamp-2">工业自动化追溯</div>
-              </div>
-            </div>
-          </Link>
-
-          <Link
-            href={`/${locale}/applications`}
-            className="group rounded-xl overflow-hidden border border-neutral-700/50 bg-neutral-800/40 hover:border-primary-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/5"
-          >
-            <div className="aspect-video bg-neutral-800 overflow-hidden relative">
-              <img
-                src="https://pmtdb1c40-pic17.websiteonline.cn/upload/1458629447_ihj4.jpg"
-                alt="供应链管理"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-3">
-                <div className="text-[12px] font-medium text-white line-clamp-2">供应链数字化管理</div>
-              </div>
-            </div>
-          </Link>
-
-          {/* View all card */}
-          <Link
-            href={`/${locale}/applications`}
-            className="group flex flex-col items-center justify-center rounded-xl border border-dashed border-neutral-700/50 bg-neutral-800/20 hover:border-primary-500/30 hover:bg-neutral-800/40 transition-all duration-300"
-          >
-            <div className="w-10 h-10 rounded-full bg-neutral-700/40 flex items-center justify-center mb-2 group-hover:bg-primary-500/10 transition-colors">
-              <svg className="w-5 h-5 text-neutral-500 group-hover:text-primary-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </div>
-            <span className="text-xs text-neutral-500 group-hover:text-primary-400 transition-colors font-medium">
-              查看全部方案
-            </span>
-          </Link>
+          {/* Right column: 3 cards */}
+          <div className="w-1/2 flex flex-col gap-3">
+            {rightCards.map((card, idx) => (
+              <Link
+                key={card.item.label}
+                href={`/${locale}/applications`}
+                className={`group flex-1 relative rounded-xl overflow-hidden border border-neutral-700/30 bg-neutral-800/30 hover:border-primary-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/5 min-h-0 ${
+                  idx === 0 ? 'hover:ring-1 hover:ring-primary-500/20' : ''
+                }`}
+              >
+                <img
+                  src={card.entry.image}
+                  alt={card.entry.title}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-neutral-950/10 to-transparent" />
+                <div className="absolute inset-0 flex items-start p-3">
+                  <span className="inline-block px-2 py-0.5 text-[10px] font-semibold text-neutral-300/80 bg-neutral-900/60 backdrop-blur-sm rounded-md border border-neutral-600/30">
+                    {card.entry.title}
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────
+   About: 4-column with large hero area
+   ──────────────────────────────────────────────── */
+
+const ABOUT_CARDS = [
+  {
+    key: 'about',
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+    description: 'Company Overview',
+    cn: '上海孚恩电子科技有限公司',
+  },
+  {
+    key: 'company',
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+      </svg>
+    ),
+    description: 'Facility Photos',
+    cn: '公司实景',
+  },
+  {
+    key: 'history',
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+    description: 'Development Timeline',
+    cn: '发展历程',
+  },
+  {
+    key: 'honors',
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+      </svg>
+    ),
+    description: 'Honors & Certifications',
+    cn: '荣誉资质',
+  },
+];
+
+function AboutMegaMenu({ items, locale }: { items: NonNullable<NavItem['children']>; locale: string }) {
+  return (
+    <div className="grid grid-cols-4 gap-4">
+      {items.map((item) => {
+        const slug = item.href.split('/').pop() ?? '';
+        const card = ABOUT_CARDS.find((c) => c.key === slug);
+        return (
+          <Link
+            key={item.href}
+            href={`/${locale}${item.href}`}
+            className="group relative rounded-2xl overflow-hidden border border-neutral-700/30 bg-neutral-800/30 hover:border-primary-500/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 p-6 flex flex-col"
+          >
+            <div className="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-400 mb-4 group-hover:bg-primary-500/15 group-hover:scale-110 transition-all duration-300">
+              {card?.icon}
+            </div>
+            <div className="text-[15px] font-bold text-white mb-1 group-hover:text-primary-400 transition-colors">
+              {item.label}
+            </div>
+            <div className="text-xs text-neutral-400">
+              {card?.description}
+            </div>
+            {card?.cn && locale === 'zh' && (
+              <div className="text-[10px] text-neutral-500 mt-1.5">
+                {card.cn}
+              </div>
+            )}
+          </Link>
+        );
+      })}
     </div>
   );
 }

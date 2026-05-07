@@ -32,10 +32,12 @@ const NAV_LINKS: Record<string, NavItem[]> = {
       children: [
         { label: 'Smart Manufacturing', href: '/applications' },
         { label: 'Warehouse & Logistics', href: '/applications' },
+        { label: 'Archive & Library', href: '/applications' },
         { label: 'Asset Management', href: '/applications' },
         { label: 'Anti-counterfeit & Traceability', href: '/applications' },
         { label: 'Retail & Supply Chain', href: '/applications' },
         { label: 'Smart City', href: '/applications' },
+        { label: 'Smart Cabinet', href: '/applications' },
       ],
     },
     {
@@ -49,7 +51,16 @@ const NAV_LINKS: Record<string, NavItem[]> = {
       ],
     },
     { label: 'News', href: '/news' },
-    { label: 'About', href: '/about' },
+    {
+      label: 'About',
+      href: '/about',
+      children: [
+        { label: 'About FN', href: '/about' },
+        { label: 'Company Scene', href: '/about/company' },
+        { label: 'History', href: '/about/history' },
+        { label: 'Honors & Certs', href: '/about/honors' },
+      ],
+    },
     { label: 'Contact', href: '/contact' },
   ],
   zh: [
@@ -70,10 +81,12 @@ const NAV_LINKS: Record<string, NavItem[]> = {
       children: [
         { label: '智能制造', href: '/applications' },
         { label: '仓储物流', href: '/applications' },
+        { label: '档案图书', href: '/applications' },
         { label: '资产管理', href: '/applications' },
         { label: '防伪追溯', href: '/applications' },
         { label: '零售与供应链', href: '/applications' },
         { label: '智慧城市', href: '/applications' },
+        { label: '智能柜体', href: '/applications' },
       ],
     },
     {
@@ -87,7 +100,16 @@ const NAV_LINKS: Record<string, NavItem[]> = {
       ],
     },
     { label: '新闻', href: '/news' },
-    { label: '关于', href: '/about' },
+    {
+      label: '关于',
+      href: '/about',
+      children: [
+        { label: '孚恩简介', href: '/about' },
+        { label: '公司实景', href: '/about/company' },
+        { label: '发展历程', href: '/about/history' },
+        { label: '荣誉资质', href: '/about/honors' },
+      ],
+    },
     { label: '联系', href: '/contact' },
   ],
 };
