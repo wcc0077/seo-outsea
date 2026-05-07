@@ -20,7 +20,7 @@ export default function Header({ siteName, logoUrl, navLinks, locale }: HeaderPr
   return (
     <header className="sticky top-0 z-50">
       {/* Main header bar */}
-      <div className="bg-neutral-900/95 backdrop-blur-md border-b border-neutral-700/50 shadow-lg shadow-neutral-900/20">
+      <div className="bg-neutral-900 border-b border-neutral-800 shadow-lg shadow-black/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-[72px]">
             {/* Logo */}
@@ -35,7 +35,7 @@ export default function Header({ siteName, logoUrl, navLinks, locale }: HeaderPr
               )}
             </Link>
 
-            {/* Desktop Navigation (with mega dropdown) */}
+            {/* Desktop Navigation */}
             <MegaMenu navLinks={navLinks} locale={locale} />
 
             {/* Language Switcher + Mobile Menu */}
