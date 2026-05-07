@@ -1,0 +1,84 @@
+{
+  "kind": "collectionType",
+  "collectionName": "rfid_tags",
+  "info": {
+    "singularName": "rfid-tag",
+    "pluralName": "rfid-tags",
+    "displayName": "RFID Tag",
+    "description": "RFID electronic tag product"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "model": {
+      "type": "string",
+      "description": "Product model number"
+    },
+    "slug": {
+      "type": "uid",
+      "required": true,
+      "targetField": "name"
+    },
+    "description": {
+      "type": "richtext",
+      "required": true
+    },
+    "tagType": {
+      "type": "enumeration",
+      "enum": [
+        "carrier",
+        "high-temp",
+        "anti-metal",
+        "flexible",
+        "wristband",
+        "card",
+        "key-fob",
+        "laundry",
+        "custom"
+      ],
+      "required": true
+    },
+    "frequency": {
+      "type": "enumeration",
+      "enum": ["LF", "HF", "UHF", "dual", "active"],
+      "required": true
+    },
+    "specs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.spec-item"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "imageUrl": {
+      "type": "string"
+    },
+    "applicationScenarios": {
+      "type": "richtext",
+      "description": "Typical application scenarios"
+    },
+    "seoTitle": {
+      "type": "string"
+    },
+    "seoDescription": {
+      "type": "text"
+    },
+    "seoKeywords": {
+      "type": "text"
+    }
+  }
+}

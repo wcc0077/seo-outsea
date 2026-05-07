@@ -19,7 +19,7 @@ FN Tech (上海孚恩电子科技有限公司) — industrial RFID hardware comp
 ```
 seo-outsea/
 ├── backend/                  # Strapi 5 CMS (runs on :1337)
-│   ├── src/api/              # Content types: product, product-category, application, news, page, faq-article, global
+│   ├── src/api/              # Content types: product, product-category, application, application-category, rfid-tag, news, page, faq-article, global, about-page
 │   ├── src/components/       # Strapi components (sections/*, shared/*)
 │   ├── config/               # server, database, middlewares, plugins, admin
 │   └── src/utils/            # translate.ts (DeepSeek AI translation utility)
@@ -104,7 +104,10 @@ npm run start        # → http://localhost:1337
 |---|---|---|
 | `product` | `backend/src/api/product/content-types/product/schema.json` | Individual products with specs, images, category relation |
 | `product-category` | `backend/src/api/product-category/...` | Hierarchical categories (self-referential `parent`/`children` relations) |
-| `application` | `backend/src/api/application/...` | Industry application/use case pages |
+| `application` | `backend/src/api/application/...` | Industry application/use case pages, linked to application-category |
+| `application-category` | `backend/src/api/application-category/...` | Application categories (icon, slug, sortOrder, oneToMany to applications) |
+| `rfid-tag` | `backend/src/api/rfid-tag/...` | RFID electronic tag products (tagType, frequency, specs, images) |
+| `about-page` | `backend/src/api/about-page/...` | About section sub-pages (pageType: intro/gallery/history/honors) |
 | `article` (news) | `backend/src/api/news/content-types/article/schema.json` | News articles with cover images, publish dates |
 | `page` | `backend/src/api/page/...` | Dynamic pages via Dynamic Zones (sections/components) |
 | `faq-article` | `backend/src/api/faq-article/...` | Knowledge base articles with categories and tags |
@@ -116,6 +119,8 @@ npm run start        # → http://localhost:1337
 - All content types have `slug` (uid field) for URL routing
 - Products link to categories via `manyToOne` relation on `category` field
 - ProductCategory supports infinite depth via self-referential `parent`/`children` relations
+- Applications link to application-categories via `manyToOne` relation on `category` field
+- ApplicationCategory has `oneToMany` inverse relation to applications
 - Custom endpoints in `routes/custom.ts` per API, all with `auth: false` for public reads
 
 ### Frontend — Next.js 15
@@ -131,7 +136,10 @@ npm run start        # → http://localhost:1337
 - `/support` — Support page
 - `/sharing` — Knowledge base / FAQ
 - `/contact` — Contact page
-- `/about` — About page
+- `/about` — About page (intro)
+- `/about/company` — Company facility photos
+- `/about/history` — Development timeline
+- `/about/honors` — Honors & certifications
 
 **Layout**: `app/[locale]/layout.tsx` wraps all locale pages with:
 - `NextIntlClientProvider` (i18n)
@@ -163,7 +171,7 @@ npm run start        # → http://localhost:1337
 
 4. **Dynamic Zones for pages**: The `page` content type uses Strapi Dynamic Zones with 9 section components (`HeroSection`, `ProductGrid`, `StatsSection`, etc.), enabling CMS users to compose pages visually.
 
-5. **DeepSeek translation utility**: `backend/src/utils/translate.ts` provides batch AI translation across all content types. Called via POST to `/{content-type}s/translate` endpoints.
+5. **DeepSeek translation utility**: `backend/src/utils/translate.ts` provides batch AI translation across all content types (product, product-category, application, application-category, rfid-tag, about-page, faq-article). Called via POST to `/{content-type}s/translate` endpoints.
 
 6. **Import seed endpoints**: `/products/import` and `/faq-articles/import` create initial data from hardcoded arrays in controllers. Guarded by `existingCount > 0` check to prevent duplicate imports.
 

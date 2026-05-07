@@ -7,7 +7,7 @@ export default factories.createCoreController('api::application.application', ({
 
     const entity = await strapi.db.query('api::application.application').findOne({
       where: { slug, locale: locale || 'en' },
-      populate: ['images'],
+      populate: ['images', 'category'],
     });
 
     if (!entity) {

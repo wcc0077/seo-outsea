@@ -1,11 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "applications",
+  "collectionName": "about_pages",
   "info": {
-    "singularName": "application",
-    "pluralName": "applications",
-    "displayName": "Application",
-    "description": "Industry application / use case"
+    "singularName": "about-page",
+    "pluralName": "about-pages",
+    "displayName": "About Page",
+    "description": "About section sub-page content"
   },
   "options": {
     "draftAndPublish": true
@@ -16,16 +16,21 @@
     }
   },
   "attributes": {
-    "name": {
+    "title": {
       "type": "string",
       "required": true
     },
     "slug": {
       "type": "uid",
       "required": true,
-      "targetField": "name"
+      "targetField": "title"
     },
-    "description": {
+    "pageType": {
+      "type": "enumeration",
+      "enum": ["intro", "gallery", "history", "honors"],
+      "required": true
+    },
+    "content": {
       "type": "richtext",
       "required": true
     },
@@ -35,9 +40,9 @@
       "required": false,
       "allowedTypes": ["images"]
     },
-    "useCase": {
-      "type": "richtext",
-      "required": false
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
     },
     "seoTitle": {
       "type": "string"
@@ -47,12 +52,6 @@
     },
     "seoKeywords": {
       "type": "text"
-    },
-    "category": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::application-category.application-category",
-      "inversedBy": "applications"
     }
   }
 }

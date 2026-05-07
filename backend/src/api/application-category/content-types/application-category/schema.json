@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "application_categories",
+  "info": {
+    "singularName": "application-category",
+    "pluralName": "application-categories",
+    "displayName": "Application Category",
+    "description": "Application category for organizing industry solutions"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "required": true,
+      "targetField": "name"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Icon identifier for frontend display"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
+    },
+    "applications": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::application.application",
+      "mappedBy": "category"
+    }
+  }
+}

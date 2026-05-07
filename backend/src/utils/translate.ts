@@ -12,6 +12,9 @@ export const TRANSLATABLE_FIELDS: TranslateFieldMap = {
   'faq-article': ['title', 'content', 'author'],
   article: ['title', 'content', 'author'],
   application: ['name', 'description', 'useCase'],
+  'application-category': ['name', 'description'],
+  'rfid-tag': ['name', 'description', 'applicationScenarios'],
+  'about-page': ['title', 'content'],
 };
 
 export function buildTranslatePayload(records: Record<string, unknown>[], fields: string[]): Record<string, unknown>[] {
