@@ -3,9 +3,9 @@ interface SpacerProps {
 }
 
 const HEIGHT_MAP = {
-  small: 'py-8',
-  medium: 'py-16',
-  large: 'py-24',
+  small: 'py-10',
+  medium: 'py-20',
+  large: 'py-28',
 };
 
 export default function Spacer({ height = 'medium' }: SpacerProps) {

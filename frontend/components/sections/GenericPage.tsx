@@ -18,13 +18,24 @@ export default async function GenericPage({ params, slug }: GenericPageProps) {
   return (
     <>
       {page.heroBanner && (
-        <section className="bg-gradient-to-br from-primary-900 to-primary-950 text-white py-20 text-center">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-4xl font-bold mb-4">{page.heroBanner.title}</h1>
+        <section className="relative bg-gradient-to-br from-neutral-900 via-primary-950 to-neutral-900 text-white py-24 text-center overflow-hidden">
+          {/* RF wave decorative rings */}
+          <div className="absolute inset-0 flex items-center justify-center" aria-hidden="true">
+            <div className="relative w-[600px] h-[600px]">
+              <div className="absolute inset-0 rounded-full border border-primary-500/10" />
+              <div className="absolute inset-12 rounded-full border border-primary-500/8" />
+              <div className="absolute inset-24 rounded-full border border-primary-500/5" />
+            </div>
+          </div>
+          <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="w-16 h-0.5 bg-primary-400 mx-auto mb-8" />
+            <h1 className="text-4xl font-bold mb-5">{page.heroBanner.title}</h1>
             {page.heroBanner.subtitle && (
-              <p className="text-lg text-gray-200">{page.heroBanner.subtitle}</p>
+              <p className="text-lg text-neutral-300 font-light max-w-2xl mx-auto">{page.heroBanner.subtitle}</p>
             )}
           </div>
+          {/* Bottom gradient */}
+          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent" aria-hidden="true" />
         </section>
       )}
       {page.sections?.map((section: SectionData, index: number) => (

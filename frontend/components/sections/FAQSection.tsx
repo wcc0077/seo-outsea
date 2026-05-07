@@ -13,22 +13,25 @@ export default function FAQSection({ title, faqs }: FAQSectionProps) {
   if (!faqs || faqs.length === 0) return null;
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-20 bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {title && (
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">{title}</h2>
+          <div className="text-center mb-14">
+            <div className="w-12 h-0.5 bg-primary-500 mx-auto mb-4" />
+            <h2 className="text-3xl font-bold text-neutral-900">{title}</h2>
+          </div>
         )}
         <dl className="space-y-4">
           {faqs.map((faq, index) => (
-            <dt key={index} className="border border-gray-200 rounded-lg overflow-hidden">
+            <dt key={index} className="border border-neutral-200 rounded-xl overflow-hidden hover:border-neutral-300 transition-colors">
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full flex items-center justify-between p-4 text-left font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+                className="w-full flex items-center justify-between p-5 text-left font-medium text-neutral-900 hover:bg-neutral-50 transition-colors"
                 aria-expanded={openIndex === index}
               >
-                {faq.question}
+                <span className="pr-4">{faq.question}</span>
                 <svg
-                  className={`w-5 h-5 transition-transform ${openIndex === index ? 'rotate-180' : ''}`}
+                  className={`w-5 h-5 flex-shrink-0 text-primary-500 transition-transform duration-200 ${openIndex === index ? 'rotate-180' : ''}`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -38,7 +41,7 @@ export default function FAQSection({ title, faqs }: FAQSectionProps) {
               </button>
               {openIndex === index && (
                 <div
-                  className="px-4 pb-4 text-gray-600 prose prose-sm max-w-none"
+                  className="px-5 pb-5 text-neutral-600 prose prose-sm max-w-none leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: faq.answer }}
                 />
               )}

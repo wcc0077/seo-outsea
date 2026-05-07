@@ -1,4 +1,4 @@
-/* frontend/app/globals.css */
+/* Global CSS — Precision Industrial Design System */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,25 +7,116 @@
   html {
     scroll-behavior: smooth;
   }
+
   body {
-    @apply antialiased text-gray-900 bg-white;
+    @apply antialiased text-neutral-900 bg-white;
+    font-family: var(--font-body);
+  }
+
+  /* Heading typography — Outfit, geometric and sharp */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; }
+  h2 { font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 600; }
+  h3 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); font-weight: 600; }
+  h4 { font-size: 1.125rem; font-weight: 600; }
+
+  /* Body text — Source Sans 3, humanist and readable */
+  p, span, div, li, a {
+    font-family: var(--font-body);
+    line-height: 1.6;
+  }
+
+  /* Selection color — cyan tint */
+  ::selection {
+    background-color: #cffafe;
+    color: #0e7490;
   }
 }
 
 @layer components {
+  /* ── Buttons ─────────────────────────────────── */
+
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium
-           text-white bg-primary-600 rounded-lg shadow-sm
-           hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500
-           transition-colors duration-200;
+    @apply inline-flex items-center justify-center px-7 py-3 text-sm font-semibold
+           text-white bg-primary-600 rounded-lg shadow-lg shadow-primary-600/25
+           hover:bg-primary-700 hover:shadow-xl hover:shadow-primary-700/30
+           hover:-translate-y-0.5
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
+           active:translate-y-0 active:shadow-md
+           transition-all duration-200;
   }
+
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium
-           text-primary-600 bg-white border border-primary-600 rounded-lg
-           hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-primary-500
-           transition-colors duration-200;
+    @apply inline-flex items-center justify-center px-7 py-3 text-sm font-semibold
+           text-primary-700 bg-white border-2 border-primary-200 rounded-lg
+           hover:border-primary-400 hover:bg-primary-50 hover:-translate-y-0.5
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
+           active:translate-y-0
+           transition-all duration-200;
   }
+
+  .btn-accent {
+    @apply inline-flex items-center justify-center px-7 py-3 text-sm font-semibold
+           text-neutral-900 bg-accent-500 rounded-lg shadow-lg shadow-accent-500/25
+           hover:bg-accent-400 hover:shadow-xl hover:shadow-accent-400/30
+           hover:-translate-y-0.5
+           focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2
+           active:translate-y-0 active:shadow-md
+           transition-all duration-200;
+  }
+
+  /* ── Cards ───────────────────────────────────── */
+
+  .card {
+    @apply bg-white rounded-2xl border border-neutral-200/80 overflow-hidden
+           hover:shadow-xl hover:shadow-neutral-900/5 hover:border-neutral-300
+           hover:-translate-y-1
+           transition-all duration-300;
+  }
+
+  .card-flat {
+    @apply bg-white rounded-2xl border border-neutral-200/80 overflow-hidden;
+  }
+
+  /* ── Section backgrounds ─────────────────────── */
+
+  .section-white { @apply bg-white; }
+  .section-subtle { @apply bg-neutral-50; }
+  .section-dark { @apply bg-neutral-900 text-white; }
+  .section-primary { @apply bg-primary-900 text-white; }
+
+  /* ── Prose container ─────────────────────────── */
+
   .container-prose {
     @apply max-w-3xl mx-auto;
+  }
+
+  /* ── Staggered animation children ─────────────── */
+
+  .stagger-children > * {
+    @apply animate-fade-in-up;
+  }
+  .stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+  .stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+  .stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+  .stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+  .stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+  .stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+}
+
+@layer utilities {
+  /* Subtle noise texture overlay */
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+
+  /* RF wave pattern background */
+  .bg-rf-waves {
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 100 Q120 80 140 100 Q120 120 100 100' fill='none' stroke='%2306b6d4' stroke-width='0.5' opacity='0.1'/%3E%3Cpath d='M100 100 Q130 70 160 100 Q130 130 100 100' fill='none' stroke='%2306b6d4' stroke-width='0.5' opacity='0.08'/%3E%3Cpath d='M100 100 Q140 60 180 100 Q140 140 100 100' fill='none' stroke='%2306b6d4' stroke-width='0.5' opacity='0.06'/%3E%3Cpath d='M100 100 Q150 50 200 100 Q150 150 100 100' fill='none' stroke='%2306b6d4' stroke-width='0.5' opacity='0.04'/%3E%3C/svg%3E");
   }
 }

@@ -1,18 +1,19 @@
 interface SectionProps {
   children: React.ReactNode;
   className?: string;
-  bg?: 'white' | 'gray' | 'primary';
+  bg?: 'white' | 'subtle' | 'dark' | 'primary';
 }
 
 export default function Section({ children, className = '', bg = 'white' }: SectionProps) {
   const bgClasses = {
     white: 'bg-white',
-    gray: 'bg-gray-50',
-    primary: 'bg-primary-600 text-white',
+    subtle: 'bg-neutral-50',
+    dark: 'bg-neutral-900 text-white',
+    primary: 'bg-primary-900 text-white',
   };
 
   return (
-    <section className={`py-16 ${bgClasses[bg]} ${className}`}>
+    <section className={`py-20 ${bgClasses[bg]} ${className}`}>
       {children}
     </section>
   );
