@@ -1,4 +1,5 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+const STRAPI_TOKEN = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN || '';
 
 interface FetchOptions {
   cache?: RequestCache;
@@ -20,6 +21,7 @@ async function fetchApi<T>(path: string, params?: Record<string, string | number
   const res = await fetch(url, {
     cache: options?.cache || 'force-cache',
     next: options?.next,
+    headers: STRAPI_TOKEN ? { 'Authorization': `Bearer ${STRAPI_TOKEN}` } : {},
   });
 
   if (!res.ok) {
@@ -136,6 +138,7 @@ export interface ProductData {
   description: string;
   specs: Array<{ name: string; value: string }>;
   images: Array<{ url: string; alternativeText: string }>;
+  imageUrl: string;
   category?: ProductCategoryData;
   seoTitle: string;
   seoDescription: string;
@@ -245,4 +248,42 @@ export function getStrapiImageUrl(url: string | undefined): string | null {
   if (!url) return null;
   if (url.startsWith('http')) return url;
   return `${STRAPI_URL}${url}`;
+}
+
+// ---- FAQ Articles ----
+
+export interface FAQArticleData {
+  id: number;
+  title: string;
+  slug: string;
+  content: string;
+  category: string;
+  tags: string[];
+  imageUrl: string | null;
+  publishDate: string;
+  author: string;
+  order: number;
+  seoTitle: string;
+  seoDescription: string;
+}
+
+export async function getFAQArticles(locale: string, category?: string): Promise<FAQArticleData[]> {
+  const params: Record<string, string> = { locale, pageSize: '20' };
+  if (category) params.category = category;
+  const res = await fetchApi<{ data: FAQArticleData[] }>('/api/faq/knowledge', params, {
+    cache: 'no-store',
+  });
+  return res.data;
+}
+
+export async function getFAQArticleBySlug(slug: string, locale: string): Promise<FAQArticleData | null> {
+  try {
+    const res = await fetchApi<{ data: FAQArticleData }>(
+      `/api/faq-articles/by-slug/${slug}`,
+      { locale }
+    );
+    return res.data;
+  } catch {
+    return null;
+  }
 }

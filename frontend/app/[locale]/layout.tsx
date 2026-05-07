@@ -5,12 +5,13 @@ import { SUPPORTED_LOCALES } from '@/lib/i18n';
 import { getGlobal, getStrapiImageUrl } from '@/lib/strapi';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { REVALIDATE_INTERVAL } from '@/lib/constants';
+import LocaleSetter from '@/components/LocaleSetter';
 
 const NAV_LINKS: Record<string, Array<{ label: string; href: string }>> = {
   en: [
     { label: 'Products', href: '/products' },
     { label: 'Applications', href: '/applications' },
+    { label: 'Support', href: '/support' },
     { label: 'News', href: '/news' },
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
@@ -18,6 +19,7 @@ const NAV_LINKS: Record<string, Array<{ label: string; href: string }>> = {
   zh: [
     { label: '产品', href: '/products' },
     { label: '应用', href: '/applications' },
+    { label: '技术支持', href: '/support' },
     { label: '新闻', href: '/news' },
     { label: '关于', href: '/about' },
     { label: '联系', href: '/contact' },
@@ -52,14 +54,11 @@ export default async function LocaleLayout({
   };
 
   return (
-    <html lang={locale}>
-      <body className="min-h-screen flex flex-col">
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <Header {...headerProps} />
-          <main className="flex-1">{children}</main>
-          <Footer global={globalData} locale={locale} />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <LocaleSetter locale={locale} />
+      <Header {...headerProps} />
+      <main className="flex-1">{children}</main>
+      <Footer global={globalData} locale={locale} />
+    </NextIntlClientProvider>
   );
 }

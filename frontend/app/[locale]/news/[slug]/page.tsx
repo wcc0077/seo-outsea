@@ -24,25 +24,27 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   };
 
   return (
-    <div className="py-16">
+    <div className="py-20">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <article>
-          <header className="mb-8">
-            <time className="text-sm text-gray-500">{formatDate(news.publishDate)}</time>
-            <h1 className="text-4xl font-bold text-gray-900 mt-2 mb-4">{news.title}</h1>
-            {news.author && <p className="text-sm text-gray-600">By {news.author}</p>}
+          <header className="mb-10">
+            <time className="text-sm font-medium text-primary-600 uppercase tracking-wider">{formatDate(news.publishDate)}</time>
+            <h1 className="text-4xl font-bold text-neutral-900 mt-3 mb-4">{news.title}</h1>
+            {news.author && <p className="text-sm text-neutral-600">By {news.author}</p>}
           </header>
 
           {news.coverImage && (
-            <img
-              src={getStrapiImageUrl(news.coverImage.url) || '/placeholder.png'}
-              alt={news.coverImage.alternativeText || news.title}
-              className="w-full rounded-xl object-cover mb-8"
-            />
+            <div className="rounded-2xl overflow-hidden shadow-lg shadow-neutral-900/10 mb-8">
+              <img
+                src={getStrapiImageUrl(news.coverImage.url) || '/placeholder.png'}
+                alt={news.coverImage.alternativeText || news.title}
+                className="w-full h-[360px] object-cover"
+              />
+            </div>
           )}
 
           <div
-            className="text-gray-600 prose prose-sm max-w-none"
+            className="text-neutral-600 prose prose-sm max-w-none"
             dangerouslySetInnerHTML={{ __html: news.content }}
           />
         </article>

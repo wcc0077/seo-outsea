@@ -23,32 +23,38 @@ export default async function NewsPage({ params, searchParams }: NewsPageProps) 
   const { pagination } = meta;
 
   return (
-    <div className="py-16">
+    <div className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">News</h1>
+        <div className="mb-10">
+          <div className="w-12 h-0.5 bg-primary-500 mb-4" />
+          <h1 className="text-4xl font-bold text-neutral-900">News</h1>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {news.map((item: NewsData) => (
             <Link key={item.slug} href={`/${locale}/news/${item.slug}`}>
               <Card className="h-full">
                 {item.coverImage && (
-                  <img
-                    src={getStrapiImageUrl(item.coverImage.url) || '/placeholder.png'}
-                    alt={item.coverImage.alternativeText || item.title}
-                    className="w-full h-48 object-cover rounded-t-xl"
-                  />
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={getStrapiImageUrl(item.coverImage.url) || '/placeholder.png'}
+                      alt={item.coverImage.alternativeText || item.title}
+                      className="w-full h-52 object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/10 to-transparent" />
+                  </div>
                 )}
-                <div className="p-4">
-                  <time className="text-xs text-gray-500">
+                <div className="p-5">
+                  <time className="text-xs font-medium text-primary-600 uppercase tracking-wider">
                     {new Date(item.publishDate).toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US', {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric',
                     })}
                   </time>
-                  <h3 className="font-semibold text-lg text-gray-900 mt-2 mb-2 line-clamp-2">{item.title}</h3>
+                  <h3 className="font-semibold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2 font-display">{item.title}</h3>
                   {item.seoDescription && (
-                    <p className="text-sm text-gray-600 line-clamp-2">{item.seoDescription}</p>
+                    <p className="text-sm text-neutral-600 line-clamp-2 leading-relaxed">{item.seoDescription}</p>
                   )}
                 </div>
               </Card>
@@ -57,7 +63,7 @@ export default async function NewsPage({ params, searchParams }: NewsPageProps) 
         </div>
 
         {pagination.pageCount > 1 && (
-          <div className="mt-8 flex justify-center">
+          <div className="mt-12 flex justify-center">
             <Pagination
               currentPage={pagination.page}
               totalPages={pagination.pageCount}

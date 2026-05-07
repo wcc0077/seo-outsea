@@ -16,25 +16,30 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
   }
 
   return (
-    <div className="py-16">
+    <div className="py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">{app.name}</h1>
+        <div className="mb-10">
+          <div className="w-12 h-0.5 bg-primary-500 mb-4" />
+          <h1 className="text-4xl font-bold text-neutral-900 mb-6">{app.name}</h1>
+        </div>
 
         {app.images?.[0] && (
-          <img
-            src={getStrapiImageUrl(app.images[0].url) || '/placeholder.png'}
-            alt={app.name}
-            className="w-full rounded-xl object-cover mb-8"
-          />
+          <div className="rounded-2xl overflow-hidden shadow-lg shadow-neutral-900/10 mb-8">
+            <img
+              src={getStrapiImageUrl(app.images[0].url) || '/placeholder.png'}
+              alt={app.name}
+              className="w-full h-[360px] object-cover"
+            />
+          </div>
         )}
 
         {app.description && (
-          <p className="text-lg text-gray-600 mb-8">{app.description}</p>
+          <p className="text-lg text-neutral-600 mb-8 leading-relaxed">{app.description}</p>
         )}
 
         {app.useCase && (
           <div
-            className="text-gray-600 prose prose-sm max-w-none"
+            className="text-neutral-600 prose prose-sm max-w-none"
             dangerouslySetInnerHTML={{ __html: app.useCase }}
           />
         )}
