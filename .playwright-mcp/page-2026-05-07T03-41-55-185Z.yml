@@ -1,0 +1,372 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e5]:
+      - list [ref=e9]:
+        - listitem [ref=e10]:
+          - link "关于孚恩" [ref=e11] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/about-us.html
+        - listitem [ref=e12]:
+          - link "智能移动终端" [ref=e13] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/mobile.html
+        - listitem [ref=e14]:
+          - link "RFID读写器" [ref=e15] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid.html
+        - listitem [ref=e16]:
+          - link "RFID电子标签" [ref=e17] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag.html
+        - listitem [ref=e18]:
+          - link "行业应用" [ref=e19] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application.html
+        - listitem [ref=e20]:
+          - link "技术支持" [ref=e21] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/support.html
+        - listitem [ref=e22]:
+          - link "联系我们" [ref=e23] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/contact.html
+      - link "上海孚恩电子科技有限公司" [ref=e27] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/index.html
+        - img "上海孚恩电子科技有限公司" [ref=e28]
+      - generic [ref=e53]:
+        - link "工业读写器" [ref=e56] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/rfid/8.html
+        - link "工业读写器" [ref=e60] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/rfid/8.html
+          - img "工业读写器" [ref=e61]
+        - link "工业载码体" [ref=e64] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/rfid/8.html
+        - link "工业载码体" [ref=e68] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/rfid/8.html
+          - img "工业载码体" [ref=e69]
+        - link "便携式RFID读写器" [ref=e72] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/mobile/7.html
+        - link "多功能工业平板" [ref=e76] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/mobile/6.html
+          - img "多功能工业平板" [ref=e77]
+        - link "多功能工业平板" [ref=e80] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/mobile/6.html
+        - link "便携式RFID读写器" [ref=e84] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/mobile/7.html
+          - img "便携式RFID读写器" [ref=e85]
+        - link "多功能手持终端" [ref=e88] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/mobile/5.html
+        - link "多功能手持终端" [ref=e92] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/mobile/5.html
+          - img "多功能手持终端" [ref=e93]
+        - img [ref=e99]
+        - img [ref=e103]
+        - img [ref=e107]
+        - img [ref=e111]
+        - img [ref=e115]
+        - img [ref=e119]
+        - link "超高频读写器" [ref=e123] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/rfid/9.html
+          - img "超高频读写器" [ref=e124]
+        - link "超高频读写器" [ref=e127] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/rfid/9.html
+        - generic [ref=e132]:
+          - textbox [ref=e134]: 请输入关键字
+          - generic [ref=e136] [cursor=pointer]: 搜索
+      - generic [ref=e139]:
+        - link [ref=e143] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/application/26.html
+          - img [ref=e144]
+        - link [ref=e148] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/application/27.html
+          - img [ref=e149]
+        - link [ref=e153] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/application/24.html
+          - img [ref=e154]
+        - link [ref=e158] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/application/21.html
+          - img [ref=e159]
+        - link [ref=e163] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/application/22.html
+          - img [ref=e164]
+        - link [ref=e168] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/application/23.html
+          - img [ref=e169]
+        - link [ref=e173] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/application/25.html
+          - img [ref=e174]
+        - link [ref=e180] [cursor=pointer]:
+          - /url: https://www.fn-tech.com/application/20.html
+          - img [ref=e181]
+      - generic [ref=e195]: "N"
+      - generic [ref=e206]:
+        - generic [ref=e208]:
+          - generic:
+            - generic:
+              - link [ref=e210] [cursor=pointer]:
+                - /url: "#"
+                - paragraph [ref=e211]
+              - link [ref=e213] [cursor=pointer]:
+                - /url: "#"
+                - paragraph [ref=e214]
+              - link [ref=e216] [cursor=pointer]:
+                - /url: "#"
+                - paragraph [ref=e217]
+        - list [ref=e221]:
+          - listitem [ref=e222]:
+            - link "聚焦商机 共促发展 孚恩董事长徐坚强先生出席 2025 中国（福建）非公经济论坛" [ref=e224] [cursor=pointer]:
+              - /url: https://www.fn-tech.com/news_more/119.html
+              - img "聚焦商机 共促发展 孚恩董事长徐坚强先生出席 2025 中国（福建）非公经济论坛" [ref=e225]
+            - generic [ref=e226]:
+              - paragraph [ref=e227]:
+                - link "聚焦商机 共促发展 孚恩董事长徐坚强先生出席 2025 中国（福建）非公经济论坛" [ref=e228] [cursor=pointer]:
+                  - /url: https://www.fn-tech.com/news_more/119.html
+              - paragraph [ref=e229]:
+                - generic [ref=e230]: 2025-10-25
+              - paragraph [ref=e231]
+          - listitem [ref=e232]:
+            - link "欢迎设计总监柴云君莅临，共话创意产业新未来" [ref=e234] [cursor=pointer]:
+              - /url: https://www.fn-tech.com/news_more/114.html
+              - img "欢迎设计总监柴云君莅临，共话创意产业新未来" [ref=e235]
+            - generic [ref=e236]:
+              - paragraph [ref=e237]:
+                - link "欢迎设计总监柴云君莅临，共话创意产业新未来" [ref=e238] [cursor=pointer]:
+                  - /url: https://www.fn-tech.com/news_more/114.html
+              - paragraph [ref=e239]:
+                - generic [ref=e240]: 2025-03-11
+              - paragraph [ref=e241]
+          - listitem [ref=e242]:
+            - link "闵行区领军人才联谊会到访孚恩科技 共谋智能终端产业协同发展" [ref=e244] [cursor=pointer]:
+              - /url: https://www.fn-tech.com/news_more/113.html
+              - img "闵行区领军人才联谊会到访孚恩科技 共谋智能终端产业协同发展" [ref=e245]
+            - generic [ref=e246]:
+              - paragraph [ref=e247]:
+                - link "闵行区领军人才联谊会到访孚恩科技 共谋智能终端产业协同发展" [ref=e248] [cursor=pointer]:
+                  - /url: https://www.fn-tech.com/news_more/113.html
+              - paragraph [ref=e249]:
+                - generic [ref=e250]: 2025-03-03
+              - paragraph [ref=e251]
+      - generic [ref=e261]:
+        - list:
+          - listitem [ref=e262]:
+            - link [ref=e265]:
+              - /url: javascript:;
+          - listitem [ref=e266]:
+            - link [ref=e269]:
+              - /url: javascript:;
+          - listitem [ref=e270]:
+            - link [ref=e273]:
+              - /url: javascript:;
+          - listitem [ref=e274]:
+            - link [ref=e277]:
+              - /url: javascript:;
+          - listitem [ref=e278]:
+            - link [ref=e281]:
+              - /url: javascript:;
+          - listitem [ref=e282]:
+            - link [ref=e285]:
+              - /url: javascript:;
+          - listitem [ref=e286]:
+            - link [ref=e289]:
+              - /url: javascript:;
+          - listitem [ref=e290]:
+            - link [ref=e293]:
+              - /url: javascript:;
+          - listitem [ref=e294]:
+            - link [ref=e297]:
+              - /url: javascript:;
+          - listitem [ref=e298]:
+            - link [ref=e301]:
+              - /url: javascript:;
+          - listitem [ref=e302]:
+            - link [ref=e305]:
+              - /url: javascript:;
+          - listitem [ref=e306]:
+            - link [ref=e309]:
+              - /url: javascript:;
+          - listitem [ref=e310]:
+            - link [ref=e313]:
+              - /url: javascript:;
+          - listitem [ref=e314]:
+            - link [ref=e317]:
+              - /url: javascript:;
+          - listitem [ref=e318]:
+            - link [ref=e321]:
+              - /url: javascript:;
+          - listitem [ref=e322]:
+            - link [ref=e325]:
+              - /url: javascript:;
+          - listitem [ref=e326]:
+            - link [ref=e329]:
+              - /url: javascript:;
+          - listitem [ref=e330]:
+            - link [ref=e333]:
+              - /url: javascript:;
+          - listitem [ref=e334]:
+            - link [ref=e337]:
+              - /url: javascript:;
+          - listitem [ref=e338]:
+            - link [ref=e341]:
+              - /url: javascript:;
+          - listitem [ref=e342]:
+            - link [ref=e345]:
+              - /url: javascript:;
+          - listitem [ref=e346]:
+            - link [ref=e349]:
+              - /url: javascript:;
+          - listitem [ref=e350]:
+            - link [ref=e353]:
+              - /url: javascript:;
+          - listitem [ref=e354]:
+            - link [ref=e357]:
+              - /url: javascript:;
+          - listitem [ref=e358]:
+            - link [ref=e361]:
+              - /url: javascript:;
+          - listitem [ref=e362]:
+            - link [ref=e365]:
+              - /url: javascript:;
+    - generic [ref=e368]:
+      - generic [ref=e370]:
+        - paragraph [ref=e371]: 微
+        - paragraph [ref=e372]: 信
+        - paragraph [ref=e373]: 公
+        - paragraph [ref=e374]: 众
+        - paragraph [ref=e375]: 号
+      - img [ref=e379]
+      - img [ref=e389]
+      - list [ref=e393]:
+        - listitem [ref=e394]:
+          - link "孚恩简介" [ref=e395] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/about-us.html
+        - listitem [ref=e396]:
+          - link "公司实景" [ref=e397] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/scenery.html
+        - listitem [ref=e398]:
+          - link "发展历史" [ref=e399] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/history.html
+        - listitem [ref=e400]:
+          - link "荣誉资质" [ref=e401] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/qualification.html
+        - listitem [ref=e402]:
+          - link "新闻中心" [ref=e403] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/news.html
+      - link "RFID读写器" [ref=e406] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/rfid.html
+      - list [ref=e410]:
+        - listitem [ref=e411]:
+          - link "多功能手持终端" [ref=e412] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/mobile/5.html
+        - listitem [ref=e413]:
+          - link "多功能工业平板" [ref=e414] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/mobile/6.html
+        - listitem [ref=e415]:
+          - link "便携式RFID读写器" [ref=e416] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/mobile/7.html
+      - link "RFID电子标签" [ref=e419] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/frid-tag.html
+      - list [ref=e423]:
+        - listitem [ref=e424]:
+          - link "工业读写器" [ref=e425] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid/8.html
+        - listitem [ref=e426]:
+          - link "超高频读写器" [ref=e427] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid/9.html
+        - listitem [ref=e428]:
+          - link "高频读写器" [ref=e429] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e430]:
+          - link "有源读写器" [ref=e431] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid/11.html
+        - listitem [ref=e432]:
+          - link "模块集成" [ref=e433] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid/28.html
+      - link "行业应用" [ref=e436] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/application.html
+      - list [ref=e440]:
+        - listitem [ref=e441]:
+          - link "RFID工业载码体" [ref=e442] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag_more/380.html
+        - listitem [ref=e443]:
+          - link "RFID耐高温标签" [ref=e444] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/13.html
+        - listitem [ref=e445]:
+          - link "RFID抗金属标签" [ref=e446] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/14.html
+        - listitem [ref=e447]:
+          - link "RFID易碎防转移标签" [ref=e448] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/15.html
+        - listitem [ref=e449]:
+          - link "智能卡与不干胶标签" [ref=e450] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/16.html
+        - listitem [ref=e451]:
+          - link "其他特种标签" [ref=e452] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/17.html
+        - listitem [ref=e453]:
+          - link "有源电子标签" [ref=e454] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/18.html
+      - link "技术支持" [ref=e457] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/support.html
+      - list [ref=e461]:
+        - listitem [ref=e462]:
+          - link "智能智造" [ref=e463] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/20.html
+        - listitem [ref=e464]:
+          - link "仓储物流" [ref=e465] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/21.html
+        - listitem [ref=e466]:
+          - link "档案图书" [ref=e467] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/22.html
+        - listitem [ref=e468]:
+          - link "资产巡检" [ref=e469] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/23.html
+        - listitem [ref=e470]:
+          - link "防伪追溯" [ref=e471] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/24.html
+        - listitem [ref=e472]:
+          - link "连锁零售" [ref=e473] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/25.html
+        - listitem [ref=e474]:
+          - link "智慧城市" [ref=e475] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/26.html
+        - listitem [ref=e476]:
+          - link "智能柜体" [ref=e477] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/27.html
+      - link "联系我们" [ref=e480] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/contact.html
+      - list [ref=e484]:
+        - listitem [ref=e485]:
+          - link "产品支持" [ref=e486] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e487]:
+          - link "服务支持" [ref=e488] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/service.html
+        - listitem [ref=e489]:
+          - link "常见问题" [ref=e490] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e491]:
+          - link "知识分享" [ref=e492] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/sharing.html
+      - link "智能移动终端" [ref=e495] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/mobile.html
+      - link "关于孚恩" [ref=e498] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/about-us.html
+      - generic [ref=e500]:
+        - generic [ref=e501]: 地址：上海市闵行区新骏环路588弄23幢401室（4-5层）
+        - generic [ref=e502]: 电话：021-5432 6377
+        - generic [ref=e503]: 邮箱：sales@fn-tech.com
+        - generic [ref=e505]:
+          - text: 网站备案号：
+          - link "沪ICP备15029430号" [ref=e506] [cursor=pointer]:
+            - /url: https://beian.miit.gov.cn/
+        - link "沪公网安备31011202005682号" [ref=e509] [cursor=pointer]:
+          - /url: https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011202005682
+  - insertion:
+    - generic [ref=e511]:
+      - generic [ref=e512]:
+        - generic [ref=e515]: 在线咨询
+        - generic [ref=e516] [cursor=pointer]: 智能手持终端
+        - generic [ref=e517] [cursor=pointer]: 工业平板
+        - generic [ref=e518] [cursor=pointer]: RFID读写器
+        - generic [ref=e519] [cursor=pointer]: RFID电子标签
+        - generic [ref=e520] [cursor=pointer]: 应用解决方案
+      - generic:
+        - paragraph [ref=e521] [cursor=pointer]:
+          - generic [ref=e523]: 可以介绍下你们的产品么？
+        - paragraph [ref=e524] [cursor=pointer]:
+          - generic [ref=e526]: 你们能提供解决方案吗？
+        - paragraph [ref=e527] [cursor=pointer]:
+          - generic [ref=e529]: 你们各地有办事处么？
