@@ -16,15 +16,55 @@ interface MegaMenuProps {
 
 const HEADER_HEIGHT = 72;
 
-function getTechnicalSpec(href: string): string {
-  if (href.includes('hf-rfid')) return '13.56MHz · IO-LINK / ModbusTCP';
-  if (href.includes('uhf-rfid')) return '860-960MHz · Long Range';
-  if (href.includes('handheld')) return 'Android · Industrial Grade';
-  if (href.includes('industrial')) return 'Fixed Mount · Edge Computing';
-  if (href.includes('portable')) return 'Bluetooth · UHF Scanner';
-  return '';
-}
+// ── Product data with images ──
 
+type ProductEntry = { name: string; slug: string; image: string };
+
+const PRODUCT_CATEGORIES: Record<string, { spec: string; products: ProductEntry[] }> = {
+  'hf-rfid-readers': {
+    spec: '13.56MHz · IO-LINK / ModbusTCP',
+    products: [
+      { name: 'D1338T 工业级高频网口读写器', slug: 'd1338t-hf-ethernet-reader', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_p6nq.jpg' },
+      { name: 'D1609 & D1339 系列工业级高频读写器', slug: 'd1609-d1339-series', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/2_yhtq.jpg' },
+      { name: 'D1646T ModbusTCP 齐平式高频RFID读写器', slug: 'd1646t-modbus-tcp', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/4_3ji7.jpg' },
+      { name: 'D1621系列 IO-LINK高频RFID读写器', slug: 'd1621-io-link', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/3_nuqm.jpg' },
+    ],
+  },
+  'uhf-rfid-readers': {
+    spec: '860-960MHz · Long Range',
+    products: [
+      { name: 'D2184B 高性能四通道UHF读写器', slug: 'd2184b-quad-channel', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2184B_x6b5.jpg' },
+      { name: 'D2480系列 工业超高频RFID读写器', slug: 'd2480-series', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2480B_4f8u.jpg' },
+      { name: 'D2188BL 超高频多通道读写器', slug: 'd2188bl-multi-channel', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2188.jpg' },
+      { name: 'D2180U 超高频桌面读写器', slug: 'd2180u-desktop', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2180U.jpg' },
+    ],
+  },
+  'handheld-terminals': {
+    spec: 'Android · Industrial Grade',
+    products: [
+      { name: 'M12 安卓手持终端', slug: 'm12-android-terminal', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_7bkj.jpg' },
+      { name: 'M11 工业级手持终端', slug: 'm11-industrial', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/M11_lnf7.jpg' },
+      { name: 'N60 智能打印手持终端', slug: 'n60-print-terminal', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/11_vljy.jpg' },
+      { name: 'M11 工业级安卓条码手持终端', slug: 'm11-barcode', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/M11.png' },
+    ],
+  },
+  'industrial-tablets': {
+    spec: 'Fixed Mount · Edge Computing',
+    products: [
+      { name: 'P01 多功能工业平板', slug: 'p01-industrial-tablet', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_hd05.jpg' },
+    ],
+  },
+  'portable-readers': {
+    spec: 'Bluetooth · UHF Scanner',
+    products: [
+      { name: 'T01 蓝牙UHF扫描仪', slug: 't01-bluetooth-uhf', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_xz3s_ou59.jpg' },
+      { name: 'T02 蓝牙UHF扫描仪', slug: 't02-bluetooth-uhf', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_jxgj_0wo1.jpg' },
+      { name: 'T03 蓝牙UHF扫描仪', slug: 't03-bluetooth-uhf', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/t03.png' },
+    ],
+  },
+};
+
+// Category icon components
 function getCategoryIcon(path: string): React.ReactNode {
   if (path.includes('hf-rfid') || path.includes('uhf-rfid')) {
     return (
@@ -53,6 +93,8 @@ function getCategoryIcon(path: string): React.ReactNode {
     </svg>
   );
 }
+
+// ── Main MegaMenu ──
 
 export default function MegaMenu({ navLinks, locale }: MegaMenuProps) {
   const [activeKey, setActiveKey] = useState<string | null>(null);
@@ -113,7 +155,7 @@ export default function MegaMenu({ navLinks, locale }: MegaMenuProps) {
         ))}
       </nav>
 
-      {/* Mega dropdown overlay — full width, positioned directly below header */}
+      {/* Mega dropdown overlay */}
       {activeNavItem && activeNavItem.children && (
         <div
           className="fixed left-0 right-0 z-[60] bg-neutral-900 border-t border-neutral-700/50 animate-fade-in-down"
@@ -136,41 +178,127 @@ export default function MegaMenu({ navLinks, locale }: MegaMenuProps) {
   );
 }
 
-/* ── Products: 5-column grid ── */
+/* ────────────────────────────────────────────────
+   Products: Left sidebar nav + Right image cards
+   ──────────────────────────────────────────────── */
 
 function ProductsMegaMenu({ items, locale }: { items: NonNullable<NavItem['children']>; locale: string }) {
+  const [activeCategory, setActiveCategory] = useState<string>(items[0]?.href ?? '');
+
+  const currentKey = items.find((i) => i.href === activeCategory);
+  const categorySlug = activeCategory.split('/').pop() ?? '';
+  const data = PRODUCT_CATEGORIES[categorySlug];
+
   return (
-    <div className="grid grid-cols-5 gap-4">
-      {items.map((item) => (
+    <div className="flex gap-8">
+      {/* Left: vertical navigation sidebar */}
+      <div className="w-56 flex-shrink-0">
+        <div className="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-4">
+          产品系列
+        </div>
+        <div className="flex flex-col border-l border-neutral-700/50">
+          {items.map((item) => {
+            const slug = item.href.split('/').pop() ?? '';
+            const isActive = activeCategory === item.href;
+            const catData = PRODUCT_CATEGORIES[slug];
+            return (
+              <button
+                key={item.href}
+                onMouseEnter={() => setActiveCategory(item.href)}
+                className={`flex items-center gap-3 px-4 py-3 text-left transition-all duration-200 border-l-2 -ml-px ${
+                  isActive
+                    ? 'border-primary-400 bg-primary-500/5 text-primary-400'
+                    : 'border-transparent text-neutral-400 hover:text-white hover:bg-neutral-800/50'
+                }`}
+              >
+                <div className={`w-7 h-7 rounded-md flex items-center justify-center transition-colors ${
+                  isActive ? 'bg-primary-500/15 text-primary-400' : 'bg-neutral-700/40 text-neutral-500'
+                }`}>
+                  {getCategoryIcon(item.href)}
+                </div>
+                <div className="min-w-0">
+                  <div className="text-[13px] font-medium truncate">{item.label}</div>
+                  {catData && (
+                    <div className="text-[11px] text-neutral-500 mt-0.5 truncate">
+                      {catData.spec}
+                    </div>
+                  )}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+        {/* "View all products" link */}
         <Link
-          key={item.href}
-          href={`/${locale}${item.href}`}
-          className="group flex flex-col gap-3 rounded-xl border border-neutral-700/50 bg-neutral-800/60 p-5 hover:border-primary-500/40 hover:bg-neutral-800 transition-all duration-300"
+          href={`/${locale}/products`}
+          className="mt-4 flex items-center gap-2 px-4 py-2.5 text-xs font-medium text-neutral-500 hover:text-primary-400 transition-colors rounded-lg hover:bg-neutral-800/50"
         >
-          <div className="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center text-primary-400 group-hover:bg-primary-500/15 transition-colors">
-            {getCategoryIcon(item.href)}
-          </div>
-          <div>
-            <div className="text-[13px] font-semibold text-white group-hover:text-primary-400 transition-colors leading-snug">
-              {item.label}
-            </div>
-            <div className="text-xs text-neutral-500 mt-1.5 leading-relaxed">
-              {getTechnicalSpec(item.href)}
-            </div>
-          </div>
-          <div className="flex items-center gap-1 text-xs text-neutral-600 group-hover:text-primary-400/60 transition-colors mt-auto pt-3 border-t border-neutral-700/30">
-            查看全部
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </div>
+          查看全部产品
+          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
         </Link>
-      ))}
+      </div>
+
+      {/* Right: image cards grid */}
+      <div className="flex-1 min-w-0">
+        {data ? (
+          <>
+            <div className="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-4">
+              {currentKey?.label}
+            </div>
+            <div className="grid grid-cols-4 gap-3">
+              {data.products.map((product) => (
+                <Link
+                  key={product.slug}
+                  href={`/${locale}/products/${product.slug}`}
+                  className="group rounded-xl overflow-hidden border border-neutral-700/50 bg-neutral-800/40 hover:border-primary-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/5"
+                >
+                  <div className="aspect-[4/3] bg-neutral-800 overflow-hidden relative">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  <div className="p-3">
+                    <div className="text-[12px] font-medium text-white group-hover:text-primary-400 transition-colors leading-snug line-clamp-2">
+                      {product.name}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+              {/* More products card */}
+              <Link
+                href={`/${locale}${currentKey?.href ?? '/products'}`}
+                className="group flex flex-col items-center justify-center rounded-xl border border-dashed border-neutral-700/50 bg-neutral-800/20 hover:border-primary-500/30 hover:bg-neutral-800/40 transition-all duration-300 min-h-[180px]"
+              >
+                <div className="w-10 h-10 rounded-full bg-neutral-700/40 flex items-center justify-center mb-2 group-hover:bg-primary-500/10 transition-colors">
+                  <svg className="w-5 h-5 text-neutral-500 group-hover:text-primary-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </div>
+                <span className="text-xs text-neutral-500 group-hover:text-primary-400 transition-colors font-medium">
+                  查看全部
+                </span>
+              </Link>
+            </div>
+          </>
+        ) : (
+          <div className="flex items-center justify-center min-h-[200px] text-neutral-500 text-sm">
+            加载中...
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
-/* ─── Applications: 3×2 grid ── */
+/* ────────────────────────────────────────────────
+   Applications: 3×2 grid
+   ──────────────────────────────────────────────── */
 
 function ApplicationsMegaMenu({ items, locale }: { items: NonNullable<NavItem['children']>; locale: string }) {
   return (
@@ -203,7 +331,9 @@ function ApplicationsMegaMenu({ items, locale }: { items: NonNullable<NavItem['c
   );
 }
 
-/* ─── Support: 4-column compact ─── */
+/* ────────────────────────────────────────────────
+   Support: 4-column compact
+   ──────────────────────────────────────────────── */
 
 function SupportMegaMenu({ items, locale }: { items: NonNullable<NavItem['children']>; locale: string }) {
   return (
