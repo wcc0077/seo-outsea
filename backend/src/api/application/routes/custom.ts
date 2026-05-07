@@ -6,5 +6,11 @@ export default {
       handler: 'application.findBySlug',
       config: { auth: false },
     },
+    {
+      method: 'POST',
+      path: '/applications/translate',
+      handler: 'application.translate',
+      config: { auth: false },
+    },
   ],
 };

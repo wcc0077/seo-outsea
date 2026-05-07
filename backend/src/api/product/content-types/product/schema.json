@@ -40,6 +40,9 @@
       "required": false,
       "allowedTypes": ["images"]
     },
+    "imageUrl": {
+      "type": "string"
+    },
     "category": {
       "type": "relation",
       "relation": "manyToOne",

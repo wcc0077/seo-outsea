@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "faq_articles",
+  "info": {
+    "singularName": "faq-article",
+    "pluralName": "faq-articles",
+    "displayName": "FAQ Article",
+    "description": "Technical support FAQ and knowledge sharing articles"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "required": true,
+      "targetField": "title"
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": ["faq", "technical", "application", "guide"],
+      "required": true,
+      "default": "faq"
+    },
+    "tags": {
+      "type": "json"
+    },
+    "imageUrl": {
+      "type": "string"
+    },
+    "publishDate": {
+      "type": "date"
+    },
+    "author": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "seoTitle": {
+      "type": "string"
+    },
+    "seoDescription": {
+      "type": "text"
+    }
+  }
+}

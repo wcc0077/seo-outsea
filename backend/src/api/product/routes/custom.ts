@@ -12,5 +12,23 @@ export default {
       handler: 'product.findByCategory',
       config: { auth: false },
     },
+    {
+      method: 'POST',
+      path: '/products/import',
+      handler: 'product.importProducts',
+      config: { auth: false },
+    },
+    {
+      method: 'GET',
+      path: '/products/all',
+      handler: 'product.listAll',
+      config: { auth: false },
+    },
+    {
+      method: 'POST',
+      path: '/products/translate',
+      handler: 'product.translate',
+      config: { auth: false },
+    },
   ],
 };

@@ -480,6 +480,53 @@ export interface ApiApplicationApplication extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiFaqArticleFaqArticle extends Struct.CollectionTypeSchema {
+  collectionName: 'faq_articles';
+  info: {
+    description: 'Technical support FAQ and knowledge sharing articles';
+    displayName: 'FAQ Article';
+    pluralName: 'faq-articles';
+    singularName: 'faq-article';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    author: Schema.Attribute.String;
+    category: Schema.Attribute.Enumeration<
+      ['faq', 'technical', 'application', 'guide']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'faq'>;
+    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    imageUrl: Schema.Attribute.String;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::faq-article.faq-article'
+    >;
+    order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    publishDate: Schema.Attribute.Date;
+    publishedAt: Schema.Attribute.DateTime;
+    seoDescription: Schema.Attribute.Text;
+    seoTitle: Schema.Attribute.String;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    tags: Schema.Attribute.JSON;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -695,6 +742,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     description: Schema.Attribute.RichText & Schema.Attribute.Required;
     images: Schema.Attribute.Media<'images', true>;
+    imageUrl: Schema.Attribute.String;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1225,6 +1273,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::application.application': ApiApplicationApplication;
+      'api::faq-article.faq-article': ApiFaqArticleFaqArticle;
       'api::global.global': ApiGlobalGlobal;
       'api::news.article': ApiNewsArticle;
       'api::page.page': ApiPagePage;
