@@ -1,11 +1,18 @@
 import Link from 'next/link';
 import Navbar from './Navbar';
+import MegaMenu from './MegaMenu';
 import LanguageSwitcher from './LanguageSwitcher';
+
+type NavItem = {
+  label: string;
+  href: string;
+  children?: Array<{ label: string; href: string }>;
+};
 
 interface HeaderProps {
   siteName: string;
   logoUrl: string | null;
-  navLinks: Array<{ label: string; href: string }>;
+  navLinks: NavItem[];
   locale: string;
 }
 
@@ -26,18 +33,8 @@ export default function Header({ siteName, logoUrl, navLinks, locale }: HeaderPr
             )}
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={`/${locale}${link.href}`}
-                className="text-sm font-medium text-neutral-300 hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary-400 after:transition-all hover:after:w-full"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+          {/* Desktop Navigation (with mega dropdown) */}
+          <MegaMenu navLinks={navLinks} locale={locale} />
 
           {/* Language Switcher + Mobile Menu */}
           <div className="flex items-center gap-3">

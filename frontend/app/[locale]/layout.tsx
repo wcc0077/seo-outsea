@@ -7,19 +7,85 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import LocaleSetter from '@/components/LocaleSetter';
 
-const NAV_LINKS: Record<string, Array<{ label: string; href: string }>> = {
+type NavItem = {
+  label: string;
+  href: string;
+  children?: Array<{ label: string; href: string }>;
+};
+
+const NAV_LINKS: Record<string, NavItem[]> = {
   en: [
-    { label: 'Products', href: '/products' },
-    { label: 'Applications', href: '/applications' },
-    { label: 'Support', href: '/support' },
+    {
+      label: 'Products',
+      href: '/products',
+      children: [
+        { label: 'HF RFID Readers', href: '/products/category/hf-rfid-readers' },
+        { label: 'UHF RFID Readers', href: '/products/category/uhf-rfid-readers' },
+        { label: 'Handheld Terminals', href: '/products/category/handheld-terminals' },
+        { label: 'Industrial Tablets', href: '/products/category/industrial-tablets' },
+        { label: 'Portable Readers', href: '/products/category/portable-readers' },
+      ],
+    },
+    {
+      label: 'Applications',
+      href: '/applications',
+      children: [
+        { label: 'Smart Manufacturing', href: '/applications' },
+        { label: 'Warehouse & Logistics', href: '/applications' },
+        { label: 'Asset Management', href: '/applications' },
+        { label: 'Anti-counterfeit & Traceability', href: '/applications' },
+        { label: 'Retail & Supply Chain', href: '/applications' },
+        { label: 'Smart City', href: '/applications' },
+      ],
+    },
+    {
+      label: 'Support',
+      href: '/support',
+      children: [
+        { label: 'Product Support', href: '/products' },
+        { label: 'Service Support', href: '/contact' },
+        { label: 'FAQ', href: '/sharing' },
+        { label: 'Knowledge Base', href: '/sharing' },
+      ],
+    },
     { label: 'News', href: '/news' },
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
   ],
   zh: [
-    { label: '产品', href: '/products' },
-    { label: '应用', href: '/applications' },
-    { label: '技术支持', href: '/support' },
+    {
+      label: '产品',
+      href: '/products',
+      children: [
+        { label: '高频系列RFID读写器', href: '/products/category/hf-rfid-readers' },
+        { label: '超高频系列RFID读写器', href: '/products/category/uhf-rfid-readers' },
+        { label: '多功能手持终端', href: '/products/category/handheld-terminals' },
+        { label: '多功能工业平板', href: '/products/category/industrial-tablets' },
+        { label: '便携式RFID读写器', href: '/products/category/portable-readers' },
+      ],
+    },
+    {
+      label: '应用',
+      href: '/applications',
+      children: [
+        { label: '智能制造', href: '/applications' },
+        { label: '仓储物流', href: '/applications' },
+        { label: '资产管理', href: '/applications' },
+        { label: '防伪追溯', href: '/applications' },
+        { label: '零售与供应链', href: '/applications' },
+        { label: '智慧城市', href: '/applications' },
+      ],
+    },
+    {
+      label: '技术支持',
+      href: '/support',
+      children: [
+        { label: '产品支持', href: '/products' },
+        { label: '服务支持', href: '/contact' },
+        { label: '常见问题', href: '/sharing' },
+        { label: '知识分享', href: '/sharing' },
+      ],
+    },
     { label: '新闻', href: '/news' },
     { label: '关于', href: '/about' },
     { label: '联系', href: '/contact' },

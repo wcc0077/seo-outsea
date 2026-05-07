@@ -3,13 +3,29 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
+type NavItem = {
+  label: string;
+  href: string;
+  children?: Array<{ label: string; href: string }>;
+};
+
 interface NavbarProps {
-  navLinks: Array<{ label: string; href: string }>;
+  navLinks: NavItem[];
   locale: string;
 }
 
 export default function Navbar({ navLinks, locale }: NavbarProps) {
   const [open, setOpen] = useState(false);
+  const [expandedKeys, setExpandedKeys] = useState<Set<string>>(new Set());
+
+  function toggleExpand(href: string) {
+    setExpandedKeys((prev) => {
+      const next = new Set(prev);
+      if (next.has(href)) next.delete(href);
+      else next.add(href);
+      return next;
+    });
+  }
 
   return (
     <>
@@ -32,14 +48,51 @@ export default function Navbar({ navLinks, locale }: NavbarProps) {
         <div className="absolute top-[72px] left-0 right-0 bg-neutral-900 border-b border-neutral-700/50 shadow-2xl md:hidden z-50 animate-fade-in-down">
           <nav className="flex flex-col px-4 py-3">
             {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={`/${locale}${link.href}`}
-                className="py-3 text-sm font-medium text-neutral-300 hover:text-white border-b border-neutral-800 last:border-0 transition-colors"
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-              </Link>
+              <div key={link.href}>
+                <div className="flex items-center justify-between">
+                  <Link
+                    href={`/${locale}${link.href}`}
+                    className="py-3 text-sm font-medium text-neutral-300 hover:text-white transition-colors flex-1"
+                    onClick={() => setOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                  {link.children && link.children.length > 0 && (
+                    <button
+                      onClick={() => toggleExpand(link.href)}
+                      className="p-2 text-neutral-400 hover:text-white transition-colors"
+                      aria-label={`Expand ${link.label}`}
+                    >
+                      <svg
+                        className={`w-4 h-4 transition-transform ${expandedKeys.has(link.href) ? 'rotate-180' : ''}`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+
+                {/* Sub-menu accordion */}
+                {link.children && expandedKeys.has(link.href) && (
+                  <div className="pb-3 pl-4 border-l border-neutral-700/50 ml-1 space-y-1">
+                    {link.children.map((child) => (
+                      <Link
+                        key={child.href}
+                        href={`/${locale}${child.href}`}
+                        className="block py-1.5 text-xs text-neutral-400 hover:text-primary-400 transition-colors"
+                        onClick={() => setOpen(false)}
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+
+                <div className="border-b border-neutral-800" />
+              </div>
             ))}
           </nav>
         </div>
