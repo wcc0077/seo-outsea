@@ -1,0 +1,63 @@
+{
+  "Navigation": {
+    "about": "About Us",
+    "products": "Products",
+    "applications": "Applications",
+    "news": "News",
+    "support": "Support",
+    "contact": "Contact",
+    "sharing": "Knowledge"
+  },
+  "Common": {
+    "readMore": "Read More",
+    "contactUs": "Contact Us",
+    "search": "Search",
+    "searchPlaceholder": "Enter keywords...",
+    "allRightsReserved": "All rights reserved.",
+    "language": "Language",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page"
+  },
+  "Products": {
+    "title": "Products",
+    "category": "Category",
+    "allProducts": "All Products",
+    "specifications": "Specifications",
+    "name": "Name",
+    "value": "Value"
+  },
+  "Applications": {
+    "title": "Industry Applications",
+    "useCase": "Use Case"
+  },
+  "News": {
+    "title": "News",
+    "latestNews": "Latest News",
+    "publishedOn": "Published on",
+    "by": "by"
+  },
+  "Support": {
+    "title": "Technical Support"
+  },
+  "Contact": {
+    "title": "Contact Us",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "send": "Send Message",
+    "name": "Your Name",
+    "emailLabel": "Your Email",
+    "message": "Message",
+    "submitSuccess": "Message sent successfully!",
+    "submitError": "Failed to send message. Please try again."
+  },
+  "NotFound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist.",
+    "goHome": "Go to Homepage"
+  },
+  "SEO": {
+    "defaultDescription": "Professional RFID readers, tags, and industrial IoT solutions."
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
+    "description": "Dynamic page content managed via Dynamic Zones"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "slug": {
+      "type": "uid",
+      "required": true,
+      "targetField": "title"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "heroBanner": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.hero-banner"
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.hero-section",
+        "sections.product-grid",
+        "sections.application-showcase",
+        "sections.news-list",
+        "sections.text-image",
+        "sections.stats-section",
+        "sections.faq-section",
+        "sections.contact-form",
+        "sections.spacer"
+      ]
+    },
+    "seoTitle": {
+      "type": "string",
+      "required": false
+    },
+    "seoDescription": {
+      "type": "text",
+      "required": false
+    },
+    "seoKeywords": {
+      "type": "text",
+      "required": false
+    }
+  }
+}

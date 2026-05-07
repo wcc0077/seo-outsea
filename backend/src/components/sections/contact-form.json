@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_sections_contact_forms",
+  "info": {
+    "displayName": "Contact Form",
+    "icon": "envelope"
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "default": "Contact Us" },
+    "subtitle": { "type": "text" },
+    "action": {
+      "type": "string",
+      "description": "Form submission endpoint URL"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_sections_news_lists",
+  "info": {
+    "displayName": "News List",
+    "icon": "newspaper"
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "maxItems": { "type": "integer", "default": 3 },
+    "categoryFilter": { "type": "string" }
+  }
+}

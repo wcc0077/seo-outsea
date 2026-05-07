@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_sections_stats_sections",
+  "info": {
+    "displayName": "Stats Section",
+    "icon": "chart-bar"
+  },
+  "options": {},
+  "attributes": {
+    "stats": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.stat-item"
+    }
+  }
+}

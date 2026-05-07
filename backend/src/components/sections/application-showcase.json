@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_sections_application_showcases",
+  "info": {
+    "displayName": "Application Showcase",
+    "icon": "sitemap"
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "applications": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::application.application"
+    },
+    "maxItems": { "type": "integer", "default": 4 }
+  }
+}

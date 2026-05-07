@@ -1,0 +1,63 @@
+{
+  "Navigation": {
+    "about": "关于孚恩",
+    "products": "产品中心",
+    "applications": "行业应用",
+    "news": "新闻中心",
+    "support": "技术支持",
+    "contact": "联系我们",
+    "sharing": "知识分享"
+  },
+  "Common": {
+    "readMore": "了解更多",
+    "contactUs": "联系我们",
+    "search": "搜索",
+    "searchPlaceholder": "请输入关键字...",
+    "allRightsReserved": "版权所有。",
+    "language": "语言",
+    "previous": "上一页",
+    "next": "下一页",
+    "page": "第"
+  },
+  "Products": {
+    "title": "产品中心",
+    "category": "产品分类",
+    "allProducts": "全部产品",
+    "specifications": "技术参数",
+    "name": "名称",
+    "value": "参数"
+  },
+  "Applications": {
+    "title": "行业应用",
+    "useCase": "应用案例"
+  },
+  "News": {
+    "title": "新闻中心",
+    "latestNews": "最新动态",
+    "publishedOn": "发布于",
+    "by": "作者"
+  },
+  "Support": {
+    "title": "技术支持"
+  },
+  "Contact": {
+    "title": "联系我们",
+    "address": "地址",
+    "phone": "电话",
+    "email": "邮箱",
+    "send": "发送消息",
+    "name": "您的姓名",
+    "emailLabel": "您的邮箱",
+    "message": "留言内容",
+    "submitSuccess": "消息发送成功！",
+    "submitError": "发送失败，请重试。"
+  },
+  "NotFound": {
+    "title": "页面未找到",
+    "description": "您访问的页面不存在。",
+    "goHome": "返回首页"
+  },
+  "SEO": {
+    "defaultDescription": "专业的RFID读写器、电子标签和工业物联网解决方案。"
+  }
+}

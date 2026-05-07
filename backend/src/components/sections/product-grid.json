@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_sections_product_grids",
+  "info": {
+    "displayName": "Product Grid",
+    "icon": "th-large"
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product-category.product-category"
+    },
+    "maxItems": { "type": "integer", "default": 6 }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_sections_spacers",
+  "info": {
+    "displayName": "Spacer",
+    "icon": "arrows-v"
+  },
+  "options": {},
+  "attributes": {
+    "height": {
+      "type": "enumeration",
+      "enum": ["small", "medium", "large"],
+      "default": "medium"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_shared_hero_banners",
+  "info": {
+    "displayName": "Hero Banner",
+    "icon": "image",
+    "description": "Page hero section content"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "text",
+      "required": false
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "ctaLabel": {
+      "type": "string",
+      "required": false
+    },
+    "ctaUrl": {
+      "type": "string",
+      "required": false
+    }
+  }
+}

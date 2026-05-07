@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_spec_items",
+  "info": {
+    "displayName": "Spec Item",
+    "icon": "list",
+    "description": "Product specification key-value pair"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "value": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

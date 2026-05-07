@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_sections_text_images",
+  "info": {
+    "displayName": "Text Image",
+    "icon": "columns"
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "content": { "type": "richtext" },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "imagePosition": {
+      "type": "enumeration",
+      "enum": ["left", "right"],
+      "default": "left"
+    }
+  }
+}

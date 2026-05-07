@@ -1,0 +1,32 @@
+{
+  "name": "fn-tech-strapi",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Headless CMS for fn-tech.com",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "dependencies": {
+    "@strapi/plugin-cloud": "5.x",
+    "@strapi/plugin-users-permissions": "5.x",
+    "@strapi/strapi": "5.x",
+    "better-sqlite3": "11.x",
+    "react": "18.x",
+    "react-dom": "18.x",
+    "react-router-dom": "6.x",
+    "styled-components": "6.x"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=22.x.x",
+    "npm": ">=6.0.0"
+  }
+}

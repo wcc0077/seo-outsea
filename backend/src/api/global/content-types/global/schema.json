@@ -1,0 +1,54 @@
+{
+  "kind": "singleType",
+  "collectionName": "globals",
+  "info": {
+    "singularName": "global",
+    "pluralName": "globals",
+    "displayName": "Global Settings",
+    "description": "Site-wide settings including contact info and language configuration"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": false
+    }
+  },
+  "attributes": {
+    "siteName": {
+      "type": "string",
+      "required": true,
+      "default": "FN Tech"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "contactInfo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.contact-info"
+    },
+    "socialLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.social-link"
+    },
+    "languages": {
+      "type": "json",
+      "required": true,
+      "default": [
+        {"code": "en", "name": "English", "enabled": true},
+        {"code": "zh", "name": "中文", "enabled": true}
+      ]
+    },
+    "defaultLocale": {
+      "type": "string",
+      "required": true,
+      "default": "en"
+    }
+  }
+}

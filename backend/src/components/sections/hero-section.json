@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_sections_hero_sections",
+  "info": {
+    "displayName": "Hero Section",
+    "icon": "bold"
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "subtitle": { "type": "text" },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "ctaLabel": { "type": "string" },
+    "ctaUrl": { "type": "string" }
+  }
+}

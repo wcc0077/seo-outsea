@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shared_contact_infos",
+  "info": {
+    "displayName": "Contact Info",
+    "icon": "phone",
+    "description": "Address, phone, email"
+  },
+  "options": {},
+  "attributes": {
+    "address": {
+      "type": "text",
+      "required": false
+    },
+    "phone": {
+      "type": "string",
+      "required": false
+    },
+    "email": {
+      "type": "email",
+      "required": false
+    }
+  }
+}
