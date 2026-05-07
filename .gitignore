@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Database
+*.db
+
+# Playwright MCP artifacts
+.playwright-mcp/
+
+# Temporary files
+tmp-*.html
+tmp-*.md
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment
+*.env.local
+.env
+
+# Build output
+.next/
+dist/
+build/
