@@ -1,6 +1,7 @@
 import https from 'https';
 import http from 'http';
 import { Readable } from 'stream';
+import { factories } from '@strapi/strapi';
 
 function downloadImage(url: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {
@@ -48,8 +49,6 @@ const RFID_TAGS = [
   { name: '有源RFID标签 AT502', model: 'AT502', tagType: 'custom' as const, frequency: 'active' as const, description: '有源RFID标签，超长寿命设计，电池寿命3年以上，适用于智慧城市、车辆管理、小区安防等场景。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_wdek.jpg' },
 ];
 
-import { factories } from '@strapi/strapi';
-
 export default factories.createCoreController('api::rfid-tag.rfid-tag', ({ strapi }) => ({
   async import(ctx) {
     const existingCount = await strapi.db.query('api::rfid-tag.rfid-tag').count();
@@ -85,7 +84,7 @@ export default factories.createCoreController('api::rfid-tag.rfid-tag', ({ strap
           } else if (uploaded) {
             imageConnect = [(uploaded as any).id];
           }
-        } catch (err: any) {
+        } catch {
           // Image failed, continue without image
         }
 
@@ -103,9 +102,10 @@ export default factories.createCoreController('api::rfid-tag.rfid-tag', ({ strap
           status: 'published',
         });
         results.created++;
-      } catch (err: any) {
+      } catch (err: unknown) {
         results.failed++;
-        results.errors.push(`${tag.name}: ${err.message}`);
+        const msg = err instanceof Error ? err.message : 'Unknown error';
+        results.errors.push(`${tag.name}: ${msg}`);
       }
       await new Promise(r => setTimeout(r, 200));
     }

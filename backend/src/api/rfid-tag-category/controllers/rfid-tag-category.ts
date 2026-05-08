@@ -1,26 +1,4 @@
-import https from 'https';
-import http from 'http';
-import { Readable } from 'stream';
 import { factories } from '@strapi/strapi';
-
-function downloadImage(url: string): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    const client = url.startsWith('https') ? https : http;
-    client.get(url, (res) => {
-      if (res.statusCode === 301 || res.statusCode === 302) {
-        downloadImage(res.headers.location!).then(resolve).catch(reject);
-        return;
-      }
-      if (res.statusCode !== 200) {
-        reject(new Error(`Failed to download ${url}: ${res.statusCode}`));
-        return;
-      }
-      const chunks: Buffer[] = [];
-      res.on('data', (chunk) => chunks.push(Buffer.from(chunk)));
-      res.on('end', () => resolve(Buffer.concat(chunks)));
-    }).on('error', reject);
-  });
-}
 
 const TAG_CATEGORIES = [
   { name: 'RFID工业载码体', slug: 'industrial-carriers', sortOrder: 1 },
@@ -52,8 +30,9 @@ export default factories.createCoreController('api::rfid-tag-category.rfid-tag-c
           status: 'published',
         });
         results.created++;
-      } catch (err: any) {
-        results.errors.push(`Category failed: ${cat.name} - ${err.message}`);
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'Unknown error';
+        results.errors.push(`Category failed: ${cat.name} - ${msg}`);
       }
       await new Promise(r => setTimeout(r, 100));
     }

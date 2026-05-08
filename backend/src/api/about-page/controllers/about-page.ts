@@ -166,9 +166,10 @@ export default factories.createCoreController('api::about-page.about-page', ({ s
           status: 'published',
         });
         results.created++;
-      } catch (err: any) {
+      } catch (err: unknown) {
         results.failed++;
-        results.errors.push(`${page.title}: ${err.message}`);
+        const msg = err instanceof Error ? err.message : 'Unknown error';
+        results.errors.push(`${page.title}: ${msg}`);
       }
       await new Promise(r => setTimeout(r, 100));
     }
