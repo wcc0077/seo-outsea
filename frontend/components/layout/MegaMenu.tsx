@@ -64,7 +64,13 @@ const PRODUCT_CATEGORIES: Record<string, { spec: string; products: ProductEntry[
   },
 };
 
-// Category icon components
+// Sub-category slugs for each top-level product group
+const PRODUCT_SUB_CATEGORIES: Record<string, string[]> = {
+  'smart-mobile-terminals': ['handheld-terminals', 'industrial-tablets', 'portable-readers'],
+  'rfid-readers': ['hf-rfid-readers', 'uhf-rfid-readers'],
+  'rfid-tags': [], // RFID tags page handles this separately
+};
+
 function getCategoryIcon(path: string): React.ReactNode {
   if (path.includes('hf-rfid') || path.includes('uhf-rfid')) {
     return (
@@ -124,6 +130,15 @@ export default function MegaMenu({ navLinks, locale }: MegaMenuProps) {
     }, 50);
   }
 
+  function handleClick(href: string) {
+    if (activeKey === href) {
+      setActiveKey(null);
+    } else {
+      clearTimer();
+      setActiveKey(href);
+    }
+  }
+
   useEffect(() => {
     return () => clearTimer();
   }, []);
@@ -145,7 +160,7 @@ export default function MegaMenu({ navLinks, locale }: MegaMenuProps) {
           >
             <Link
               href={`/${locale}${link.href}`}
-              className={`text-sm font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary-400 after:transition-all hover:after:w-full ${
+              className={`text-sm font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary-400 after:transition-all hover:after:w-full cursor-pointer ${
                 activeKey === link.href ? 'text-white' : 'text-neutral-300 hover:text-white'
               }`}
             >
@@ -170,8 +185,10 @@ export default function MegaMenu({ navLinks, locale }: MegaMenuProps) {
               <ApplicationsMegaMenu items={activeNavItem.children} locale={locale} />
             ) : activeNavItem.href === '/about' ? (
               <AboutMegaMenu items={activeNavItem.children} locale={locale} />
-            ) : (
+            ) : activeNavItem.href === '/support' ? (
               <SupportMegaMenu items={activeNavItem.children} locale={locale} />
+            ) : (
+              <SimpleMegaMenu items={activeNavItem.children} locale={locale} />
             )}
           </div>
         </div>
@@ -181,32 +198,44 @@ export default function MegaMenu({ navLinks, locale }: MegaMenuProps) {
 }
 
 /* ────────────────────────────────────────────────
-   Products: Left sidebar nav + Right image cards
+   Products: 3-column layout with sub-category cards
    ──────────────────────────────────────────────── */
 
 function ProductsMegaMenu({ items, locale }: { items: NonNullable<NavItem['children']>; locale: string }) {
-  const [activeCategory, setActiveCategory] = useState<string>(items[0]?.href ?? '');
+  const [activeSlug, setActiveSlug] = useState<string>('smart-mobile-terminals');
 
-  const currentKey = items.find((i) => i.href === activeCategory);
-  const categorySlug = activeCategory.split('/').pop() ?? '';
-  const data = PRODUCT_CATEGORIES[categorySlug];
+  const navToSlug = (label: string): string => {
+    const lower = label.toLowerCase();
+    if (lower.includes('smart mobile') || lower.includes('移动终端')) return 'smart-mobile-terminals';
+    if (lower.includes('rfid reader') || lower.includes('读写器')) return 'rfid-readers';
+    if (lower.includes('rfid tag') || lower.includes('标签')) return 'rfid-tags';
+    return '';
+  };
+
+  const subSlugs = PRODUCT_SUB_CATEGORIES[activeSlug] || [];
+  const activeProducts: { product: ProductEntry; category: string }[] = [];
+  for (const sub of subSlugs) {
+    for (const product of (PRODUCT_CATEGORIES[sub]?.products ?? [])) {
+      activeProducts.push({ product, category: sub });
+    }
+  }
 
   return (
     <div className="flex gap-8">
-      {/* Left: vertical navigation sidebar */}
+      {/* Left sidebar */}
       <div className="w-56 flex-shrink-0">
         <div className="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-4">
           产品系列
         </div>
         <div className="flex flex-col border-l border-neutral-700/50">
           {items.map((item) => {
-            const slug = item.href.split('/').pop() ?? '';
-            const isActive = activeCategory === item.href;
-            const catData = PRODUCT_CATEGORIES[slug];
+            const slug = navToSlug(item.label);
+            const isActive = slug === activeSlug;
             return (
-              <button
-                key={item.href}
-                onMouseEnter={() => setActiveCategory(item.href)}
+              <Link
+                key={item.label}
+                href={`/${locale}${item.href}`}
+                onMouseEnter={() => setActiveSlug(slug)}
                 className={`flex items-center gap-3 px-4 py-3 text-left transition-all duration-200 border-l-2 -ml-px ${
                   isActive
                     ? 'border-primary-400 bg-primary-500/5 text-primary-400'
@@ -216,21 +245,15 @@ function ProductsMegaMenu({ items, locale }: { items: NonNullable<NavItem['child
                 <div className={`w-7 h-7 rounded-md flex items-center justify-center transition-colors ${
                   isActive ? 'bg-primary-500/15 text-primary-400' : 'bg-neutral-700/40 text-neutral-500'
                 }`}>
-                  {getCategoryIcon(item.href)}
+                  {getCategoryIcon(slug)}
                 </div>
                 <div className="min-w-0">
                   <div className="text-[13px] font-medium truncate">{item.label}</div>
-                  {catData && (
-                    <div className="text-[11px] text-neutral-500 mt-0.5 truncate">
-                      {catData.spec}
-                    </div>
-                  )}
                 </div>
-              </button>
+              </Link>
             );
           })}
         </div>
-        {/* "View all products" link */}
         <Link
           href={`/${locale}/products`}
           className="mt-4 flex items-center gap-2 px-4 py-2.5 text-xs font-medium text-neutral-500 hover:text-primary-400 transition-colors rounded-lg hover:bg-neutral-800/50"
@@ -242,41 +265,43 @@ function ProductsMegaMenu({ items, locale }: { items: NonNullable<NavItem['child
         </Link>
       </div>
 
-      {/* Right: image cards grid */}
+      {/* Right: featured products grid */}
       <div className="flex-1 min-w-0">
-        {data ? (
-          <>
-            <div className="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-4">
-              {currentKey?.label}
-            </div>
-            <div className="grid grid-cols-4 gap-3">
-              {data.products.map((product) => (
-                <Link
-                  key={product.slug}
-                  href={`/${locale}/products/${product.slug}`}
-                  className="group rounded-xl overflow-hidden border border-neutral-700/50 bg-neutral-800/40 hover:border-primary-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/5"
-                >
-                  <div className="aspect-[4/3] bg-neutral-800 overflow-hidden relative">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-110"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <div className="p-3">
-                    <div className="text-[12px] font-medium text-white group-hover:text-primary-400 transition-colors leading-snug line-clamp-2">
-                      {product.name}
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </>
+        <div className="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-4">
+          热门产品
+        </div>
+        {activeSlug === 'rfid-tags' ? (
+          <div className="flex items-center justify-center h-64 text-neutral-500 text-sm">
+            <Link href={`/${locale}/rfid-tags`} className="text-primary-400 hover:underline">
+              前往 RFID 标签页面 →
+            </Link>
+          </div>
+        ) : activeProducts.length === 0 ? (
+          <div className="flex items-center justify-center h-64 text-neutral-500 text-sm">暂无产品</div>
         ) : (
-          <div className="flex items-center justify-center min-h-[200px] text-neutral-500 text-sm">
-            加载中...
+          <div className="grid grid-cols-4 gap-3">
+            {activeProducts.map(({ product, category }) => (
+              <Link
+                key={product.slug}
+                href={`/${locale}/products/${product.slug}`}
+                className="group rounded-xl overflow-hidden border border-neutral-700/50 bg-neutral-800/40 hover:border-primary-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/5"
+              >
+                <div className="aspect-[4/3] bg-neutral-800 overflow-hidden relative">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <div className="p-3">
+                  <div className="text-[12px] font-medium text-white group-hover:text-primary-400 transition-colors leading-snug line-clamp-2">
+                    {product.name}
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         )}
       </div>
@@ -291,7 +316,6 @@ function ProductsMegaMenu({ items, locale }: { items: NonNullable<NavItem['child
 type ApplicationEntry = { title: string; image: string };
 
 const APPLICATION_CATEGORIES: Record<string, ApplicationEntry> = {
-  // Chinese keys (zh locale nav labels)
   '智能智造': {
     image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_0cw9.jpg',
     title: '智能智造',
@@ -312,9 +336,9 @@ const APPLICATION_CATEGORIES: Record<string, ApplicationEntry> = {
     image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1458614250_kwa3.jpg',
     title: '防伪追溯',
   },
-  '零售与供应链': {
+  '连锁零售': {
     image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_dfym_3f0c.jpg',
-    title: '零售与供应链',
+    title: '连锁零售',
   },
   '智慧城市': {
     image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/jucg.png',
@@ -324,7 +348,6 @@ const APPLICATION_CATEGORIES: Record<string, ApplicationEntry> = {
     image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1458617833_oq6g.jpg',
     title: '智能柜体',
   },
-  // English aliases (en locale nav labels)
   'Smart Manufacturing': {
     image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_0cw9.jpg',
     title: 'Smart Manufacturing',
@@ -337,9 +360,9 @@ const APPLICATION_CATEGORIES: Record<string, ApplicationEntry> = {
     image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/5.webp',
     title: 'Archive & Library',
   },
-  'Asset Management': {
+  'Asset Inspection': {
     image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_5oov_u61r.jpg',
-    title: 'Asset Management',
+    title: 'Asset Inspection',
   },
   'Anti-counterfeit & Traceability': {
     image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1458614250_kwa3.jpg',
@@ -522,7 +545,7 @@ function ApplicationsMegaMenu({ items, locale }: { items: NonNullable<NavItem['c
 
 const ABOUT_CARDS = [
   {
-    key: 'about',
+    key: 'intro',
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -605,7 +628,7 @@ function SupportMegaMenu({ items, locale }: { items: NonNullable<NavItem['childr
     <div className="grid grid-cols-4 gap-4">
       {items.map((item) => (
         <Link
-          key={item.href}
+          key={item.label}
           href={`/${locale}${item.href}`}
           className="group flex items-center gap-4 rounded-xl border border-neutral-700/50 bg-neutral-800/60 p-5 hover:border-primary-500/40 hover:bg-neutral-800 transition-all duration-300"
         >
@@ -640,5 +663,27 @@ function getSupportIcon(href: string): React.ReactNode {
     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
     </svg>
+  );
+}
+
+/* ────────────────────────────────────────────────
+   Simple: basic 2-column grid for simple dropdowns
+   ──────────────────────────────────────────────── */
+
+function SimpleMegaMenu({ items, locale }: { items: NonNullable<NavItem['children']>; locale: string }) {
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      {items.map((item) => (
+        <Link
+          key={item.href}
+          href={`/${locale}${item.href}`}
+          className="group rounded-xl border border-neutral-700/50 bg-neutral-800/60 p-4 hover:border-primary-500/40 hover:bg-neutral-800 transition-all duration-300"
+        >
+          <span className="text-[13px] font-semibold text-white group-hover:text-primary-400 transition-colors">
+            {item.label}
+          </span>
+        </Link>
+      ))}
+    </div>
   );
 }

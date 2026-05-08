@@ -13,6 +13,12 @@ export default {
       config: { auth: false },
     },
     {
+      method: 'GET',
+      path: '/rfid-tags/by-category/:slug',
+      handler: 'rfid-tag.findByCategory',
+      config: { auth: false },
+    },
+    {
       method: 'POST',
       path: '/rfid-tags/import',
       handler: 'rfid-tag.import',

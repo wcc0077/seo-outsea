@@ -141,6 +141,27 @@ export default factories.createCoreController('api::rfid-tag.rfid-tag', ({ strap
     return { data: entities };
   },
 
+  async findByCategory(ctx) {
+    const { slug } = ctx.params;
+    const { locale, page = '1', pageSize = '12' } = ctx.query;
+
+    const category = await strapi.db.query('api::rfid-tag-category.rfid-tag-category').findOne({
+      where: { slug, locale: locale || 'en' },
+    });
+
+    if (!category) {
+      return ctx.notFound('RFID tag category not found');
+    }
+
+    const entities = await strapi.db.query('api::rfid-tag.rfid-tag').findMany({
+      where: { category: category.documentId, locale: locale || 'en' },
+      populate: ['images', 'category'],
+      orderBy: 'name',
+    });
+
+    return { data: entities, category };
+  },
+
   async translate(ctx) {
     const { fromLocale, toLocale } = ctx.request.body as { fromLocale: string; toLocale: string };
 

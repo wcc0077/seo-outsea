@@ -242,12 +242,113 @@ export async function getNewsBySlug(slug: string, locale: string): Promise<NewsD
   }
 }
 
+// ---- RFID Tag Categories ----
+
+export interface RfidTagCategoryData {
+  id?: number;
+  name: string;
+  slug: string;
+  description: string;
+  parent?: RfidTagCategoryData;
+  children?: RfidTagCategoryData[];
+  sortOrder: number;
+  image?: { url: string; alternativeText: string };
+}
+
+export async function getRfidTagCategories(locale: string): Promise<RfidTagCategoryData[]> {
+  const res = await fetchApi<{ data: RfidTagCategoryData[] }>('/api/rfid-tag-categories', {
+    locale,
+    'sort[0]': 'sortOrder:asc',
+  });
+  return res.data;
+}
+
+export async function getRfidTagCategoryBySlug(slug: string, locale: string): Promise<RfidTagCategoryData | null> {
+  try {
+    const res = await fetchApi<{ data: RfidTagCategoryData }>(
+      `/api/rfid-tag-categories/by-slug/${slug}`,
+      { locale }
+    );
+    return res.data;
+  } catch {
+    return null;
+  }
+}
+
+// ---- RFID Tags ----
+
+export interface RfidTagData {
+  name: string;
+  slug: string;
+  model?: string;
+  description: string;
+  tagType?: string;
+  frequency?: string;
+  specs: Array<{ name: string; value: string }>;
+  images: Array<{ url: string; alternativeText: string }>;
+  imageUrl: string;
+  category?: RfidTagCategoryData;
+  applicationScenarios: string;
+  seoTitle: string;
+  seoDescription: string;
+  seoKeywords: string;
+}
+
+export async function getRfidTags(locale: string): Promise<RfidTagData[]> {
+  const res = await fetchApi<{ data: RfidTagData[] }>('/api/rfid-tags', { locale });
+  return res.data;
+}
+
+export async function getRfidTagsByCategory(categorySlug: string, locale: string): Promise<RfidTagData[]> {
+  const res = await fetchApi<{ data: RfidTagData[] }>(
+    `/api/rfid-tags/by-category/${categorySlug}`,
+    { locale }
+  );
+  return res.data;
+}
+
+export async function getRfidTagBySlug(slug: string, locale: string): Promise<RfidTagData | null> {
+  try {
+    const res = await fetchApi<{ data: RfidTagData }>(
+      `/api/rfid-tags/by-slug/${slug}`,
+      { locale }
+    );
+    return res.data;
+  } catch {
+    return null;
+  }
+}
+
 // ---- Image URL Helper ----
 
 export function getStrapiImageUrl(url: string | undefined): string | null {
   if (!url) return null;
   if (url.startsWith('http')) return url;
   return `${STRAPI_URL}${url}`;
+}
+
+// ---- About Pages ----
+
+export interface AboutPageData {
+  id: number;
+  title: string;
+  slug: string;
+  pageType: 'intro' | 'gallery' | 'history' | 'honors';
+  content: string;
+  sortOrder: number;
+  images?: Array<{ url: string; alternativeText: string }>;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoKeywords?: string;
+}
+
+export async function getAboutPageBySlug(slug: string, locale: string): Promise<AboutPageData | null> {
+  try {
+    const res = await fetchApi<{ data: AboutPageData }>(`/api/about-pages/by-slug/${slug}`, { locale });
+    return res.data;
+  } catch {
+    return null;
+  }
 }
 
 // ---- FAQ Articles ----

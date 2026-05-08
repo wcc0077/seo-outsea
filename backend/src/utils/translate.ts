@@ -14,6 +14,7 @@ export const TRANSLATABLE_FIELDS: TranslateFieldMap = {
   application: ['name', 'description', 'useCase'],
   'application-category': ['name', 'description'],
   'rfid-tag': ['name', 'description', 'applicationScenarios'],
+  'rfid-tag-category': ['name', 'description'],
   'about-page': ['title', 'content'],
 };
 
@@ -37,6 +38,10 @@ export async function callDeepSeekTranslate(fromLocale: string, toLocale: string
   const languageNames: Record<string, string> = {
     en: 'English',
     zh: 'Chinese (Simplified)',
+    fr: 'French',
+    de: 'German',
+    es: 'Spanish',
+    ru: 'Russian',
   };
 
   const fromLang = languageNames[fromLocale] || fromLocale;

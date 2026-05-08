@@ -14,13 +14,14 @@ interface HeaderProps {
   logoUrl: string | null;
   navLinks: NavItem[];
   locale: string;
+  noBorder?: boolean;
 }
 
-export default function Header({ siteName, logoUrl, navLinks, locale }: HeaderProps) {
+export default function Header({ siteName, logoUrl, navLinks, locale, noBorder }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50">
       {/* Main header bar */}
-      <div className="bg-neutral-900 border-b border-neutral-800 shadow-lg shadow-black/20">
+      <div className={`bg-neutral-900 ${noBorder ? '' : 'border-b border-neutral-800 shadow-lg shadow-black/20'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-[72px]">
             {/* Logo */}

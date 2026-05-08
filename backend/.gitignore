@@ -1,8 +1,9 @@
-node_modules/
+.node_modules/
 .env
 database.sqlite
 .tmp/
 .strapi/
+.strapi-updater.json
 build/
 dist/
 *.tgz

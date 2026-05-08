@@ -1,11 +1,26 @@
 {
   "Navigation": {
-    "about": "About Us",
     "products": "Products",
+    "smartMobileTerminals": "Smart Mobile Terminals",
+    "rfidReaders": "RFID Readers",
+    "rfidTags": "RFID Tags",
     "applications": "Applications",
-    "news": "News",
+    "smartManufacturing": "Smart Manufacturing",
+    "warehouseLogistics": "Warehouse & Logistics",
+    "archiveLibrary": "Archive & Library",
+    "assetInspection": "Asset Inspection",
+    "antiCounterfeit": "Anti-counterfeit & Traceability",
+    "retailSupplyChain": "Retail & Supply Chain",
+    "smartCity": "Smart City",
+    "smartCabinet": "Smart Cabinet",
     "support": "Support",
+    "productSupport": "Product Support",
+    "serviceSupport": "Service Support",
+    "faq": "FAQ",
+    "knowledgeBase": "Knowledge Base",
+    "about": "About Us",
     "contact": "Contact",
+    "news": "News",
     "sharing": "Knowledge"
   },
   "Common": {
@@ -59,5 +74,42 @@
   },
   "SEO": {
     "defaultDescription": "Professional RFID readers, tags, and industrial IoT solutions."
+  },
+  "About": {
+    "intro": "About FN",
+    "gallery": "Company Scene",
+    "history": "History",
+    "honors": "Honors & Certs"
+  },
+  "Home": {
+    "heroTitle": "Industrial RFID Solutions",
+    "heroSubtitle": "Professional RFID hardware for smart manufacturing, logistics, and asset management.",
+    "heroCta": "Explore Products",
+    "heroSlogan": "Made in China, Global Service",
+    "featuredProducts": "Featured Products",
+    "keyApplications": "Key Applications",
+    "latestNews": "Latest News"
+  },
+  "RfidTags": {
+    "title": "RFID Electronic Tags",
+    "subtitle": "Industrial RFID tags for asset tracking, logistics, and manufacturing.",
+    "categories": "Categories",
+    "allTags": "All Tags",
+    "empty": "No RFID tags available yet."
+  },
+  "Footer": {
+    "products": "Products",
+    "readers": "RFID Readers",
+    "tags": "RFID Tags",
+    "mobile": "Mobile Terminals",
+    "applications": "Applications",
+    "manufacturing": "Smart Manufacturing",
+    "logistics": "Warehouse & Logistics",
+    "assets": "Asset Management",
+    "support": "Support",
+    "techSupport": "Technical Support",
+    "knowledgeBase": "Knowledge Base",
+    "contactUs": "Contact Us",
+    "copyright": "© {startYear}–{endYear} {name}. All rights reserved."
   }
 }

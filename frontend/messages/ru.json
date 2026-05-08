@@ -1,0 +1,115 @@
+{
+  "Navigation": {
+    "about": "О нас",
+    "products": "Продукция",
+    "smartMobileTerminals": "Умные мобильные терминалы",
+    "rfidReaders": "RFID-считыватели",
+    "rfidTags": "RFID-метки",
+    "applications": "Применение",
+    "smartManufacturing": "Умное производство",
+    "warehouseLogistics": "Склад и логистика",
+    "archiveLibrary": "Архивы и библиотеки",
+    "assetInspection": "Инспекция активов",
+    "antiCounterfeit": "Защита от подделок и отслеживание",
+    "retailSupplyChain": "Розничная торговля и цепочка поставок",
+    "smartCity": "Умный город",
+    "smartCabinet": "Умный шкаф",
+    "support": "Поддержка",
+    "productSupport": "Поддержка продукта",
+    "serviceSupport": "Поддержка сервиса",
+    "faq": "Частые вопросы",
+    "knowledgeBase": "База знаний",
+    "contact": "Контакты",
+    "news": "Новости",
+    "sharing": "База знаний"
+  },
+  "Common": {
+    "readMore": "Подробнее",
+    "contactUs": "Связаться с нами",
+    "search": "Поиск",
+    "searchPlaceholder": "Введите ключевые слова...",
+    "allRightsReserved": "Все права защищены.",
+    "language": "Язык",
+    "previous": "Назад",
+    "next": "Далее",
+    "page": "Страница"
+  },
+  "Products": {
+    "title": "Продукция",
+    "category": "Категория",
+    "allProducts": "Вся продукция",
+    "specifications": "Характеристики",
+    "name": "Название",
+    "value": "Значение"
+  },
+  "Applications": {
+    "title": "Промышленные применения",
+    "useCase": "Пример использования"
+  },
+  "News": {
+    "title": "Новости",
+    "latestNews": "Последние новости",
+    "publishedOn": "Опубликовано",
+    "by": "автор"
+  },
+  "Support": {
+    "title": "Техническая поддержка"
+  },
+  "Contact": {
+    "title": "Связаться с нами",
+    "address": "Адрес",
+    "phone": "Телефон",
+    "email": "Электронная почта",
+    "send": "Отправить сообщение",
+    "name": "Ваше имя",
+    "emailLabel": "Ваш e-mail",
+    "message": "Сообщение",
+    "submitSuccess": "Сообщение успешно отправлено!",
+    "submitError": "Не удалось отправить сообщение. Попробуйте ещё раз."
+  },
+  "NotFound": {
+    "title": "Страница не найдена",
+    "description": "Запрашиваемая страница не существует.",
+    "goHome": "Перейти на главную"
+  },
+  "SEO": {
+    "defaultDescription": "Профессиональные RFID-считыватели, метки и промышленные IoT-решения."
+  },
+  "About": {
+    "intro": "О компании FN",
+    "gallery": "Наши помещения",
+    "history": "История",
+    "honors": "Награды и сертификаты"
+  },
+  "Home": {
+    "heroTitle": "Промышленные RFID-решения",
+    "heroSubtitle": "Профессиональное RFID-оборудование для умного производства, логистики и управления активами.",
+    "heroCta": "Смотреть продукты",
+    "heroSlogan": "Сделано в Китае, Обслуживаем мир",
+    "featuredProducts": "Избранные продукты",
+    "keyApplications": "Ключевые применения",
+    "latestNews": "Последние новости"
+  },
+  "RfidTags": {
+    "title": "RFID-метки",
+    "subtitle": "Промышленные RFID-метки для отслеживания активов, логистики и производства.",
+    "categories": "Категории",
+    "allTags": "Все метки",
+    "empty": "Пока нет доступных RFID-меток."
+  },
+  "Footer": {
+    "products": "Продукция",
+    "readers": "RFID-считыватели",
+    "tags": "RFID-метки",
+    "mobile": "Мобильные терминалы",
+    "applications": "Применение",
+    "manufacturing": "Умное производство",
+    "logistics": "Склад и логистика",
+    "assets": "Управление активами",
+    "support": "Поддержка",
+    "techSupport": "Техническая поддержка",
+    "knowledgeBase": "База знаний",
+    "contactUs": "Связаться с нами",
+    "copyright": "© {startYear}–{endYear} {name}. Все права защищены."
+  }
+}

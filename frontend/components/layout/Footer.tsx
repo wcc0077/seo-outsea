@@ -1,13 +1,15 @@
 import Link from 'next/link';
 import { GlobalData, getStrapiImageUrl } from '@/lib/strapi';
+import { getTranslations } from 'next-intl/server';
 
 interface FooterProps {
   global: GlobalData | null;
   locale: string;
 }
 
-export default function Footer({ global, locale }: FooterProps) {
+export default async function Footer({ global, locale }: FooterProps) {
   const contact = global?.contactInfo;
+  const t = await getTranslations({ locale, namespace: 'Footer' });
 
   return (
     <footer className="bg-neutral-950 text-neutral-400 relative overflow-hidden">
@@ -41,38 +43,38 @@ export default function Footer({ global, locale }: FooterProps) {
 
           {/* Products */}
           <div>
-            <h3 className="text-white font-semibold mb-4 font-display">Products</h3>
+            <h3 className="text-white font-semibold mb-4 font-display">{t('products')}</h3>
             <ul className="space-y-2.5 text-sm">
-              <li><Link href={`/${locale}/products`} className="hover:text-primary-400 transition-colors">RFID Readers</Link></li>
-              <li><Link href={`/${locale}/products`} className="hover:text-primary-400 transition-colors">RFID Tags</Link></li>
-              <li><Link href={`/${locale}/products`} className="hover:text-primary-400 transition-colors">Mobile Terminals</Link></li>
+              <li><Link href={`/${locale}/products`} className="hover:text-primary-400 transition-colors">{t('readers')}</Link></li>
+              <li><Link href={`/${locale}/products`} className="hover:text-primary-400 transition-colors">{t('tags')}</Link></li>
+              <li><Link href={`/${locale}/products`} className="hover:text-primary-400 transition-colors">{t('mobile')}</Link></li>
             </ul>
           </div>
 
           {/* Applications */}
           <div>
-            <h3 className="text-white font-semibold mb-4 font-display">Applications</h3>
+            <h3 className="text-white font-semibold mb-4 font-display">{t('applications')}</h3>
             <ul className="space-y-2.5 text-sm">
-              <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">Smart Manufacturing</Link></li>
-              <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">Warehouse & Logistics</Link></li>
-              <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">Asset Management</Link></li>
+              <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('manufacturing')}</Link></li>
+              <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('logistics')}</Link></li>
+              <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('assets')}</Link></li>
             </ul>
           </div>
 
           {/* Support */}
           <div>
-            <h3 className="text-white font-semibold mb-4 font-display">Support</h3>
+            <h3 className="text-white font-semibold mb-4 font-display">{t('support')}</h3>
             <ul className="space-y-2.5 text-sm">
-              <li><Link href={`/${locale}/support`} className="hover:text-primary-400 transition-colors">Technical Support</Link></li>
-              <li><Link href={`/${locale}/sharing`} className="hover:text-primary-400 transition-colors">Knowledge Base</Link></li>
-              <li><Link href={`/${locale}/contact`} className="hover:text-primary-400 transition-colors">Contact Us</Link></li>
+              <li><Link href={`/${locale}/support`} className="hover:text-primary-400 transition-colors">{t('techSupport')}</Link></li>
+              <li><Link href={`/${locale}/sharing`} className="hover:text-primary-400 transition-colors">{t('knowledgeBase')}</Link></li>
+              <li><Link href={`/${locale}/contact`} className="hover:text-primary-400 transition-colors">{t('contactUs')}</Link></li>
             </ul>
           </div>
         </div>
 
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-neutral-800 text-sm text-center text-neutral-500 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span>&copy; {new Date().getFullYear()} {global?.siteName || 'FN Tech'}. All rights reserved.</span>
+          <span>{t('copyright', { name: global?.siteName || 'FN Tech', startYear: 2006, endYear: new Date().getFullYear() })}</span>
           {/* Decorative RF dot */}
           <span className="w-1.5 h-1.5 rounded-full bg-primary-500/50" aria-hidden="true" />
         </div>

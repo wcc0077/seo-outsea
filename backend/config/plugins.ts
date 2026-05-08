@@ -2,7 +2,7 @@ export default ({ env }) => ({
   i18n: {
     enabled: true,
     config: {
-      locales: ['en', 'zh'],
+      locales: ['en', 'zh', 'fr', 'de', 'es', 'ru'],
       defaultLocale: 'en',
     },
   },

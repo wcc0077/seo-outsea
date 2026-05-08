@@ -1,4 +1,13 @@
 import { factories } from '@strapi/strapi';
+import fs from 'fs';
+import path from 'path';
+
+interface ScrapedArticle {
+  title: string;
+  url: string;
+  date: string;
+  content: string;
+}
 
 export default factories.createCoreController('api::news.article', ({ strapi }) => ({
   async findBySlug(ctx) {
@@ -31,6 +40,81 @@ export default factories.createCoreController('api::news.article', ({ strapi }) 
     });
 
     return { data: results, meta: { pagination } };
+  },
+
+  async importNews(ctx) {
+    const existingCount = await strapi.db.query('api::news.article').count();
+    if (existingCount > 0) {
+      return { data: null, error: `News articles already exist (${existingCount}). Skipping import.` };
+    }
+
+    // Try to load from multiple possible paths
+    const possiblePaths = [
+      path.join(process.cwd(), 'scripts', 'fn-tech-news.json'),
+      path.join(process.cwd(), '..', '..', 'tmp', 'fn-tech-news.json'),
+      '/tmp/fn-tech-news.json',
+    ];
+
+    let dataPath: string | null = null;
+    for (const p of possiblePaths) {
+      if (fs.existsSync(p)) {
+        dataPath = p;
+        break;
+      }
+    }
+
+    if (!dataPath) {
+      return ctx.badRequest('News data file not found. Place fn-tech-news.json in backend/scripts/ or /tmp/');
+    }
+
+    const rawData = fs.readFileSync(dataPath, 'utf-8');
+    const articles: ScrapedArticle[] = JSON.parse(rawData);
+
+    const results = { created: 0, failed: 0, errors: [] as string[] };
+
+    for (const article of articles) {
+      try {
+        const slug = article.title
+          .toLowerCase()
+          .replace(/[^\w\u4e00-\u9fff\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-')
+          .replace(/^-|-$/g, '')
+          .substring(0, 100);
+
+        if (!slug) continue;
+
+        // Check if slug already exists
+        const existing = await strapi.db.query('api::news.article').findOne({
+          where: { slug },
+        });
+
+        if (existing) {
+          results.failed++;
+          continue;
+        }
+
+        await strapi.db.query('api::news.article').create({
+          data: {
+            title: article.title,
+            slug,
+            content: article.content,
+            publishDate: article.date,
+            author: '孚恩科技',
+            publishedAt: article.date || new Date().toISOString(),
+            locale: 'en',
+          },
+        });
+
+        results.created++;
+      } catch (err: unknown) {
+        results.failed++;
+        const msg = err instanceof Error ? err.message : 'Unknown error';
+        results.errors.push(`Failed to import "${article.title.substring(0, 40)}": ${msg}`);
+      }
+    }
+
+    return { data: results };
   },
 
   async translate(ctx) {

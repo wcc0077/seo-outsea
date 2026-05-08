@@ -1,10 +1,12 @@
 import { notFound } from 'next/navigation';
 import { getPageBySlug, getProducts, getApplications, getPublishedNews, PageData } from '@/lib/strapi';
 import HeroSection from '@/components/sections/HeroSection';
+import AnimatedHero from '@/components/sections/AnimatedHero';
 import ProductGrid from '@/components/sections/ProductGrid';
 import ApplicationShowcase from '@/components/sections/ApplicationShowcase';
 import NewsList from '@/components/sections/NewsList';
 import SectionRenderer from '@/components/sections/SectionRenderer';
+import { getTranslations } from 'next-intl/server';
 import { REVALIDATE_INTERVAL } from '@/lib/constants';
 
 interface HomePageProps {
@@ -25,14 +27,18 @@ export default async function HomePage({ params }: HomePageProps) {
   ]);
 
   if (!page) {
+    // Translate fallback strings
+    const t = await getTranslations({ locale, namespace: 'Home' });
+
     // Render fallback homepage with featured content
     return (
       <>
-        <HeroSection
-          title="Industrial RFID Solutions"
-          subtitle="Professional RFID hardware for smart manufacturing, logistics, and asset management."
-          ctaLabel="Explore Products"
+        <AnimatedHero
+          title={t('heroTitle')}
+          subtitle={t('heroSubtitle')}
+          ctaLabel={t('heroCta')}
           ctaUrl={`/${locale}/products`}
+          slogan={t('heroSlogan')}
         />
         <ProductGrid title="Featured Products" products={products} locale={locale} />
         <ApplicationShowcase title="Key Applications" applications={applications} locale={locale} />

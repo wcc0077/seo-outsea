@@ -2,10 +2,25 @@
   "Navigation": {
     "about": "关于孚恩",
     "products": "产品中心",
+    "smartMobileTerminals": "智能移动终端",
+    "rfidReaders": "RFID读写器",
+    "rfidTags": "RFID电子标签",
     "applications": "行业应用",
-    "news": "新闻中心",
+    "smartManufacturing": "智能智造",
+    "warehouseLogistics": "仓储物流",
+    "archiveLibrary": "档案图书",
+    "assetInspection": "资产巡检",
+    "antiCounterfeit": "防伪追溯",
+    "retailSupplyChain": "连锁零售",
+    "smartCity": "智慧城市",
+    "smartCabinet": "智能柜体",
     "support": "技术支持",
+    "productSupport": "产品支持",
+    "serviceSupport": "服务支持",
+    "faq": "常见问题",
+    "knowledgeBase": "知识分享",
     "contact": "联系我们",
+    "news": "新闻中心",
     "sharing": "知识分享"
   },
   "Common": {
@@ -59,5 +74,42 @@
   },
   "SEO": {
     "defaultDescription": "专业的RFID读写器、电子标签和工业物联网解决方案。"
+  },
+  "About": {
+    "intro": "孚恩简介",
+    "gallery": "公司实景",
+    "history": "发展历程",
+    "honors": "荣誉资质"
+  },
+  "Home": {
+    "heroTitle": "工业 RFID 解决方案",
+    "heroSubtitle": "专业的 RFID 硬件，适用于智能制造、物流和资产管理。",
+    "heroCta": "探索产品",
+    "heroSlogan": "中国制造，全球服务",
+    "featuredProducts": "精选产品",
+    "keyApplications": "核心应用",
+    "latestNews": "最新动态"
+  },
+  "RfidTags": {
+    "title": "RFID 电子标签",
+    "subtitle": "适用于资产追踪、物流和制造业的工业级 RFID 标签。",
+    "categories": "产品分类",
+    "allTags": "全部标签",
+    "empty": "暂无 RFID 标签产品。"
+  },
+  "Footer": {
+    "products": "产品中心",
+    "readers": "RFID 读写器",
+    "tags": "电子标签",
+    "mobile": "移动终端",
+    "applications": "行业应用",
+    "manufacturing": "智能制造",
+    "logistics": "仓储物流",
+    "assets": "资产管理",
+    "support": "技术支持",
+    "techSupport": "技术支持",
+    "knowledgeBase": "知识分享",
+    "contactUs": "联系我们",
+    "copyright": "© {startYear}–{endYear} {name} 版权所有。"
   }
 }

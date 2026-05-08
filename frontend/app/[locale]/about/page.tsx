@@ -1,5 +1,6 @@
-import GenericPage from '@/components/sections/GenericPage';
+import { redirect } from 'next/navigation';
 
-export default async function AboutPage(props: { params: Promise<{ locale: string }> }) {
-  return <GenericPage {...props} slug="about" />;
+export default async function AboutRedirectPage(props: { params: Promise<{ locale: string }> }) {
+  const { locale } = await props.params;
+  redirect(`/${locale}/about/intro`);
 }

@@ -1,0 +1,115 @@
+{
+  "Navigation": {
+    "about": "Über uns",
+    "products": "Produkte",
+    "smartMobileTerminals": "Intelligente Mobile Terminals",
+    "rfidReaders": "RFID-Lesegeräte",
+    "rfidTags": "RFID-Tags",
+    "applications": "Anwendungen",
+    "smartManufacturing": "Intelligente Fertigung",
+    "warehouseLogistics": "Logistik & Lager",
+    "archiveLibrary": "Archive & Bibliotheken",
+    "assetInspection": "Vermögensinspektion",
+    "antiCounterfeit": "Produktschutz & Rückverfolgbarkeit",
+    "retailSupplyChain": "Einzelhandel & Lieferkette",
+    "smartCity": "Intelligente Stadt",
+    "smartCabinet": "Intelligenter Schrank",
+    "support": "Support",
+    "productSupport": "Produktsupport",
+    "serviceSupport": "Servicesupport",
+    "faq": "Häufige Fragen",
+    "knowledgeBase": "Wissensdatenbank",
+    "contact": "Kontakt",
+    "news": "Nachrichten",
+    "sharing": "Wissensdatenbank"
+  },
+  "Common": {
+    "readMore": "Weiterlesen",
+    "contactUs": "Kontaktieren Sie uns",
+    "search": "Suchen",
+    "searchPlaceholder": "Stichwörter eingeben...",
+    "allRightsReserved": "Alle Rechte vorbehalten.",
+    "language": "Sprache",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "page": "Seite"
+  },
+  "Products": {
+    "title": "Produkte",
+    "category": "Kategorie",
+    "allProducts": "Alle Produkte",
+    "specifications": "Spezifikationen",
+    "name": "Name",
+    "value": "Wert"
+  },
+  "Applications": {
+    "title": "Industrielle Anwendungen",
+    "useCase": "Anwendungsfall"
+  },
+  "News": {
+    "title": "Nachrichten",
+    "latestNews": "Neueste Nachrichten",
+    "publishedOn": "Veröffentlicht am",
+    "by": "von"
+  },
+  "Support": {
+    "title": "Technischer Support"
+  },
+  "Contact": {
+    "title": "Kontaktieren Sie uns",
+    "address": "Adresse",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "send": "Nachricht senden",
+    "name": "Ihr Name",
+    "emailLabel": "Ihre E-Mail",
+    "message": "Nachricht",
+    "submitSuccess": "Nachricht erfolgreich gesendet!",
+    "submitError": "Nachricht senden fehlgeschlagen. Bitte versuchen Sie es erneut."
+  },
+  "NotFound": {
+    "title": "Seite nicht gefunden",
+    "description": "Die gesuchte Seite existiert nicht.",
+    "goHome": "Zur Startseite"
+  },
+  "SEO": {
+    "defaultDescription": "Professionelle RFID-Lesegeräte, -Tags und industrielle IoT-Lösungen."
+  },
+  "About": {
+    "intro": "Über FN",
+    "gallery": "Unternehmensstandort",
+    "history": "Geschichte",
+    "honors": "Auszeichnungen & Zertifikate"
+  },
+  "Home": {
+    "heroTitle": "Industrielle RFID-Lösungen",
+    "heroSubtitle": "Professionelle RFID-Hardware für intelligente Fertigung, Logistik und Vermögensverwaltung.",
+    "heroCta": "Produkte entdecken",
+    "heroSlogan": "Made in China, Globaler Service",
+    "featuredProducts": "Ausgewählte Produkte",
+    "keyApplications": "Wichtige Anwendungen",
+    "latestNews": "Neueste Nachrichten"
+  },
+  "RfidTags": {
+    "title": "RFID-Elektronik-Tags",
+    "subtitle": "Industrielle RFID-Tags für Asset-Tracking, Logistik und Fertigung.",
+    "categories": "Kategorien",
+    "allTags": "Alle Tags",
+    "empty": "Derzeit keine RFID-Tags verfügbar."
+  },
+  "Footer": {
+    "products": "Produkte",
+    "readers": "RFID-Lesegeräte",
+    "tags": "RFID-Tags",
+    "mobile": "Mobile Terminals",
+    "applications": "Anwendungen",
+    "manufacturing": "Intelligente Fertigung",
+    "logistics": "Logistik & Lager",
+    "assets": "Vermögensverwaltung",
+    "support": "Support",
+    "techSupport": "Technischer Support",
+    "knowledgeBase": "Wissensdatenbank",
+    "contactUs": "Kontakt",
+    "copyright": "© {startYear}–{endYear} {name}. Alle Rechte vorbehalten."
+  }
+}

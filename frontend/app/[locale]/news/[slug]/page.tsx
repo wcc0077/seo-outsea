@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { getNewsBySlug, NewsData } from '@/lib/strapi';
 import { getStrapiImageUrl } from '@/lib/strapi';
 import JsonLd from '@/components/seo/JsonLd';
+import Breadcrumb from '@/components/ui/Breadcrumb';
 
 interface NewsDetailPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -25,6 +26,10 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
 
   return (
     <div className="py-20">
+      <Breadcrumb locale={locale} items={[
+        { label: locale === 'zh' ? '新闻' : 'News', href: `/${locale}/news` },
+        { label: news.title },
+      ]} />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <article>
           <header className="mb-10">

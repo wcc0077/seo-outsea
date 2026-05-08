@@ -44,13 +44,13 @@ export default {
       method: 'GET',
       path: '/news/by-slug/:slug',
       handler: 'news.findBySlug',
-      config: { auth: false },
+      config: { auth: false, policies: [] },
     },
     {
       method: 'GET',
       path: '/news/published',
       handler: 'news.getPublished',
-      config: { auth: false },
+      config: { auth: false, policies: [] },
     },
   ],
 };

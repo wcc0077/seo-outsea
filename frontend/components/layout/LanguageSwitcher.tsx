@@ -10,6 +10,10 @@ interface LanguageSwitcherProps {
 const LOCALE_NAMES: Record<string, string> = {
   en: 'English',
   zh: '中文',
+  fr: 'Français',
+  de: 'Deutsch',
+  es: 'Español',
+  ru: 'Русский',
 };
 
 export default function LanguageSwitcher({ currentLocale }: LanguageSwitcherProps) {

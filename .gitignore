@@ -23,3 +23,9 @@ Thumbs.db
 .next/
 dist/
 build/
+
+# Intermediate screenshots and research dumps (root level only)
+/*.png
+/*.jpg
+/*.jpeg
+/*.txt

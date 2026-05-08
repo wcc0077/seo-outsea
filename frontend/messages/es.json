@@ -1,0 +1,115 @@
+{
+  "Navigation": {
+    "about": "Acerca de",
+    "products": "Productos",
+    "smartMobileTerminals": "Terminales Móviles Inteligentes",
+    "rfidReaders": "Lectores RFID",
+    "rfidTags": "Etiquetas RFID",
+    "applications": "Aplicaciones",
+    "smartManufacturing": "Fabricación Inteligente",
+    "warehouseLogistics": "Logística y Almacén",
+    "archiveLibrary": "Archivos y Bibliotecas",
+    "assetInspection": "Inspección de Activos",
+    "antiCounterfeit": "Antifalsificación y Trazabilidad",
+    "retailSupplyChain": "Minoristas y Cadena de Suministro",
+    "smartCity": "Ciudad Inteligente",
+    "smartCabinet": "Gabinete Inteligente",
+    "support": "Soporte",
+    "productSupport": "Soporte de Producto",
+    "serviceSupport": "Soporte de Servicio",
+    "faq": "Preguntas Frecuentes",
+    "knowledgeBase": "Base de Conocimientos",
+    "contact": "Contacto",
+    "news": "Noticias",
+    "sharing": "Base de conocimientos"
+  },
+  "Common": {
+    "readMore": "Leer más",
+    "contactUs": "Contáctenos",
+    "search": "Buscar",
+    "searchPlaceholder": "Ingrese palabras clave...",
+    "allRightsReserved": "Todos los derechos reservados.",
+    "language": "Idioma",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "page": "Página"
+  },
+  "Products": {
+    "title": "Productos",
+    "category": "Categoría",
+    "allProducts": "Todos los productos",
+    "specifications": "Especificaciones",
+    "name": "Nombre",
+    "value": "Valor"
+  },
+  "Applications": {
+    "title": "Aplicaciones industriales",
+    "useCase": "Caso de uso"
+  },
+  "News": {
+    "title": "Noticias",
+    "latestNews": "Últimas noticias",
+    "publishedOn": "Publicado el",
+    "by": "por"
+  },
+  "Support": {
+    "title": "Soporte técnico"
+  },
+  "Contact": {
+    "title": "Contáctenos",
+    "address": "Dirección",
+    "phone": "Teléfono",
+    "email": "Correo electrónico",
+    "send": "Enviar mensaje",
+    "name": "Su nombre",
+    "emailLabel": "Su correo electrónico",
+    "message": "Mensaje",
+    "submitSuccess": "¡Mensaje enviado con éxito!",
+    "submitError": "Error al enviar el mensaje. Inténtelo de nuevo."
+  },
+  "NotFound": {
+    "title": "Página no encontrada",
+    "description": "La página que busca no existe.",
+    "goHome": "Ir a la página principal"
+  },
+  "SEO": {
+    "defaultDescription": "Lectores RFID profesionales, etiquetas y soluciones IoT industriales."
+  },
+  "About": {
+    "intro": "Sobre FN",
+    "gallery": "Instalaciones",
+    "history": "Historia",
+    "honors": "Premios y certificaciones"
+  },
+  "Home": {
+    "heroTitle": "Soluciones RFID Industriales",
+    "heroSubtitle": "Hardware RFID profesional para fabricación inteligente, logística y gestión de activos.",
+    "heroCta": "Explorar productos",
+    "heroSlogan": "Hecho en China, Servicio Global",
+    "featuredProducts": "Productos destacados",
+    "keyApplications": "Aplicaciones clave",
+    "latestNews": "Últimas noticias"
+  },
+  "RfidTags": {
+    "title": "Etiquetas RFID Electrónicas",
+    "subtitle": "Etiquetas RFID industriales para seguimiento de activos, logística y fabricación.",
+    "categories": "Categorías",
+    "allTags": "Todas las etiquetas",
+    "empty": "Aún no hay etiquetas RFID disponibles."
+  },
+  "Footer": {
+    "products": "Productos",
+    "readers": "Lectores RFID",
+    "tags": "Etiquetas RFID",
+    "mobile": "Terminales móviles",
+    "applications": "Aplicaciones",
+    "manufacturing": "Fabricación inteligente",
+    "logistics": "Logística y almacén",
+    "assets": "Gestión de activos",
+    "support": "Soporte",
+    "techSupport": "Soporte técnico",
+    "knowledgeBase": "Base de conocimientos",
+    "contactUs": "Contáctenos",
+    "copyright": "© {startYear}–{endYear} {name}. Todos los derechos reservados."
+  }
+}

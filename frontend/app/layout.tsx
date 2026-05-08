@@ -1,16 +1,16 @@
 import type { Metadata } from 'next';
-import { Outfit, Source_Sans_3 } from 'next/font/google';
+import { Inter, Noto_Sans } from 'next/font/google';
 import './globals.css';
 
-const outfit = Outfit({
-  subsets: ['latin'],
+const inter = Inter({
+  subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext', 'greek', 'greek-ext', 'vietnamese'],
   variable: '--font-display',
   display: 'swap',
   weight: ['400', '500', '600', '700', '800'],
 });
 
-const sourceSans = Source_Sans_3({
-  subsets: ['latin'],
+const notoSans = Noto_Sans({
+  subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext', 'devanagari'],
   variable: '--font-body',
   display: 'swap',
   weight: ['300', '400', '500', '600', '700'],
@@ -39,7 +39,7 @@ export default function RootLayout({
 }) {
   return (
     <html suppressHydrationWarning>
-      <body className={`${outfit.variable} ${sourceSans.variable} min-h-screen flex flex-col`}>
+      <body className={`${inter.variable} ${notoSans.variable} min-h-screen flex flex-col`}>
         {children}
       </body>
     </html>
