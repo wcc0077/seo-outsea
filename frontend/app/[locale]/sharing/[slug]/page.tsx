@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getFAQArticleBySlug, getFAQArticles, FAQArticleData } from '@/lib/strapi';
+import Breadcrumb from '@/components/ui/Breadcrumb';
 
 const CATEGORY_LABELS: Record<string, string> = {
   faq: '常见问题',
@@ -29,13 +30,11 @@ export default async function FAQArticlePage({ params }: { params: Promise<{ loc
     <div className="py-16 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-neutral-500 mb-8">
-          <Link href={`/${locale}`} className="hover:text-primary-600">首页</Link>
-          <span>/</span>
-          <Link href={`/${locale}/support`} className="hover:text-primary-600">技术支持</Link>
-          <span>/</span>
-          <Link href={`/${locale}/sharing`} className="hover:text-primary-600">知识分享</Link>
-        </nav>
+        <Breadcrumb locale={locale} items={[
+          { label: locale === 'zh' ? '技术支持' : 'Support', href: `/${locale}/support` },
+          { label: locale === 'zh' ? '知识分享' : 'Knowledge Base', href: `/${locale}/sharing` },
+          { label: article.title },
+        ]} />
 
         {/* Article Header */}
         <header className="mb-10">

@@ -3,6 +3,7 @@ import { getApplicationCategoryBySlug, getApplicationsByCategory, ApplicationDat
 import Link from 'next/link';
 import Card from '@/components/ui/Card';
 import { getStrapiImageUrl } from '@/lib/strapi';
+import Breadcrumb from '@/components/ui/Breadcrumb';
 
 interface AppCategoryPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -23,6 +24,11 @@ export default async function AppCategoryPage({ params }: AppCategoryPageProps) 
   return (
     <div className="py-20 bg-gradient-to-b from-neutral-50 to-white min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Breadcrumb locale={locale} items={[
+          { label: locale === 'zh' ? '行业应用' : 'Applications', href: `/${locale}/applications` },
+          { label: category.name },
+        ]} />
+
         <div className="mb-12">
           <div className="w-12 h-0.5 bg-primary-500 mb-4" />
           <h1 className="text-4xl font-bold text-neutral-900 mb-3">{category.name}</h1>

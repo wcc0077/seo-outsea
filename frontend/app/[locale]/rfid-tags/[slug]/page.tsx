@@ -3,6 +3,7 @@ import { getRfidTagBySlug, RfidTagData } from '@/lib/strapi';
 import { getStrapiImageUrl } from '@/lib/strapi';
 import Badge from '@/components/ui/Badge';
 import JsonLd from '@/components/seo/JsonLd';
+import Breadcrumb from '@/components/ui/Breadcrumb';
 
 interface RfidTagDetailPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -19,6 +20,11 @@ export default async function RfidTagDetailPage({ params }: RfidTagDetailPagePro
   return (
     <div className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Breadcrumb locale={locale} items={[
+          { label: locale === 'zh' ? 'RFID电子标签' : 'RFID Tags', href: `/${locale}/rfid-tags` },
+          ...(tag.category ? [{ label: tag.category.name, href: `/${locale}/rfid-tags/category/${tag.category.slug}` }] : []),
+          { label: tag.name },
+        ]} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Images */}
           <div>

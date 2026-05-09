@@ -3,6 +3,7 @@ import { getProductBySlug, ProductData } from '@/lib/strapi';
 import { getStrapiImageUrl } from '@/lib/strapi';
 import Badge from '@/components/ui/Badge';
 import JsonLd from '@/components/seo/JsonLd';
+import Breadcrumb from '@/components/ui/Breadcrumb';
 
 interface ProductDetailPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -19,6 +20,11 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   return (
     <div className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Breadcrumb locale={locale} items={[
+          { label: locale === 'zh' ? '产品中心' : 'Products', href: `/${locale}/products` },
+          ...(product.category ? [{ label: product.category.name, href: `/${locale}/products/category/${product.category.slug}` }] : []),
+          { label: product.name },
+        ]} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Images */}
           <div>

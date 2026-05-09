@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Card from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
 import { getStrapiImageUrl } from '@/lib/strapi';
+import Breadcrumb from '@/components/ui/Breadcrumb';
 
 interface CategoryPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -24,6 +25,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   return (
     <div className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Breadcrumb locale={locale} items={[
+          { label: locale === 'zh' ? 'RFID电子标签' : 'RFID Tags', href: `/${locale}/rfid-tags` },
+          { label: category.name },
+        ]} />
+
         <div className="mb-10">
           <div className="w-12 h-0.5 bg-primary-500 mb-4" />
           <h1 className="text-4xl font-bold text-neutral-900 mb-3">{category.name}</h1>
