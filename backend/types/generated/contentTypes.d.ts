@@ -827,10 +827,12 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'manyToOne',
       'api::product-category.product-category'
     >;
+    connectivity: Schema.Attribute.JSON;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.RichText & Schema.Attribute.Required;
+    features: Schema.Attribute.JSON;
     images: Schema.Attribute.Media<'images', true>;
     imageUrl: Schema.Attribute.String;
     locale: Schema.Attribute.String;
@@ -839,7 +841,11 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'api::product.product'
     >;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    os: Schema.Attribute.Enumeration<['android', 'windows', 'other']>;
     publishedAt: Schema.Attribute.DateTime;
+    rfidFrequency: Schema.Attribute.Enumeration<
+      ['uhf', 'hf', 'lf-125khz', 'lf-134khz', 'vhf']
+    >;
     seoDescription: Schema.Attribute.Text;
     seoKeywords: Schema.Attribute.Text;
     seoTitle: Schema.Attribute.String;

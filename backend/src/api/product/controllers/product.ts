@@ -60,6 +60,22 @@ function downloadImage(url: string): Promise<Buffer> {
 }
 
 export default factories.createCoreController('api::product.product', ({ strapi }) => ({
+  async find(ctx) {
+    // Use strapi.db.query to ensure all scalar fields (like imageUrl) are returned
+    const { locale, populate } = ctx.query;
+
+    const entities = await strapi.db.query('api::product.product').findMany({
+      where: {
+        locale: locale || 'en',
+        publishedAt: { $notNull: true },
+      },
+      populate: populate || ['images', 'category'],
+      orderBy: { updatedAt: 'desc' },
+    });
+
+    return { data: entities, meta: {} };
+  },
+
   async findBySlug(ctx) {
     const { slug } = ctx.params;
     const { locale } = ctx.query;
@@ -169,6 +185,7 @@ export default factories.createCoreController('api::product.product', ({ strapi 
             slug,
             description: `${product.name}\n\n工业级${model || 'RFID'}设备，适用于工业自动化场景。`,
             category: category?.documentId,
+            imageUrl: product.imageUrl,
             images: imageConnect,
           },
         });

@@ -13,10 +13,18 @@ export default async function ApplicationsPage({ params }: ApplicationsPageProps
     getApplicationCategories(locale).catch(() => []),
   ]);
 
+  // Deduplicate categories by slug to handle Strapi i18n duplicates
+  const seen = new Set<string>();
+  const uniqueCategories = categories.filter(cat => {
+    if (seen.has(cat.slug)) return false;
+    seen.add(cat.slug);
+    return true;
+  });
+
   return (
     <ApplicationsPageClient
       applications={applications}
-      categories={categories}
+      categories={uniqueCategories}
       locale={locale}
     />
   );

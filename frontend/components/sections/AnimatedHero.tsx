@@ -60,8 +60,8 @@ export default function AnimatedHero({ title, subtitle, ctaLabel, ctaUrl, slogan
   function getNodePos(node: NetworkNode) {
     const rad = (node.angle * Math.PI) / 180;
     return {
-      x: cx + Math.cos(rad) * node.radius,
-      y: cy + Math.sin(rad) * node.radius,
+      x: Math.round((cx + Math.cos(rad) * node.radius) * 1e6) / 1e6,
+      y: Math.round((cy + Math.sin(rad) * node.radius) * 1e6) / 1e6,
     };
   }
 
@@ -122,6 +122,7 @@ export default function AnimatedHero({ title, subtitle, ctaLabel, ctaUrl, slogan
               viewBox="0 0 480 440"
               className="w-full max-w-[560px] h-auto"
               aria-label="RFID product network"
+              suppressHydrationWarning
             >
               <defs>
                 <filter id="glow">

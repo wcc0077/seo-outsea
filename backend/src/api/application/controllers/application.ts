@@ -13,7 +13,15 @@ export default factories.createCoreController('api::application.application', ({
       orderBy: { updatedAt: 'desc' },
     });
 
-    return { data: entities, meta: {} };
+    // Deduplicate by documentId to handle Strapi i18n duplicates
+    const seen = new Set();
+    const unique = entities.filter(e => {
+      if (seen.has(e.documentId)) return false;
+      seen.add(e.documentId);
+      return true;
+    });
+
+    return { data: unique, meta: {} };
   },
 
   async findBySlug(ctx) {
@@ -21,7 +29,7 @@ export default factories.createCoreController('api::application.application', ({
     const { locale } = ctx.query;
 
     const entity = await strapi.db.query('api::application.application').findOne({
-      where: { slug, locale: locale || 'en' },
+      where: { slug, locale: locale || 'en', publishedAt: { $notNull: true } },
       populate: ['images', 'category'],
     });
 
@@ -36,9 +44,9 @@ export default factories.createCoreController('api::application.application', ({
     const { categorySlug } = ctx.params;
     const { locale } = ctx.query;
 
-    // Find the category first
+    // Find the category first (published version)
     const category = await strapi.db.query('api::application-category.application-category').findOne({
-      where: { slug: categorySlug, locale: locale || 'en' },
+      where: { slug: categorySlug, locale: locale || 'en', publishedAt: { $notNull: true } },
     });
 
     if (!category) {
@@ -46,9 +54,9 @@ export default factories.createCoreController('api::application.application', ({
     }
 
     const entities = await strapi.db.query('api::application.application').findMany({
-      where: { category: category.id, locale: locale || 'en' },
+      where: { category: category.id, locale: locale || 'en', publishedAt: { $notNull: true } },
       populate: ['images', 'category'],
-      orderBy: ['name'],
+      orderBy: { name: 'asc' },
     });
 
     return { data: entities };

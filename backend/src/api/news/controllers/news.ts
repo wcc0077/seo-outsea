@@ -1,4 +1,3 @@
-import { factories } from '@strapi/strapi';
 import fs from 'fs';
 import path from 'path';
 
@@ -9,30 +8,51 @@ interface ScrapedArticle {
   content: string;
 }
 
-export default factories.createCoreController('api::news.article', ({ strapi }) => ({
-  async findBySlug(ctx) {
-    const { slug } = ctx.params;
-    const { locale } = ctx.query;
+export default {
+  async find(ctx) {
+    const results = await strapi.db.query('api::news.article').findMany({});
+    return { data: results };
+  },
 
+  async findOne(ctx) {
     const entity = await strapi.db.query('api::news.article').findOne({
-      where: { slug, locale: locale || 'en' },
-      populate: ['coverImage'],
+      where: { id: ctx.params.id },
     });
-
     if (!entity) {
       return ctx.notFound('News not found');
     }
-
     return { data: entity };
   },
 
-  async getPublished(ctx) {
+  async create(ctx) {
+    const entity = await strapi.db.query('api::news.article').create({
+      data: ctx.request.body.data,
+    });
+    return { data: entity };
+  },
+
+  async update(ctx) {
+    const entity = await strapi.db.query('api::news.article').update({
+      where: { id: ctx.params.id },
+      data: ctx.request.body.data,
+    });
+    return { data: entity };
+  },
+
+  async delete(ctx) {
+    const entity = await strapi.db.query('api::news.article').delete({
+      where: { id: ctx.params.id },
+    });
+    return { data: entity };
+  },
+
+  async getPublishedNews(ctx) {
     const { locale } = ctx.query;
     const page = parseInt(ctx.query.page as string) || 1;
     const pageSize = parseInt(ctx.query.pageSize as string) || 10;
 
     const { results, pagination } = await strapi.db.query('api::news.article').findPage({
-      where: { locale: locale || 'en', publishedAt: { $notNull: true } },
+      where: { locale: locale || 'zh', publishedAt: { $notNull: true } },
       populate: ['coverImage'],
       orderBy: { publishDate: 'desc' },
       page,
@@ -42,13 +62,29 @@ export default factories.createCoreController('api::news.article', ({ strapi }) 
     return { data: results, meta: { pagination } };
   },
 
+  async findBySlug(ctx) {
+    const { slug } = ctx.params;
+    const { locale } = ctx.query;
+    const targetLocale = locale || 'zh';
+
+    const entity = await strapi.db.connection('news')
+      .where('slug', slug)
+      .andWhere('locale', targetLocale)
+      .first();
+
+    if (!entity) {
+      return ctx.notFound('News not found');
+    }
+
+    return { data: entity };
+  },
+
   async importNews(ctx) {
     const existingCount = await strapi.db.query('api::news.article').count();
     if (existingCount > 0) {
       return { data: null, error: `News articles already exist (${existingCount}). Skipping import.` };
     }
 
-    // Try to load from multiple possible paths
     const possiblePaths = [
       path.join(process.cwd(), 'scripts', 'fn-tech-news.json'),
       path.join(process.cwd(), '..', '..', 'tmp', 'fn-tech-news.json'),
@@ -69,14 +105,13 @@ export default factories.createCoreController('api::news.article', ({ strapi }) 
 
     const rawData = fs.readFileSync(dataPath, 'utf-8');
     const articles: ScrapedArticle[] = JSON.parse(rawData);
-
     const results = { created: 0, failed: 0, errors: [] as string[] };
 
     for (const article of articles) {
       try {
         const slug = article.title
           .toLowerCase()
-          .replace(/[^\w\u4e00-\u9fff\s-]/g, '')
+          .replace(/[^\w一-鿿\s-]/g, '')
           .replace(/\s+/g, '-')
           .replace(/-+/g, '-')
           .replace(/^-|-$/g, '')
@@ -84,7 +119,6 @@ export default factories.createCoreController('api::news.article', ({ strapi }) 
 
         if (!slug) continue;
 
-        // Check if slug already exists
         const existing = await strapi.db.query('api::news.article').findOne({
           where: { slug },
         });
@@ -186,4 +220,4 @@ export default factories.createCoreController('api::news.article', ({ strapi }) 
       errors,
     };
   },
-}));
+};

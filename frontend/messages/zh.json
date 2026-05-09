@@ -87,7 +87,10 @@
     "heroCta": "探索产品",
     "heroSlogan": "中国制造，全球服务",
     "featuredProducts": "精选产品",
+    "statsTitle": "选择我们",
+    "statsSubtitle": "Choose us",
     "keyApplications": "核心应用",
+    "clientLogosTitle": "客户案例",
     "latestNews": "最新动态"
   },
   "RfidTags": {

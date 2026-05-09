@@ -48,6 +48,20 @@
       "relation": "manyToOne",
       "target": "api::product-category.product-category"
     },
+    "rfidFrequency": {
+      "type": "enumeration",
+      "enum": ["uhf", "hf", "lf-125khz", "lf-134khz", "vhf"]
+    },
+    "features": {
+      "type": "json"
+    },
+    "connectivity": {
+      "type": "json"
+    },
+    "os": {
+      "type": "enumeration",
+      "enum": ["android", "windows", "other"]
+    },
     "seoTitle": {
       "type": "string"
     },

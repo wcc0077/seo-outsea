@@ -163,33 +163,19 @@ export default function ProductsPageClient({ products, categories, locale }: Pro
           >
             全部产品
           </button>
-          {grouped.map(group => {
-            const isRfidTags = group.parent.slug === 'rfid-tags';
-            if (isRfidTags) {
-              return (
-                <Link
-                  key={group.parent.slug}
-                  href={`/${locale}/rfid-tags`}
-                  className={`flex-shrink-0 px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 bg-white text-primary-600 border border-primary-300 hover:bg-primary-50 hover:text-primary-700`}
-                >
-                  {group.parent.name} →
-                </Link>
-              );
-            }
-            return (
-              <button
-                key={group.parent.slug}
-                onClick={() => setActiveCategory(activeCategory === group.parent.slug ? null : group.parent.slug)}
-                className={`flex-shrink-0 px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 ${
-                  activeCategory === group.parent.slug
-                    ? 'bg-primary-600 text-white shadow-md shadow-primary-600/20'
-                    : 'bg-white text-neutral-700 hover:bg-primary-50 hover:text-primary-600 border border-neutral-200'
-                }`}
-              >
-                {group.parent.name}
-              </button>
-            );
-          })}
+          {grouped.map(group => (
+            <button
+              key={group.parent.slug}
+              onClick={() => setActiveCategory(activeCategory === group.parent.slug ? null : group.parent.slug)}
+              className={`flex-shrink-0 px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 ${
+                activeCategory === group.parent.slug
+                  ? 'bg-primary-600 text-white shadow-md shadow-primary-600/20'
+                  : 'bg-white text-neutral-700 hover:bg-primary-50 hover:text-primary-600 border border-neutral-200'
+              }`}
+            >
+              {group.parent.name}
+            </button>
+          ))}
         </div>
 
         {/* ── Filter table ── */}

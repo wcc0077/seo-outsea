@@ -118,7 +118,15 @@ export async function getProductCategories(locale: string): Promise<ProductCateg
     'filters[publishedAt][$notNull]': 'true',
     'sort[0]': 'sortOrder:asc',
   });
-  return res.data;
+
+  // Deduplicate by documentId to handle Strapi i18n duplicates
+  const seen = new Set<string>();
+  return res.data.filter(cat => {
+    const key = cat.documentId || cat.slug;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 export async function getProductCategoryBySlug(slug: string, locale: string): Promise<ProductCategoryData | null> {
@@ -180,6 +188,7 @@ export async function getProductBySlug(slug: string, locale: string): Promise<Pr
 // ---- Applications ----
 
 export interface ApplicationData {
+  documentId?: string;
   name: string;
   slug: string;
   description: string;
@@ -197,7 +206,16 @@ export async function getApplications(locale: string): Promise<ApplicationData[]
     locale,
     populate: 'images,category',
   });
-  return res.data;
+
+  // Deduplicate by documentId to handle Strapi i18n duplicates
+  const seen = new Set<string>();
+  return res.data.filter(app => {
+    // Prefer published entries; if same documentId appears twice, keep first
+    const key = app.documentId || app.slug;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 export async function getApplicationBySlug(slug: string, locale: string): Promise<ApplicationData | null> {
@@ -224,6 +242,7 @@ export async function getApplicationsByCategory(categorySlug: string, locale: st
 
 export interface ApplicationCategoryData {
   id?: number;
+  documentId?: string;
   name: string;
   slug: string;
   icon: string;
@@ -237,7 +256,15 @@ export async function getApplicationCategories(locale: string): Promise<Applicat
     locale,
     'sort[0]': 'sortOrder:asc',
   });
-  return res.data;
+
+  // Deduplicate by documentId to handle Strapi i18n duplicates
+  const seen = new Set<string>();
+  return res.data.filter(cat => {
+    const key = cat.documentId || cat.slug;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 export async function getApplicationCategoryBySlug(slug: string, locale: string): Promise<ApplicationCategoryData | null> {

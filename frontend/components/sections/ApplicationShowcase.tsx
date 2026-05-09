@@ -21,7 +21,10 @@ export default function ApplicationShowcase({ title, applications, locale }: App
           </div>
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-children">
-          {applications.slice(0, 6).map((app) => (
+          {applications
+            .filter((app, idx, arr) => arr.findIndex(a => a.slug === app.slug) === idx)
+            .slice(0, 6)
+            .map((app) => (
             <Link key={app.slug} href={`/${locale}/applications/${app.slug}`}>
               <Card className="h-full">
                 {app.images?.[0] && (

@@ -20,6 +20,12 @@ export default {
     },
     {
       method: 'POST',
+      path: '/application-categories/sync',
+      handler: 'application-category.sync',
+      config: { auth: false },
+    },
+    {
+      method: 'POST',
       path: '/application-categories/translate',
       handler: 'application-category.translate',
       config: { auth: false },

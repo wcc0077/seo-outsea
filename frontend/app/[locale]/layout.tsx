@@ -54,12 +54,14 @@ export default async function LocaleLayout({
     locale,
   };
 
+  const currentYear = new Date().getFullYear();
+
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <LocaleSetter locale={locale} />
       <HeaderWrapper {...headerProps} />
       <main className="flex-1">{children}</main>
-      <Footer global={globalData} locale={locale} />
+      <Footer global={globalData} locale={locale} currentYear={currentYear} />
     </NextIntlClientProvider>
   );
 }

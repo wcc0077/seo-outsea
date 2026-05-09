@@ -10,10 +10,10 @@
   },
   "dependencies": {
     "next": "15.x",
-    "next-intl": "3.x",
+    "next-intl": "^3.26.5",
+    "next-sitemap": "4.x",
     "react": "19.x",
-    "react-dom": "19.x",
-    "next-sitemap": "4.x"
+    "react-dom": "19.x"
   },
   "devDependencies": {
     "@types/node": "^20",

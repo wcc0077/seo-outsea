@@ -1,13 +1,13 @@
-import { notFound } from 'next/navigation';
-import { getPageBySlug, getProducts, getApplications, getPublishedNews, PageData } from '@/lib/strapi';
+import { getPageBySlug, getProducts, getApplications, getPublishedNews } from '@/lib/strapi';
 import HeroSection from '@/components/sections/HeroSection';
 import AnimatedHero from '@/components/sections/AnimatedHero';
 import ProductGrid from '@/components/sections/ProductGrid';
 import ApplicationShowcase from '@/components/sections/ApplicationShowcase';
+import CompanyStats from '@/components/sections/CompanyStats';
+import ClientLogos from '@/components/sections/ClientLogos';
 import NewsList from '@/components/sections/NewsList';
 import SectionRenderer from '@/components/sections/SectionRenderer';
 import { getTranslations } from 'next-intl/server';
-import { REVALIDATE_INTERVAL } from '@/lib/constants';
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
@@ -40,9 +40,11 @@ export default async function HomePage({ params }: HomePageProps) {
           ctaUrl={`/${locale}/products`}
           slogan={t('heroSlogan')}
         />
-        <ProductGrid title="Featured Products" products={products} locale={locale} />
-        <ApplicationShowcase title="Key Applications" applications={applications} locale={locale} />
-        <NewsList title="Latest News" news={news.data} locale={locale} />
+        <ProductGrid title={t('featuredProducts')} products={products} locale={locale} />
+        <CompanyStats title={t('statsTitle')} subtitle={t('statsSubtitle')} />
+        <ApplicationShowcase title={t('keyApplications')} applications={applications} locale={locale} />
+        <ClientLogos title={t('clientLogosTitle')} />
+        <NewsList title={t('latestNews')} news={news.data} locale={locale} />
       </>
     );
   }

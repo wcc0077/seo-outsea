@@ -50,6 +50,21 @@ const CHILD_CATEGORIES = [
 import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::product-category.product-category', ({ strapi }) => ({
+  async find(ctx) {
+    const { locale, populate } = ctx.query;
+
+    const entities = await strapi.db.query('api::product-category.product-category').findMany({
+      where: {
+        locale: locale || 'en',
+        publishedAt: { $notNull: true },
+      },
+      populate: populate || ['parent', 'children'],
+      orderBy: { sortOrder: 'asc' },
+    });
+
+    return { data: entities, meta: {} };
+  },
+
   async import(ctx) {
     const existingCount = await strapi.db.query('api::product-category.product-category').count();
     if (existingCount > 0) {
