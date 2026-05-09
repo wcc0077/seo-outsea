@@ -21,10 +21,14 @@ export default async function ApplicationsPage({ params }: ApplicationsPageProps
     return true;
   });
 
+  // Default to first category (smart-manufacturing)
+  const defaultCategory = uniqueCategories.length > 0 ? uniqueCategories[0].slug : null;
+
   return (
     <ApplicationsPageClient
       applications={applications}
       categories={uniqueCategories}
+      defaultCategory={defaultCategory}
       locale={locale}
     />
   );

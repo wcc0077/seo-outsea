@@ -7,6 +7,7 @@ import { getStrapiImageUrl, ApplicationData, ApplicationCategoryData } from '@/l
 interface ApplicationsPageClientProps {
   applications: ApplicationData[];
   categories: ApplicationCategoryData[];
+  defaultCategory: string | null;
   locale: string;
 }
 
@@ -35,8 +36,8 @@ const CATEGORY_GRADIENTS: Record<string, string> = {
 
 const PAGE_SIZE = 8;
 
-export default function ApplicationsPageClient({ applications, categories, locale }: ApplicationsPageClientProps) {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+export default function ApplicationsPageClient({ applications, categories, defaultCategory, locale }: ApplicationsPageClientProps) {
+  const [activeCategory, setActiveCategory] = useState<string | null>(defaultCategory);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -74,20 +75,10 @@ export default function ApplicationsPageClient({ applications, categories, local
       <div className="sticky top-[72px] z-40 bg-white/95 backdrop-blur-sm border-b border-neutral-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 py-3 overflow-x-auto scrollbar-hide">
-            <button
-              onClick={() => setActiveCategory(null)}
-              className={`flex-shrink-0 px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                !activeCategory
-                  ? 'bg-primary-600 text-white shadow-md shadow-primary-600/20'
-                  : 'text-neutral-600 hover:bg-neutral-100 hover:text-primary-600'
-              }`}
-            >
-              全部方案
-            </button>
             {categories.map(cat => (
               <button
                 key={cat.slug}
-                onClick={() => setActiveCategory(activeCategory === cat.slug ? null : cat.slug)}
+                onClick={() => setActiveCategory(cat.slug)}
                 className={`flex-shrink-0 px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
                   activeCategory === cat.slug
                     ? 'bg-primary-600 text-white shadow-md shadow-primary-600/20'
