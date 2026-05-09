@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import { getApplicationCategories } from '@/lib/strapi';
 
 type NavItem = {
   label: string;
@@ -10,6 +11,9 @@ export async function getNavLinks(locale: string): Promise<NavItem[]> {
   const t = await getTranslations({ locale, namespace: 'Navigation' });
   const news = await getTranslations({ locale, namespace: 'News' });
   const about = await getTranslations({ locale, namespace: 'About' });
+
+  // Fetch application categories dynamically from Strapi
+  const appCategories = await getApplicationCategories(locale).catch(() => []);
 
   return [
     {
@@ -24,16 +28,21 @@ export async function getNavLinks(locale: string): Promise<NavItem[]> {
     {
       label: t('applications'),
       href: '/applications',
-      children: [
-        { label: t('smartManufacturing'), href: '/applications' },
-        { label: t('warehouseLogistics'), href: '/applications' },
-        { label: t('archiveLibrary'), href: '/applications' },
-        { label: t('assetInspection'), href: '/applications' },
-        { label: t('antiCounterfeit'), href: '/applications' },
-        { label: t('retailSupplyChain'), href: '/applications' },
-        { label: t('smartCity'), href: '/applications' },
-        { label: t('smartCabinet'), href: '/applications' },
-      ],
+      children: appCategories.length > 0
+        ? appCategories.map(cat => ({
+            label: cat.name,
+            href: `/applications/category/${cat.slug}`,
+          }))
+        : [
+            { label: t('smartManufacturing'), href: '/applications' },
+            { label: t('warehouseLogistics'), href: '/applications' },
+            { label: t('archiveLibrary'), href: '/applications' },
+            { label: t('assetInspection'), href: '/applications' },
+            { label: t('antiCounterfeit'), href: '/applications' },
+            { label: t('retailSupplyChain'), href: '/applications' },
+            { label: t('smartCity'), href: '/applications' },
+            { label: t('smartCabinet'), href: '/applications' },
+          ],
     },
     {
       label: t('support'),

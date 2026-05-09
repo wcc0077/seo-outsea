@@ -117,6 +117,20 @@ const APPLICATIONS = [
 import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::application-category.application-category', ({ strapi }) => ({
+  async find(ctx) {
+    const { locale } = ctx.query;
+
+    const entities = await strapi.db.query('api::application-category.application-category').findMany({
+      where: {
+        locale: locale || 'en',
+        publishedAt: { $notNull: true },
+      },
+      orderBy: { sortOrder: 'asc' },
+    });
+
+    return { data: entities, meta: {} };
+  },
+
   async import(ctx) {
     const existingCatCount = await strapi.db.query('api::application-category.application-category').count();
     const existingAppCount = await strapi.db.query('api::application.application').count();

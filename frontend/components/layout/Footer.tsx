@@ -1,15 +1,38 @@
 import Link from 'next/link';
-import { GlobalData, getStrapiImageUrl } from '@/lib/strapi';
+import { GlobalData, getProductCategories, getApplicationCategories, ApplicationCategoryData } from '@/lib/strapi';
 import { getTranslations } from 'next-intl/server';
 
 interface FooterProps {
   global: GlobalData | null;
   locale: string;
+  currentYear: number;
 }
 
-export default async function Footer({ global, locale }: FooterProps) {
+export default async function Footer({ global, locale, currentYear }: FooterProps) {
   const contact = global?.contactInfo;
   const t = await getTranslations({ locale, namespace: 'Footer' });
+  const [allCategories, appCategories] = await Promise.all([
+    getProductCategories(locale).catch(() => []),
+    getApplicationCategories(locale).catch(() => []),
+  ]);
+
+  // Filter only published categories (Strapi returns both draft + published)
+  const published = allCategories.filter((c) => c.publishedAt !== null);
+
+  // Footer product columns: only top-level categories
+  const footerProductSlugs = ['mobile-devices', 'rfid-readers', 'rfid-tags'];
+  const productTopLevel = published
+    .filter((c) => !c.parent && footerProductSlugs.includes(c.slug))
+    .sort((a, b) => footerProductSlugs.indexOf(a.slug) - footerProductSlugs.indexOf(b.slug));
+
+  // Group children by their parent's slug
+  const childMap = new Map<string, typeof published>();
+  for (const cat of published) {
+    if (cat.parent?.slug) {
+      if (!childMap.has(cat.parent.slug)) childMap.set(cat.parent.slug, []);
+      childMap.get(cat.parent.slug)!.push(cat);
+    }
+  }
 
   return (
     <footer className="bg-neutral-950 text-neutral-400 relative overflow-hidden">
@@ -20,9 +43,9 @@ export default async function Footer({ global, locale }: FooterProps) {
         {/* Top accent line */}
         <div className="h-px w-24 bg-gradient-to-r from-primary-500 to-transparent mb-12" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-x-12 gap-y-10">
           {/* Company */}
-          <div className="lg:col-span-1">
+          <div className="col-span-2 sm:col-span-1">
             <h3 className="text-white font-semibold mb-4 font-display text-lg">{global?.siteName || 'FN Tech'}</h3>
             {contact && (
               <div className="space-y-2 text-sm leading-relaxed">
@@ -41,32 +64,87 @@ export default async function Footer({ global, locale }: FooterProps) {
             )}
           </div>
 
-          {/* Products */}
+          {/* Product category columns from Strapi */}
+          {productTopLevel.map((category) => {
+            const children = childMap.get(category.slug) || [];
+            return (
+              <div key={category.slug}>
+                <h3 className="text-white font-semibold mb-4 font-display text-sm">{category.name}</h3>
+                <ul className="space-y-2.5 text-sm">
+                  {children.length > 0
+                    ? children.map((child) => (
+                        <li key={child.id}>
+                          <Link href={`/${locale}/products/category/${child.slug}`} className="hover:text-primary-400 transition-colors break-all">
+                            {child.name}
+                          </Link>
+                        </li>
+                      ))
+                    : (
+                      <li>
+                        <Link href={`/${locale}/products/category/${category.slug}`} className="hover:text-primary-400 transition-colors">
+                          {category.name}
+                        </Link>
+                      </li>
+                    )}
+                </ul>
+              </div>
+            );
+          })}
+
+          {/* 行业应用 */}
           <div>
-            <h3 className="text-white font-semibold mb-4 font-display">{t('products')}</h3>
+            <h3 className="text-white font-semibold mb-4 font-display text-sm">{t('applications')}</h3>
             <ul className="space-y-2.5 text-sm">
-              <li><Link href={`/${locale}/products`} className="hover:text-primary-400 transition-colors">{t('readers')}</Link></li>
-              <li><Link href={`/${locale}/products`} className="hover:text-primary-400 transition-colors">{t('tags')}</Link></li>
-              <li><Link href={`/${locale}/products`} className="hover:text-primary-400 transition-colors">{t('mobile')}</Link></li>
+              {appCategories.length > 0
+                ? appCategories.map((cat: ApplicationCategoryData) => (
+                    <li key={cat.id}>
+                      <Link href={`/${locale}/applications/category/${cat.slug}`} className="hover:text-primary-400 transition-colors">
+                        {cat.name}
+                      </Link>
+                    </li>
+                  ))
+                : (
+                  <>
+                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('manufacturing')}</Link></li>
+                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('logistics')}</Link></li>
+                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('archiveLibrary')}</Link></li>
+                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('assetInspection')}</Link></li>
+                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('antiCounterfeit')}</Link></li>
+                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('retailSupplyChain')}</Link></li>
+                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('smartCity')}</Link></li>
+                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('smartCabinet')}</Link></li>
+                  </>
+                )}
             </ul>
           </div>
 
-          {/* Applications */}
+          {/* 技术支持 */}
           <div>
-            <h3 className="text-white font-semibold mb-4 font-display">{t('applications')}</h3>
+            <h3 className="text-white font-semibold mb-4 font-display text-sm">{t('support')}</h3>
             <ul className="space-y-2.5 text-sm">
-              <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('manufacturing')}</Link></li>
-              <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('logistics')}</Link></li>
-              <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('assets')}</Link></li>
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div>
-            <h3 className="text-white font-semibold mb-4 font-display">{t('support')}</h3>
-            <ul className="space-y-2.5 text-sm">
-              <li><Link href={`/${locale}/support`} className="hover:text-primary-400 transition-colors">{t('techSupport')}</Link></li>
+              <li><Link href={`/${locale}/products`} className="hover:text-primary-400 transition-colors">{t('productSupport')}</Link></li>
+              <li><Link href={`/${locale}/contact`} className="hover:text-primary-400 transition-colors">{t('serviceSupport')}</Link></li>
+              <li><Link href={`/${locale}/sharing`} className="hover:text-primary-400 transition-colors">{t('faq')}</Link></li>
               <li><Link href={`/${locale}/sharing`} className="hover:text-primary-400 transition-colors">{t('knowledgeBase')}</Link></li>
+            </ul>
+          </div>
+
+          {/* 关于孚恩 */}
+          <div>
+            <h3 className="text-white font-semibold mb-4 font-display text-sm">{t('about')}</h3>
+            <ul className="space-y-2.5 text-sm">
+              <li><Link href={`/${locale}/about/intro`} className="hover:text-primary-400 transition-colors">{t('companyIntro')}</Link></li>
+              <li><Link href={`/${locale}/about/company`} className="hover:text-primary-400 transition-colors">{t('companyPhotos')}</Link></li>
+              <li><Link href={`/${locale}/about/history`} className="hover:text-primary-400 transition-colors">{t('history')}</Link></li>
+              <li><Link href={`/${locale}/about/honors`} className="hover:text-primary-400 transition-colors">{t('honors')}</Link></li>
+              <li><Link href={`/${locale}/news`} className="hover:text-primary-400 transition-colors">{t('news')}</Link></li>
+            </ul>
+          </div>
+
+          {/* 联系我们 */}
+          <div>
+            <h3 className="text-white font-semibold mb-4 font-display text-sm">{t('contactUs')}</h3>
+            <ul className="space-y-2.5 text-sm">
               <li><Link href={`/${locale}/contact`} className="hover:text-primary-400 transition-colors">{t('contactUs')}</Link></li>
             </ul>
           </div>
@@ -74,8 +152,7 @@ export default async function Footer({ global, locale }: FooterProps) {
 
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-neutral-800 text-sm text-center text-neutral-500 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span>{t('copyright', { name: global?.siteName || 'FN Tech', startYear: 2006, endYear: new Date().getFullYear() })}</span>
-          {/* Decorative RF dot */}
+          <span>{t('copyright', { name: global?.siteName || 'FN Tech', startYear: 2006, endYear: currentYear })}</span>
           <span className="w-1.5 h-1.5 rounded-full bg-primary-500/50" aria-hidden="true" />
         </div>
       </div>

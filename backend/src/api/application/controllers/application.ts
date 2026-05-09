@@ -1,6 +1,21 @@
 import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::application.application', ({ strapi }) => ({
+  async find(ctx) {
+    const { locale } = ctx.query;
+
+    const entities = await strapi.db.query('api::application.application').findMany({
+      where: {
+        locale: locale || 'en',
+        publishedAt: { $notNull: true },
+      },
+      populate: ['images', 'category'],
+      orderBy: { updatedAt: 'desc' },
+    });
+
+    return { data: entities, meta: {} };
+  },
+
   async findBySlug(ctx) {
     const { slug } = ctx.params;
     const { locale } = ctx.query;
@@ -15,6 +30,28 @@ export default factories.createCoreController('api::application.application', ({
     }
 
     return { data: entity };
+  },
+
+  async findByCategory(ctx) {
+    const { categorySlug } = ctx.params;
+    const { locale } = ctx.query;
+
+    // Find the category first
+    const category = await strapi.db.query('api::application-category.application-category').findOne({
+      where: { slug: categorySlug, locale: locale || 'en' },
+    });
+
+    if (!category) {
+      return ctx.notFound('Application category not found');
+    }
+
+    const entities = await strapi.db.query('api::application.application').findMany({
+      where: { category: category.id, locale: locale || 'en' },
+      populate: ['images', 'category'],
+      orderBy: ['name'],
+    });
+
+    return { data: entities };
   },
 
   async translate(ctx) {

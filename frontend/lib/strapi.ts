@@ -101,9 +101,11 @@ export async function getAllPages(locale: string): Promise<PageData[]> {
 
 export interface ProductCategoryData {
   id?: number;
+  documentId: string;
   name: string;
   slug: string;
   description: string;
+  publishedAt?: string | null;
   parent?: ProductCategoryData;
   children?: ProductCategoryData[];
   sortOrder: number;
@@ -113,6 +115,7 @@ export interface ProductCategoryData {
 export async function getProductCategories(locale: string): Promise<ProductCategoryData[]> {
   const res = await fetchApi<{ data: ProductCategoryData[] }>('/api/product-categories', {
     locale,
+    'filters[publishedAt][$notNull]': 'true',
     'sort[0]': 'sortOrder:asc',
   });
   return res.data;
@@ -140,6 +143,10 @@ export interface ProductData {
   images: Array<{ url: string; alternativeText: string }>;
   imageUrl: string;
   category?: ProductCategoryData;
+  rfidFrequency?: 'uhf' | 'hf' | 'lf-125khz' | 'lf-134khz' | 'vhf';
+  features?: string[];
+  connectivity?: string[];
+  os?: 'android' | 'windows' | 'other';
   seoTitle: string;
   seoDescription: string;
   seoKeywords: string;
@@ -177,14 +184,19 @@ export interface ApplicationData {
   slug: string;
   description: string;
   images: Array<{ url: string; alternativeText: string }>;
+  imageUrl: string | null;
   useCase: string;
+  category?: ApplicationCategoryData;
   seoTitle: string;
   seoDescription: string;
   seoKeywords: string;
 }
 
 export async function getApplications(locale: string): Promise<ApplicationData[]> {
-  const res = await fetchApi<{ data: ApplicationData[] }>('/api/applications', { locale });
+  const res = await fetchApi<{ data: ApplicationData[] }>('/api/applications', {
+    locale,
+    populate: 'images,category',
+  });
   return res.data;
 }
 
@@ -192,6 +204,46 @@ export async function getApplicationBySlug(slug: string, locale: string): Promis
   try {
     const res = await fetchApi<{ data: ApplicationData }>(
       `/api/applications/by-slug/${slug}`,
+      { locale }
+    );
+    return res.data;
+  } catch {
+    return null;
+  }
+}
+
+export async function getApplicationsByCategory(categorySlug: string, locale: string): Promise<ApplicationData[]> {
+  const res = await fetchApi<{ data: ApplicationData[] }>(
+    `/api/applications/by-category/${categorySlug}`,
+    { locale }
+  );
+  return res.data;
+}
+
+// ---- Application Categories ----
+
+export interface ApplicationCategoryData {
+  id?: number;
+  name: string;
+  slug: string;
+  icon: string;
+  description: string;
+  sortOrder: number;
+  publishedAt?: string | null;
+}
+
+export async function getApplicationCategories(locale: string): Promise<ApplicationCategoryData[]> {
+  const res = await fetchApi<{ data: ApplicationCategoryData[] }>('/api/application-categories', {
+    locale,
+    'sort[0]': 'sortOrder:asc',
+  });
+  return res.data;
+}
+
+export async function getApplicationCategoryBySlug(slug: string, locale: string): Promise<ApplicationCategoryData | null> {
+  try {
+    const res = await fetchApi<{ data: ApplicationCategoryData }>(
+      `/api/application-categories/by-slug/${slug}`,
       { locale }
     );
     return res.data;
@@ -233,7 +285,7 @@ export async function getPublishedNews(locale: string, page = 1, pageSize = 10):
 export async function getNewsBySlug(slug: string, locale: string): Promise<NewsData | null> {
   try {
     const res = await fetchApi<{ data: NewsData }>(
-      `/api/news/by-slug/${slug}`,
+      `/api/news-slug/${slug}`,
       { locale }
     );
     return res.data;

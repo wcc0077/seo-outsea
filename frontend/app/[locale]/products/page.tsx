@@ -1,80 +1,83 @@
-import { notFound } from 'next/navigation';
-import { getProductCategories, getProducts, ProductData } from '@/lib/strapi';
-import Link from 'next/link';
-import Card from '@/components/ui/Card';
-import Badge from '@/components/ui/Badge';
-import { getStrapiImageUrl } from '@/lib/strapi';
+import { getRfidTags, getProductCategories, getProducts, getRfidTagCategories } from '@/lib/strapi';
+import ProductsPageClient from './ProductsPageClient';
 
 interface ProductsPageProps {
   params: Promise<{ locale: string }>;
 }
 
+// Minimal shapes for mapping rfid-tag data into ProductData
+interface MinimalCategory {
+  name: string;
+  slug: string;
+  description: string;
+  sortOrder: number;
+  documentId: string;
+  publishedAt: string | null;
+  parent?: { slug: string; name: string; description: string; sortOrder: number; documentId: string } | null;
+}
+
 export default async function ProductsPage({ params }: ProductsPageProps) {
   const { locale } = await params;
 
-  const [categories, products] = await Promise.all([
+  const [categories, products, rfidTags, rfidTagCategories] = await Promise.all([
     getProductCategories(locale).catch(() => []),
     getProducts(locale).catch(() => []),
+    getRfidTags(locale).catch(() => []),
+    getRfidTagCategories(locale).catch(() => []),
   ]);
 
+  // Map rfid-tag data to ProductData shape for unified rendering
+  const mappedRfidTags = rfidTags.map(tag => ({
+    name: tag.name,
+    slug: tag.slug,
+    description: tag.description,
+    specs: tag.specs || [],
+    images: tag.images || [],
+    imageUrl: tag.imageUrl || '',
+    category: tag.category ? {
+      name: tag.category.name,
+      slug: tag.category.slug,
+      description: tag.category.description || '',
+      sortOrder: tag.category.sortOrder || 0,
+      documentId: tag.category.slug,
+      publishedAt: null,
+    } as MinimalCategory : undefined,
+    rfidFrequency: (tag.frequency === 'uhf' ? 'uhf' : tag.frequency === 'hf' ? 'hf' : null) as 'uhf' | 'hf' | null,
+    features: [] as string[],
+    connectivity: [] as string[],
+    os: null as 'android' | 'windows' | 'other' | null,
+    seoTitle: tag.seoTitle || '',
+    seoDescription: tag.seoDescription || '',
+    seoKeywords: tag.seoKeywords || '',
+  }));
+
+  // Merge products and RFID tags
+  const allProducts = [...products, ...mappedRfidTags];
+
+  // Merge rfid-tag categories into the category list so tabs work
+  const mergedRfidTagCategories: MinimalCategory[] = rfidTagCategories.map(c => ({
+    name: c.name,
+    slug: c.slug,
+    description: c.description,
+    sortOrder: c.sortOrder,
+    documentId: c.slug,
+    publishedAt: null,
+    parent: c.parent ? {
+      slug: c.parent.slug,
+      name: c.parent.name,
+      description: c.parent.description || '',
+      sortOrder: c.parent.sortOrder || 0,
+      documentId: c.parent.slug,
+    } : undefined,
+  }));
+
+  const allCategories = [...categories, ...mergedRfidTagCategories];
+
   return (
-    <div className="py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-10">
-          <div className="w-12 h-0.5 bg-primary-500 mb-4" />
-          <h1 className="text-4xl font-bold text-neutral-900">Products</h1>
-        </div>
-
-        {/* Category Filter */}
-        {categories.length > 0 && (
-          <div className="flex flex-wrap gap-3 mb-10">
-            <Link
-              href={`/${locale}/products`}
-              className="btn-primary text-sm"
-            >
-              All
-            </Link>
-            {categories.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/${locale}/products/category/${cat.slug}`}
-                className="btn-secondary text-sm"
-              >
-                {cat.name}
-              </Link>
-            ))}
-          </div>
-        )}
-
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product: ProductData) => (
-            <Link key={product.slug} href={`/${locale}/products/${product.slug}`}>
-              <Card className="h-full">
-                {(product.images?.[0] || product.imageUrl) && (
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={product.imageUrl || getStrapiImageUrl(product.images[0].url) || '/placeholder.png'}
-                      alt={product.images?.[0]?.alternativeText || product.name}
-                      className="w-full h-52 object-cover transition-transform duration-500 hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/10 to-transparent" />
-                  </div>
-                )}
-                <div className="p-5">
-                  <h3 className="font-semibold text-lg text-neutral-900 mb-2 font-display">{product.name}</h3>
-                  {product.description && (
-                    <p className="text-sm text-neutral-600 line-clamp-2 leading-relaxed">{product.description}</p>
-                  )}
-                  {product.category && (
-                    <Badge className="mt-4" variant="primary">{product.category.name}</Badge>
-                  )}
-                </div>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </div>
+    <ProductsPageClient
+      products={allProducts as any}
+      categories={allCategories as any}
+      locale={locale}
+    />
   );
 }

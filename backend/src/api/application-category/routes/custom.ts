@@ -2,6 +2,12 @@ export default {
   routes: [
     {
       method: 'GET',
+      path: '/application-categories',
+      handler: 'application-category.find',
+      config: { auth: false },
+    },
+    {
+      method: 'GET',
       path: '/application-categories/by-slug/:slug',
       handler: 'application-category.findBySlug',
       config: { auth: false },

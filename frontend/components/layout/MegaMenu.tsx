@@ -72,6 +72,31 @@ const PRODUCT_SUB_CATEGORIES: Record<string, string[]> = {
 };
 
 function getCategoryIcon(path: string): React.ReactNode {
+  // Top-level: Smart Mobile Terminals — handheld device icon
+  if (path === 'smart-mobile-terminals') {
+    return (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+      </svg>
+    );
+  }
+  // Top-level: RFID Readers — antenna/signal icon
+  if (path === 'rfid-readers') {
+    return (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75 6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.98 0 13.789" />
+      </svg>
+    );
+  }
+  // Top-level: RFID Tags — price tag / label icon
+  if (path === 'rfid-tags') {
+    return (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 9H5.25A2.25 2.25 0 003 11.25v4.5A2.25 2.25 0 005.25 18h4.5A2.25 2.25 0 0012 15.75v-4.5A2.25 2.25 0 009.568 9zM6 13.5V12m10.5-3h.375c.621 0 1.125.504 1.125 1.125v10.5c0 .621-.504 1.125-1.125 1.125h-10.5c-.621 0-1.125-.504-1.125-1.125V12.75c0-.621.504-1.125 1.125-1.125H9" />
+      </svg>
+    );
+  }
+  // Sub-category: HF/UHF RFID reader series
   if (path.includes('hf-rfid') || path.includes('uhf-rfid')) {
     return (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -79,13 +104,16 @@ function getCategoryIcon(path: string): React.ReactNode {
       </svg>
     );
   }
+  // Sub-category: Handheld terminals
   if (path.includes('handheld')) {
     return (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 12.75c1.148 0 2.165-.345 3-.984.835.639 1.852.984 3 .984 1.148 0 2.165-.345 3-.984.835.639 1.852.984 3 .984 1.148 0 2.165-.345 3-.984" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 3.75H6A2.25 2.25 0 003.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0120.25 6v1.5m0 9V18A2.25 2.25 0 0118 20.25h-1.5m-9 0H6A2.25 2.25 0 013.75 18v-1.5M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     );
   }
+  // Sub-category: Industrial tablets
   if (path.includes('industrial')) {
     return (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -93,9 +121,17 @@ function getCategoryIcon(path: string): React.ReactNode {
       </svg>
     );
   }
+  // Sub-category: Portable readers (Bluetooth UHF scanners)
+  if (path.includes('portable')) {
+    return (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 3.75H6A2.25 2.25 0 003.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0120.25 6v1.5m0 9V18A2.25 2.25 0 0118 20.25h-1.5m-9 0H6A2.25 2.25 0 013.75 18v-1.5M12 9.75a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+      </svg>
+    );
+  }
   return (
     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
     </svg>
   );
 }
@@ -383,9 +419,23 @@ const APPLICATION_CATEGORIES: Record<string, ApplicationEntry> = {
 };
 
 function getAppIcon(label: string): React.ReactNode {
+  // Smart Manufacturing — factory/gear icon
   if (
-    label.includes('智造') || label.includes('物流') || label.includes('零售') ||
-    label.includes('Manufacturing') || label.includes('Logistics') || label.includes('Retail')
+    label.includes('智造') || label.includes('Manufacturing') ||
+    label.includes('Fabrication') || label.includes('производство') ||
+    label.includes('Fertigung')
+  ) {
+    return (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M11.423 7.413c1.098-.872 2.515-1.397 4.027-1.397s2.929.525 4.027 1.397M11.423 7.413a6.418 6.418 0 00-3.195 2.772C7.423 11.618 7 13.264 7 15c0 1.736.423 3.382 1.228 4.815a6.418 6.418 0 003.195 2.772m0-15.174c1.098-.872 2.515-1.397 4.027-1.397s2.929.525 4.027 1.397m0 0a6.418 6.418 0 013.195 2.772C20.577 11.618 21 13.264 21 15c0 1.736-.423 3.382-1.228 4.815a6.418 6.418 0 01-3.195 2.772M11.423 7.413V4.5m0 2.913a6.418 6.418 0 00-3.195 2.772C7.423 11.618 7 13.264 7 15c0 1.736.423 3.382 1.228 4.815a6.418 6.418 0 003.195 2.772m0-15.174V2.25" />
+      </svg>
+    );
+  }
+  // Warehouse & Logistics — warehouse/building icon
+  if (
+    label.includes('物流') || label.includes('Logistics') || label.includes('logística') ||
+    label.includes('Logistique') || label.includes('Entrepôt') || label.includes('Almacén') ||
+    label.includes('логистика')
   ) {
     return (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -393,22 +443,89 @@ function getAppIcon(label: string): React.ReactNode {
       </svg>
     );
   }
-  if (label.includes('城市') || label.includes('City')) {
+  // Archive & Library — book open icon
+  if (
+    label.includes('档案') || label.includes('图书') || label.includes('Archive') ||
+    label.includes('Library') || label.includes('Archiv') || label.includes('Bibliothèque') ||
+    label.includes('Archiv') || label.includes('архив')
+  ) {
+    return (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+      </svg>
+    );
+  }
+  // Asset Inspection — clipboard/checklist icon
+  if (
+    label.includes('资产') || label.includes('巡检') || label.includes('Asset') ||
+    label.includes('Inspection') || label.includes('Inspección') || label.includes('Inspektion') ||
+    label.includes('инспекция') || label.includes('Actif')
+  ) {
+    return (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+      </svg>
+    );
+  }
+  // Anti-counterfeit & Traceability — shield/check icon
+  if (
+    label.includes('防伪') || label.includes('追溯') || label.includes('Anti-counterfeit') ||
+    label.includes('Traceability') || label.includes('Antifalsificación') ||
+    label.includes('Produktschutz') || label.includes('Anticontrefaçon') ||
+    label.includes('Защита')
+  ) {
+    return (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+      </svg>
+    );
+  }
+  // Retail & Supply Chain — shopping cart icon
+  if (
+    label.includes('零售') || label.includes('Retail') || label.includes('Minoristas') ||
+    label.includes('Einzelhandel') || label.includes('Chaîne') || label.includes('Suministro') ||
+    label.includes('розничная')
+  ) {
+    return (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 2.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+      </svg>
+    );
+  }
+  // Smart City — buildings skyline icon
+  if (
+    label.includes('城市') || label.includes('City') || label.includes('Ciudad') ||
+    label.includes('Ville') || label.includes('город')
+  ) {
     return (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
       </svg>
     );
   }
+  // Smart Cabinet — server rack / cabinet icon
+  if (
+    label.includes('柜体') || label.includes('Cabinet') || label.includes('Gabinete') ||
+    label.includes('Schrank') || label.includes('Armoire') || label.includes('шкаф')
+  ) {
+    return (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
+      </svg>
+    );
+  }
   return (
     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
     </svg>
   );
 }
 
 function ApplicationsMegaMenu({ items, locale }: { items: NonNullable<NavItem['children']>; locale: string }) {
   const [activeLabel, setActiveLabel] = useState<string>(items[0]?.label ?? '');
+
+  const activeItem = items.find(item => item.label === activeLabel);
+  const activeHref = activeItem?.href ?? `/applications`;
 
   const appData = APPLICATION_CATEGORIES[activeLabel] || Object.values(APPLICATION_CATEGORIES)[0];
 
@@ -466,7 +583,7 @@ function ApplicationsMegaMenu({ items, locale }: { items: NonNullable<NavItem['c
           <div className="w-1/2 flex flex-col gap-3">
             {/* Featured card */}
             <Link
-              href={`/${locale}/applications`}
+              href={`/${locale}${activeHref}`}
               className="group flex-[3] relative rounded-2xl overflow-hidden border border-neutral-700/30 bg-neutral-800/30 hover:border-primary-500/20 transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/10 min-h-0"
             >
               <img
@@ -491,7 +608,7 @@ function ApplicationsMegaMenu({ items, locale }: { items: NonNullable<NavItem['c
             {/* Secondary card */}
             {leftCard && (
               <Link
-                href={`/${locale}/applications`}
+                href={`/${locale}${leftCard.item.href}`}
                 className="group flex-1 relative rounded-xl overflow-hidden border border-neutral-700/30 bg-neutral-800/30 hover:border-primary-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/5 min-h-0"
               >
                 <img
@@ -513,7 +630,7 @@ function ApplicationsMegaMenu({ items, locale }: { items: NonNullable<NavItem['c
             {rightCards.map((card, idx) => (
               <Link
                 key={card.item.label}
-                href={`/${locale}/applications`}
+                href={`/${locale}${card.item.href}`}
                 className={`group flex-1 relative rounded-xl overflow-hidden border border-neutral-700/30 bg-neutral-800/30 hover:border-primary-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/5 min-h-0 ${
                   idx === 0 ? 'hover:ring-1 hover:ring-primary-500/20' : ''
                 }`}
@@ -633,7 +750,7 @@ function SupportMegaMenu({ items, locale }: { items: NonNullable<NavItem['childr
           className="group flex items-center gap-4 rounded-xl border border-neutral-700/50 bg-neutral-800/60 p-5 hover:border-primary-500/40 hover:bg-neutral-800 transition-all duration-300"
         >
           <div className="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center text-primary-400 group-hover:bg-primary-500/15 transition-colors">
-            {getSupportIcon(item.href)}
+            {getSupportIcon(item.href, item.label)}
           </div>
           <span className="text-[13px] font-semibold text-white group-hover:text-primary-400 transition-colors">
             {item.label}
@@ -644,24 +761,39 @@ function SupportMegaMenu({ items, locale }: { items: NonNullable<NavItem['childr
   );
 }
 
-function getSupportIcon(href: string): React.ReactNode {
+function getSupportIcon(href: string, label: string): React.ReactNode {
+  // Product support — box/package icon
   if (href.includes('/products')) {
     return (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
       </svg>
     );
   }
+  // Service/contact — mail icon
   if (href.includes('/contact')) {
     return (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
       </svg>
     );
   }
+  // FAQ — question mark / help icon
+  if (
+    label.includes('FAQ') || label.includes('faq') || label.includes('常见') ||
+    label.includes('Fragen') || label.includes('Preguntas') || label.includes('Questions') ||
+    label.includes('вопрос') || label.includes('Fréquentes')
+  ) {
+    return (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+      </svg>
+    );
+  }
+  // Knowledge base — book/library icon
   return (
     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
     </svg>
   );
 }
