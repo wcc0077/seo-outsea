@@ -352,9 +352,9 @@ function ProductsMegaMenu({ items, locale }: { items: NonNullable<NavItem['child
 type ApplicationEntry = { title: string; image: string };
 
 const APPLICATION_CATEGORIES: Record<string, ApplicationEntry> = {
-  '智能制造': {
+  '智能智造': {
     image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_0cw9.jpg',
-    title: '智能制造',
+    title: '智能智造',
   },
   '仓储物流': {
     image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_ehv8.png',

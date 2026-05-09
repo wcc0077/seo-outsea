@@ -24,7 +24,7 @@ function downloadImage(url: string): Promise<Buffer> {
 // 8 application categories (from fn-tech.com)
 const APP_CATEGORIES = [
   {
-    name: '智能制造',
+    name: '智能智造',
     slug: 'smart-manufacturing',
     icon: 'factory',
     description: 'RFID技术在光伏电池片、切片、拉晶等光伏制造场景及数控刀具管理中的应用，实现生产全流程追溯、质量管控与工业4.0智能化转型。',
