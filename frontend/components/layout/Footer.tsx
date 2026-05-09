@@ -56,22 +56,23 @@ export default async function Footer({ global, locale, currentYear }: FooterProp
   // Filter only published categories (Strapi returns both draft + published)
   const published = allCategories.filter((c) => c.publishedAt !== null);
 
-  // Footer product columns: use Strapi data if available, fallback to hardcoded
+  // Footer product columns: only top-level categories
   const footerProductSlugs = ['mobile-devices', 'rfid-readers', 'rfid-tags'];
   const productTopLevel = published
     .filter((c) => !c.parent && footerProductSlugs.includes(c.slug))
     .sort((a, b) => footerProductSlugs.indexOf(a.slug) - footerProductSlugs.indexOf(b.slug));
 
-  // Group children by their parent's slug
+  // Group children by their parent's documentId
   const childMap = new Map<string, typeof published>();
   for (const cat of published) {
-    if (cat.parent?.slug) {
-      if (!childMap.has(cat.parent.slug)) childMap.set(cat.parent.slug, []);
-      childMap.get(cat.parent.slug)!.push(cat);
+    if (cat.parent?.documentId) {
+      const parentId = cat.parent.documentId;
+      if (!childMap.has(parentId)) childMap.set(parentId, []);
+      childMap.get(parentId)!.push(cat);
     }
   }
 
-  // Use fallback if no product categories from Strapi
+  // Use Strapi data if top-level categories exist, otherwise fallback
   const useFallbackProducts = productTopLevel.length === 0;
 
   return (
@@ -107,9 +108,10 @@ export default async function Footer({ global, locale, currentYear }: FooterProp
           {/* Product category columns from Strapi or fallback */}
           {(useFallbackProducts ? FALLBACK_PRODUCT_COLUMNS : productTopLevel).map((category) => {
             const isFallback = useFallbackProducts;
+            const docId = isFallback ? null : (category as ProductCategoryData).documentId;
             const children = isFallback
               ? (category as typeof FALLBACK_PRODUCT_COLUMNS[0]).children
-              : childMap.get((category as ProductCategoryData).slug) || [];
+              : (docId ? childMap.get(docId) : []) || [];
             const name = isFallback ? (category as typeof FALLBACK_PRODUCT_COLUMNS[0]).name : (category as ProductCategoryData).name;
             const slug = isFallback ? (category as typeof FALLBACK_PRODUCT_COLUMNS[0]).slug : (category as ProductCategoryData).slug;
             return (

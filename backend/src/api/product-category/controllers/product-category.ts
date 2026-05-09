@@ -51,16 +51,32 @@ import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::product-category.product-category', ({ strapi }) => ({
   async find(ctx) {
-    const { locale, populate } = ctx.query;
+    const { locale } = ctx.query;
 
     const entities = await strapi.db.query('api::product-category.product-category').findMany({
       where: {
         locale: locale || 'en',
         publishedAt: { $notNull: true },
       },
-      populate: populate || ['parent', 'children'],
+      populate: ['parent', 'children'],
       orderBy: { sortOrder: 'asc' },
     });
+
+    // Group children by parent's documentId
+    const childMap = new Map<string, typeof entities>();
+    for (const cat of entities) {
+      if (cat.parent?.documentId) {
+        if (!childMap.has(cat.parent.documentId)) childMap.set(cat.parent.documentId, []);
+        childMap.get(cat.parent.documentId)!.push(cat);
+      }
+    }
+
+    // Attach grouped children to parent categories
+    for (const cat of entities) {
+      if (cat.documentId && childMap.has(cat.documentId)) {
+        cat.children = childMap.get(cat.documentId)!;
+      }
+    }
 
     return { data: entities, meta: {} };
   },
