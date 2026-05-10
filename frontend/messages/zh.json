@@ -204,6 +204,7 @@
     "zipCode": "邮编",
     "ctaTitle": "我们期待与您的合作",
     "nationalHotline": "全国统一热线",
-    "faxShort": "传真"
+    "faxShort": "传真",
+    "website": "网址"
   }
 }

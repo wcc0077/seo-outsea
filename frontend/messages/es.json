@@ -142,5 +142,22 @@
     "news": "Noticias",
     "contactUs": "Contáctenos",
     "copyright": "© {startYear}–{endYear} {name}. Todos los derechos reservados."
+  },
+  "ContactPage": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch with the FN Tech team for product inquiries and technical support",
+    "officesTitle": "Our Offices",
+    "officesSubtitle": "We have offices across China to provide localized service and support",
+    "mapHint": "Click markers on the map to view locations",
+    "hqBadge": "Headquarters",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "fax": "Fax",
+    "zipCode": "Postal Code",
+    "ctaTitle": "We Look Forward to Working With You",
+    "nationalHotline": "National Hotline",
+    "faxShort": "Fax",
+    "website": "Website"
   }
 }

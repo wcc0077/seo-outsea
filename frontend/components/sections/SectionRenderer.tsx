@@ -6,7 +6,6 @@ import NewsList from './NewsList';
 import TextImage from './TextImage';
 import StatsSection from './StatsSection';
 import FAQSection from './FAQSection';
-import ContactForm from './ContactForm';
 import Spacer from './Spacer';
 
 interface SectionRendererProps {
@@ -38,7 +37,7 @@ export default function SectionRenderer({ section, locale }: SectionRendererProp
       return <FAQSection {...(section as unknown as Parameters<typeof FAQSection>[0])} />;
 
     case 'sections.contact-form':
-      return <ContactForm {...(section as unknown as Parameters<typeof ContactForm>[0])} />;
+      return null;
 
     case 'sections.spacer':
       return <Spacer {...(section as unknown as Parameters<typeof Spacer>[0])} />;
