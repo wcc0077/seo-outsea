@@ -6,11 +6,18 @@ export default {
         if (ctx.path === '/api/products') {
           const { locale } = ctx.query;
           const results = await strapi.db.query('api::product.product').findMany({
-            where: { locale: locale || 'en' },
+            where: { locale: locale || 'en', publishedAt: { $notNull: true } },
             populate: ['category', 'images'],
             orderBy: { createdAt: 'desc' },
           });
-          ctx.body = { data: results };
+          // Deduplicate by documentId
+          const seen = new Set();
+          const unique = results.filter(r => {
+            if (seen.has(r.documentId)) return false;
+            seen.add(r.documentId);
+            return true;
+          });
+          ctx.body = { data: unique };
           ctx.status = 200;
           return;
         }
@@ -19,11 +26,18 @@ export default {
         if (ctx.path === '/api/applications') {
           const { locale } = ctx.query;
           const results = await strapi.db.query('api::application.application').findMany({
-            where: { locale: locale || 'en' },
+            where: { locale: locale || 'en', publishedAt: { $notNull: true } },
             populate: ['category', 'images'],
             orderBy: { createdAt: 'desc' },
           });
-          ctx.body = { data: results };
+          // Deduplicate by documentId
+          const seen = new Set();
+          const unique = results.filter(r => {
+            if (seen.has(r.documentId)) return false;
+            seen.add(r.documentId);
+            return true;
+          });
+          ctx.body = { data: unique };
           ctx.status = 200;
           return;
         }
@@ -42,7 +56,7 @@ export default {
         if (ctx.path === '/api/product-categories') {
           const { locale } = ctx.query;
           const results = await strapi.db.query('api::product-category.product-category').findMany({
-            where: { locale: locale || 'en' },
+            where: { locale: locale || 'en', publishedAt: { $notNull: true } },
             populate: ['parent', 'children'],
             orderBy: { sortOrder: 'asc' },
           });
@@ -55,22 +69,17 @@ export default {
         if (ctx.path === '/api/application-categories') {
           const { locale } = ctx.query;
           const results = await strapi.db.query('api::application-category.application-category').findMany({
-            where: { locale: locale || 'en' },
+            where: { locale: locale || 'en', publishedAt: { $notNull: true } },
             orderBy: { sortOrder: 'asc' },
           });
-          ctx.body = { data: results };
-          ctx.status = 200;
-          return;
-        }
-
-        // ── RFID tag categories ──
-        if (ctx.path === '/api/rfid-tag-categories') {
-          const { locale } = ctx.query;
-          const results = await strapi.db.query('api::rfid-tag-category.rfid-tag-category').findMany({
-            where: { locale: locale || 'en' },
-            orderBy: { sortOrder: 'asc' },
+          // Deduplicate by documentId
+          const seen = new Set();
+          const unique = results.filter(r => {
+            if (seen.has(r.documentId)) return false;
+            seen.add(r.documentId);
+            return true;
           });
-          ctx.body = { data: results };
+          ctx.body = { data: unique };
           ctx.status = 200;
           return;
         }
@@ -79,11 +88,18 @@ export default {
         if (ctx.path === '/api/rfid-tags') {
           const { locale } = ctx.query;
           const results = await strapi.db.query('api::rfid-tag.rfid-tag').findMany({
-            where: { locale: locale || 'en' },
+            where: { locale: locale || 'en', publishedAt: { $notNull: true } },
             populate: ['category', 'images'],
             orderBy: { createdAt: 'desc' },
           });
-          ctx.body = { data: results };
+          // Deduplicate by documentId
+          const seen = new Set();
+          const unique = results.filter(r => {
+            if (seen.has(r.documentId)) return false;
+            seen.add(r.documentId);
+            return true;
+          });
+          ctx.body = { data: unique };
           ctx.status = 200;
           return;
         }
@@ -93,8 +109,8 @@ export default {
           const slug = ctx.path.replace('/api/rfid-tags/by-category/', '');
           const { locale } = ctx.query;
 
-          const category = await strapi.db.query('api::rfid-tag-category.rfid-tag-category').findOne({
-            where: { slug, locale: locale || 'en' },
+          const category = await strapi.db.query('api::product-category.product-category').findOne({
+            where: { slug, locale: locale || 'en', publishedAt: { $notNull: true } },
           });
 
           if (!category) {
@@ -104,11 +120,18 @@ export default {
           }
 
           const results = await strapi.db.query('api::rfid-tag.rfid-tag').findMany({
-            where: { category: category.documentId, locale: locale || 'en' },
+            where: { category: category.id, locale: locale || 'en', publishedAt: { $notNull: true } },
             populate: ['category', 'images'],
             orderBy: { name: 'asc' },
           });
-          ctx.body = { data: results, category };
+          // Deduplicate by documentId
+          const seen = new Set();
+          const unique = results.filter(r => {
+            if (seen.has(r.documentId)) return false;
+            seen.add(r.documentId);
+            return true;
+          });
+          ctx.body = { data: unique, category };
           ctx.status = 200;
           return;
         }

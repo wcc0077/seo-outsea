@@ -144,6 +144,8 @@ export async function getProductCategoryBySlug(slug: string, locale: string): Pr
 // ---- Products ----
 
 export interface ProductData {
+  id?: number;
+  documentId?: string;
   name: string;
   slug: string;
   description: string;
@@ -158,11 +160,21 @@ export interface ProductData {
   seoTitle: string;
   seoDescription: string;
   seoKeywords: string;
+  publishedAt?: string | null;
 }
 
 export async function getProducts(locale: string): Promise<ProductData[]> {
   const res = await fetchApi<{ data: ProductData[] }>('/api/products', { locale });
-  return res.data;
+
+  // Filter published products and deduplicate by documentId
+  const published = res.data.filter((p) => p.publishedAt !== null && p.slug);
+  const seen = new Set<string>();
+  return published.filter((p) => {
+    const key = p.documentId || p.slug;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 export async function getProductsByCategory(categorySlug: string, locale: string): Promise<ProductData[]> {
@@ -205,7 +217,7 @@ export async function getApplications(locale: string): Promise<ApplicationData[]
   const res = await fetchApi<{ data: ApplicationData[] }>('/api/applications', {
     locale,
     populate: 'images,category',
-  });
+  }, { next: { revalidate: 60 } }); // Revalidate every 60 seconds
 
   // Deduplicate by documentId to handle Strapi i18n duplicates
   const seen = new Set<string>();
@@ -249,6 +261,7 @@ export interface ApplicationCategoryData {
   description: string;
   sortOrder: number;
   publishedAt?: string | null;
+  image?: { url: string; alternativeText: string } | null;
 }
 
 export async function getApplicationCategories(locale: string): Promise<ApplicationCategoryData[]> {
@@ -257,9 +270,10 @@ export async function getApplicationCategories(locale: string): Promise<Applicat
     'sort[0]': 'sortOrder:asc',
   });
 
-  // Deduplicate by documentId to handle Strapi i18n duplicates
+  // Filter published categories and deduplicate by documentId
+  const published = res.data.filter((cat) => cat.publishedAt !== null);
   const seen = new Set<string>();
-  return res.data.filter(cat => {
+  return published.filter((cat) => {
     const key = cat.documentId || cat.slug;
     if (seen.has(key)) return false;
     seen.add(key);
@@ -321,42 +335,26 @@ export async function getNewsBySlug(slug: string, locale: string): Promise<NewsD
   }
 }
 
-// ---- RFID Tag Categories ----
+// ---- RFID Tag Categories (unified into Product Category) ----
 
-export interface RfidTagCategoryData {
-  id?: number;
-  name: string;
-  slug: string;
-  description: string;
-  parent?: RfidTagCategoryData;
-  children?: RfidTagCategoryData[];
-  sortOrder: number;
-  image?: { url: string; alternativeText: string };
-}
+export type RfidTagCategoryData = ProductCategoryData;
 
 export async function getRfidTagCategories(locale: string): Promise<RfidTagCategoryData[]> {
-  const res = await fetchApi<{ data: RfidTagCategoryData[] }>('/api/rfid-tag-categories', {
-    locale,
-    'sort[0]': 'sortOrder:asc',
-  });
-  return res.data;
+  const allCategories = await getProductCategories(locale);
+  const rfidTagParent = allCategories.find((c) => c.slug === 'rfid-tags');
+  if (!rfidTagParent) return [];
+  return allCategories.filter((c) => c.parent?.documentId === rfidTagParent.documentId);
 }
 
 export async function getRfidTagCategoryBySlug(slug: string, locale: string): Promise<RfidTagCategoryData | null> {
-  try {
-    const res = await fetchApi<{ data: RfidTagCategoryData }>(
-      `/api/rfid-tag-categories/by-slug/${slug}`,
-      { locale }
-    );
-    return res.data;
-  } catch {
-    return null;
-  }
+  return getProductCategoryBySlug(slug, locale);
 }
 
 // ---- RFID Tags ----
 
 export interface RfidTagData {
+  id?: number;
+  documentId?: string;
   name: string;
   slug: string;
   model?: string;
@@ -371,11 +369,20 @@ export interface RfidTagData {
   seoTitle: string;
   seoDescription: string;
   seoKeywords: string;
+  publishedAt?: string | null;
 }
 
 export async function getRfidTags(locale: string): Promise<RfidTagData[]> {
   const res = await fetchApi<{ data: RfidTagData[] }>('/api/rfid-tags', { locale });
-  return res.data;
+
+  // Filter published tags and deduplicate by slug
+  const published = res.data.filter((t) => t.publishedAt !== null && t.slug);
+  const seen = new Set<string>();
+  return published.filter((t) => {
+    if (seen.has(t.slug)) return false;
+    seen.add(t.slug);
+    return true;
+  });
 }
 
 export async function getRfidTagsByCategory(categorySlug: string, locale: string): Promise<RfidTagData[]> {
@@ -383,7 +390,15 @@ export async function getRfidTagsByCategory(categorySlug: string, locale: string
     `/api/rfid-tags/by-category/${categorySlug}`,
     { locale }
   );
-  return res.data;
+
+  // Filter published tags and deduplicate by slug
+  const published = res.data.filter((t) => t.publishedAt !== null && t.slug);
+  const seen = new Set<string>();
+  return published.filter((t) => {
+    if (seen.has(t.slug)) return false;
+    seen.add(t.slug);
+    return true;
+  });
 }
 
 export async function getRfidTagBySlug(slug: string, locale: string): Promise<RfidTagData | null> {
