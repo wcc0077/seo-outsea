@@ -79,7 +79,54 @@
     "intro": "About FN",
     "gallery": "Company Scene",
     "history": "History",
-    "honors": "Honors & Certs"
+    "honors": "Honors & Certs",
+    "values": {
+      "title": "Core Values",
+      "subtitle": "CORE VALUES",
+      "integrity": "Integrity",
+      "altruism": "Altruism",
+      "gratitude": "Gratitude",
+      "diligence": "Diligence",
+      "professionalism": "Professionalism",
+      "responsibility": "Responsibility"
+    },
+    "motto": "With trust we prosper, with gratitude we empower",
+    "whyChooseUs": {
+      "title": "Why Choose FN Tech",
+      "subtitle": "WHY CHOOSE US",
+      "strength": {
+        "title": "Enterprise Strength",
+        "points": [
+          "4,000 sqm R&D and production base with over 20 million RMB registered capital",
+          "100+ professional team members led by senior PhDs",
+          "30+ honors and awards with active corporate social responsibility"
+        ]
+      },
+      "quality": {
+        "title": "Product Quality",
+        "points": [
+          "3+ million RMB in R&D testing equipment, 100% inspection per unit",
+          "Incoming, component, semi-finished, finished, and burn-in testing at every stage",
+          "ISO9001/ISO14001 certified, quality assured through systematic processes"
+        ]
+      },
+      "technology": {
+        "title": "R&D Technology",
+        "points": [
+          "Senior R&D team from top enterprises like TI and top 985 universities",
+          "18 years of RFID IoT hardware R&D experience, 70+ patents",
+          "Modular product design enabling low-cost rapid customization"
+        ]
+      },
+      "service": {
+        "title": "Professional Service",
+        "points": [
+          "Pre-sales technical consulting with expert on-site visits and total solution mindset",
+          "Process-driven operations with ERP + dedicated account managers for efficient delivery",
+          "24-hour hotline support, multiple warranty options, unique RFID Knowledge Hub"
+        ]
+      }
+    }
   },
   "Home": {
     "heroTitle": "Industrial RFID Solutions",
@@ -142,5 +189,21 @@
     "news": "News",
     "contactUs": "Contact Us",
     "copyright": "© {startYear}–{endYear} {name}. All rights reserved."
+  },
+  "ContactPage": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch with the FN Tech team for product inquiries and technical support",
+    "officesTitle": "Our Offices",
+    "officesSubtitle": "We have offices across China to provide localized service and support",
+    "mapHint": "Click markers on the map to view locations",
+    "hqBadge": "Headquarters",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "fax": "Fax",
+    "zipCode": "Postal Code",
+    "ctaTitle": "We Look Forward to Working With You",
+    "nationalHotline": "National Hotline",
+    "faxShort": "Fax"
   }
 }

@@ -79,7 +79,54 @@
     "intro": "孚恩简介",
     "gallery": "公司实景",
     "history": "发展历程",
-    "honors": "荣誉资质"
+    "honors": "荣誉资质",
+    "values": {
+      "title": "核心价值观",
+      "subtitle": "CORE VALUES",
+      "integrity": "诚信",
+      "altruism": "利他",
+      "gratitude": "感恩",
+      "diligence": "勤奋",
+      "professionalism": "专业",
+      "responsibility": "责任"
+    },
+    "motto": "有孚盈缶，知恩允能",
+    "whyChooseUs": {
+      "title": "选择孚恩的理由",
+      "subtitle": "WHY CHOOSE US",
+      "strength": {
+        "title": "企业实力",
+        "points": [
+          "4000平米研发生产基地，2000多万注册资金",
+          "100余人专业团队，资深博士带队",
+          "30多项荣誉奖项并承担多个组织社会责任"
+        ]
+      },
+      "quality": {
+        "title": "产品品质",
+        "points": [
+          "300多万研发测试设备，逐台全检，确保品质一致性",
+          "来料检、部件检、半成品检、成品检、老化测试，层层把关",
+          "通过 ISO9001/ISO14001 等权威认证，从体系上保障产品品质"
+        ]
+      },
+      "technology": {
+        "title": "研发技术",
+        "points": [
+          "来自 TI 等一流大企业或 985 高校的资深研发团队专注自主研发创新",
+          "18年 RFID 物联网硬件研发经验，70多项专利，积跬步以成千里",
+          "众多模块化设计的产品基础，可低成本快速个性化定制"
+        ]
+      },
+      "service": {
+        "title": "专业服务",
+        "points": [
+          "售前多方位技术咨询，专家上门服务，以提供整体解决方案的心态营销硬件产品",
+          "售中流程化作业，ERP系统+专职商务跟单，高效下单供货，及时主动反馈",
+          "售后24小时服务热线快速响应，多种质保，创新独特的\"RFID智库\"互动分享"
+        ]
+      }
+    }
   },
   "Home": {
     "heroTitle": "工业 RFID 解决方案",
@@ -142,5 +189,21 @@
     "news": "新闻中心",
     "contactUs": "联系我们",
     "copyright": "© {startYear}–{endYear} {name} 版权所有。"
+  },
+  "ContactPage": {
+    "title": "联系我们",
+    "subtitle": "随时与孚恩团队取得联系，获取产品咨询与技术支持",
+    "officesTitle": "办事处",
+    "officesSubtitle": "我们在全国各地设有办事处，为您提供本地化的服务支持",
+    "mapHint": "点击地图标记查看位置",
+    "hqBadge": "总部",
+    "address": "地址",
+    "phone": "电话",
+    "email": "邮箱",
+    "fax": "传真",
+    "zipCode": "邮编",
+    "ctaTitle": "我们期待与您的合作",
+    "nationalHotline": "全国统一热线",
+    "faxShort": "传真"
   }
 }

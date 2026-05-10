@@ -7,19 +7,62 @@ export default async function AboutIntroPage({ params }: { params: Promise<{ loc
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'About' });
 
-  // Try Strapi first, fallback to hardcoded
   const strapiData = await getAboutPageBySlug('company-intro', locale);
 
   const isZh = locale === 'zh';
 
   const heroTitle = strapiData?.title || (isZh ? '关于孚恩' : 'About FN Tech');
   const heroSubtitle = isZh
-    ? '专注 RFID 硬件研发与制造，助力全球工业智能化升级'
-    : 'Focused on RFID hardware R&D and manufacturing, empowering global industrial intelligence';
+    ? '专注 RFID 硬件研发与制造，助力全球工业智能化升级 —— 幸福员工，感动客户'
+    : 'Focused on RFID hardware R&D and manufacturing — Happy employees, inspired customers';
 
   const sections = strapiData
     ? parseStrapiContent(strapiData.content)
     : getFallbackSections(isZh);
+
+  const values = [
+    { char: isZh ? '诚' : 'I', key: 'integrity' as const },
+    { char: isZh ? '利' : 'A', key: 'altruism' as const },
+    { char: isZh ? '恩' : 'G', key: 'gratitude' as const },
+    { char: isZh ? '勤' : 'D', key: 'diligence' as const },
+    { char: isZh ? '专' : 'P', key: 'professionalism' as const },
+    { char: isZh ? '责' : 'R', key: 'responsibility' as const },
+  ];
+
+  const whyChooseUsItems = [
+    {
+      key: 'strength',
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+        </svg>
+      ),
+    },
+    {
+      key: 'quality',
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+    },
+    {
+      key: 'technology',
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+        </svg>
+      ),
+    },
+    {
+      key: 'service',
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+        </svg>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -126,6 +169,74 @@ export default async function AboutIntroPage({ params }: { params: Promise<{ loc
         </section>
       ))}
 
+      {/* Motto Pull-quote */}
+      <section className="relative bg-neutral-950 border-y border-neutral-800/50 py-20 text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-primary-400/40 text-6xl font-serif leading-none mb-6">&ldquo;</div>
+          <blockquote className="font-serif text-2xl md:text-3xl text-neutral-200 mb-8">
+            {t('motto')}
+          </blockquote>
+          <div className="w-16 h-0.5 bg-primary-400/50 mx-auto" />
+        </div>
+      </section>
+
+      {/* Core Values */}
+      <section className="py-20 bg-neutral-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <div className="text-xs font-semibold uppercase tracking-widest text-primary-400 mb-2">{t('values.subtitle')}</div>
+            <h2 className="text-3xl font-bold text-white">{t('values.title')}</h2>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+            {values.map((v, i) => (
+              <div
+                key={i}
+                className="group flex flex-col items-center p-8 rounded-xl bg-neutral-800/50 border border-neutral-700/30 hover:border-primary-500/30 transition-all duration-300"
+              >
+                <div className="text-5xl font-bold text-primary-400/80 mb-3 group-hover:text-primary-400 transition-colors duration-300">
+                  {v.char}
+                </div>
+                <div className="text-sm font-semibold text-neutral-200">{t(`values.${v.key}`)}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section className="py-20 bg-neutral-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <div className="text-xs font-semibold uppercase tracking-widest text-primary-400 mb-2">{t('whyChooseUs.subtitle')}</div>
+            <h2 className="text-3xl font-bold text-white">{t('whyChooseUs.title')}</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {whyChooseUsItems.map((item, i) => {
+              const points = t.raw(`whyChooseUs.${item.key}.points`) as string[];
+              return (
+                <div
+                  key={i}
+                  className="p-8 rounded-xl bg-neutral-800/50 border border-neutral-700/30 hover:border-primary-500/30 transition-all duration-300"
+                >
+                  <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center text-primary-400 mb-5">
+                    {item.icon}
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-4">{t(`whyChooseUs.${item.key}.title`)}</h3>
+                  <ul className="space-y-3">
+                    {points.map((point, j) => (
+                      <li key={j} className="flex items-start gap-3 text-neutral-300">
+                        <span className="mt-2 w-1 h-1 rounded-full bg-primary-400 flex-shrink-0" />
+                        <span className="text-sm leading-relaxed">{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-20 bg-neutral-900 border-t border-neutral-800/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -198,20 +309,6 @@ function getFallbackSections(isZh: boolean): Section[] {
 
 公司拥有完善的RFID测试环境和生产线，确保产品从设计到量产的每一个环节都经过严格的品质控制。`,
         },
-        {
-          title: '企业资质',
-          subtitle: 'QUALIFICATIONS',
-          items: [
-            { icon: 'badge', text: '上海市高新技术企业' },
-            { icon: 'badge', text: '专精特新中小企业' },
-            { icon: 'badge', text: '上海市科技小巨人培育企业' },
-            { icon: 'badge', text: '上海市双软认证企业' },
-            { icon: 'badge', text: 'ISO9001 质量管理体系' },
-            { icon: 'badge', text: 'ISO14001 环境管理体系' },
-            { icon: 'badge', text: 'CCC 强制认证' },
-            { icon: 'badge', text: '70+ 项知识产权' },
-          ],
-        },
       ]
     : [
         {
@@ -243,20 +340,6 @@ FN Tech focuses on RFID automatic identification, data collection, and IoT hardw
           content: `The company has a high-quality R&D team with core members having over 15 years of technical accumulation in the RFID industry. More than 60% of the R&D team hold master's degrees, with full-stack R&D capabilities from chip selection, circuit design, firmware development, antenna design to application software.
 
 The company has a complete RFID testing environment and production line, ensuring that every stage from design to mass production undergoes strict quality control.`,
-        },
-        {
-          title: 'Qualifications',
-          subtitle: 'QUALIFICATIONS',
-          items: [
-            { icon: 'badge', text: 'Shanghai High-Tech Enterprise' },
-            { icon: 'badge', text: 'Specialized & Innovative SME' },
-            { icon: 'badge', text: 'Shanghai Sci-Tech Giant Cultivation' },
-            { icon: 'badge', text: 'Shanghai Double-Software Certified' },
-            { icon: 'badge', text: 'ISO9001 Quality Management' },
-            { icon: 'badge', text: 'ISO14001 Environmental Management' },
-            { icon: 'badge', text: 'CCC Mandatory Certification' },
-            { icon: 'badge', text: '70+ IP Rights' },
-          ],
         },
       ];
 }
