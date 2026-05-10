@@ -143,6 +143,11 @@ export async function getProductCategoryBySlug(slug: string, locale: string): Pr
 
 // ---- Products ----
 
+export interface ProductTagData {
+  label: string;
+  color?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+}
+
 export interface ProductData {
   id?: number;
   documentId?: string;
@@ -150,13 +155,14 @@ export interface ProductData {
   slug: string;
   description: string;
   specs: Array<{ name: string; value: string }>;
+  tags?: ProductTagData[];
   images: Array<{ url: string; alternativeText: string }>;
   imageUrl: string;
   category?: ProductCategoryData;
   rfidFrequency?: 'uhf' | 'hf' | 'lf-125khz' | 'lf-134khz' | 'vhf';
   features?: string[];
   connectivity?: string[];
-  os?: 'android' | 'windows' | 'other';
+  os?: 'android' | 'windows' | 'other' | null;
   seoTitle: string;
   seoDescription: string;
   seoKeywords: string;

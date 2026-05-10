@@ -205,6 +205,22 @@ export interface SharedStatItem extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedTagItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_tag_items';
+  info: {
+    description: 'Product feature/benefit tag with optional styling';
+    displayName: 'Tag Item';
+    icon: 'tag';
+  };
+  attributes: {
+    color: Schema.Attribute.Enumeration<
+      ['default', 'primary', 'success', 'warning', 'danger', 'info']
+    > &
+      Schema.Attribute.DefaultTo<'default'>;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -223,6 +239,7 @@ declare module '@strapi/strapi' {
       'shared.social-link': SharedSocialLink;
       'shared.spec-item': SharedSpecItem;
       'shared.stat-item': SharedStatItem;
+      'shared.tag-item': SharedTagItem;
     }
   }
 }

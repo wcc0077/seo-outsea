@@ -2,43 +2,36 @@ import { factories } from '@strapi/strapi';
 import https from 'https';
 import http from 'http';
 import { Readable } from 'stream';
+import fs from 'fs';
+import path from 'path';
 
-const PRODUCTS = [
-  { name: 'D1338T 工业级高频网口读写器', category: 'hf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_p6nq.jpg' },
-  { name: 'D1609 & D1339系列工业级高频读写器', category: 'hf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/2_yhtq.jpg' },
-  { name: 'D1612 工业级高频读写器', category: 'hf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/3_nuqm.jpg' },
-  { name: 'D1621系列 IO-LINK高频RFID读写器', category: 'hf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/3_nuqm.jpg' },
-  { name: 'D1646T ModbusTCP 工业齐平式高频RFID读写器', category: 'hf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/4_3ji7.jpg' },
-  { name: 'D1606 系列高频工业读写器', category: 'hf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/8897.png' },
-  { name: 'D1604 系列工业级高频读写器', category: 'hf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D1604-1_o803.jpg' },
-  { name: 'D1333系列工业级高频读写器', category: 'hf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_1alu.webp' },
-  { name: 'D1626系列IO-LINK高频RFID读写器', category: 'hf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/2.webp' },
-  { name: 'D2184B 高性能四通道UHF读写器', category: 'uhf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2184B_x6b5.jpg' },
-  { name: 'D2480系列 工业超高频RFID读写器', category: 'uhf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2480B_4f8u.jpg' },
-  { name: 'D2381 工业级超高频读写器', category: 'uhf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D1108WD2381(3)_lunh.jpg' },
-  { name: 'D2188BL超高频多通道读写器', category: 'uhf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2188.jpg' },
-  { name: 'D2184BL超高频多通道读写器', category: 'uhf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2188BL.jpg' },
-  { name: 'D2181B Lite 超高频读写器', category: 'uhf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2181Blite.jpg' },
-  { name: 'D2184B Lite超高频读写器', category: 'uhf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2184Blite_6cwb.jpg' },
-  { name: 'D2181R工业级超高频读写器', category: 'uhf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2181R.jpg' },
-  { name: 'D2180U超高频桌面读写器', category: 'uhf-rfid-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2180U.jpg' },
-  { name: 'M12 安卓手持终端', category: 'handheld-terminals', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_7bkj.jpg' },
-  { name: 'M11 工业级手持终端', category: 'handheld-terminals', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/M11_lnf7.jpg' },
-  { name: 'N60 智能打印手持终端', category: 'handheld-terminals', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/11_vljy.jpg' },
-  { name: 'M11高工业级安卓条码手持终端', category: 'handheld-terminals', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/M11.png' },
-  { name: 'P01 多功能工业平板', category: 'industrial-tablets', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_hd05.jpg' },
-  { name: 'T01 蓝牙UHF扫描仪', category: 'portable-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_xz3s_ou59.jpg' },
-  { name: 'T02 蓝牙UHF扫描仪', category: 'portable-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_jxgj_0wo1.jpg' },
-  { name: 'T03 蓝牙UHF扫描仪', category: 'portable-readers', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/t03.png' },
-];
+interface ScrapedProduct {
+  name: string;
+  slug: string;
+  description: string;
+  features: string[];
+  specsRaw: string;
+  specsText: string;
+  mainImage: string;
+  images: string[];
+  category: string;
+  parentCategory: string;
+  subcategory: string;
+  frequency: string;
+  os: string;
+  connectivity: string[];
+  seoTitle: string;
+  seoKeywords: string;
+  url: string;
+}
 
-const CATEGORIES = [
-  { name: '高频系列RFID读写器', slug: 'hf-rfid-readers' },
-  { name: '超高频系列RFID读写器', slug: 'uhf-rfid-readers' },
-  { name: '多功能手持终端', slug: 'handheld-terminals' },
-  { name: '多功能工业平板', slug: 'industrial-tablets' },
-  { name: '便携式RFID读写器', slug: 'portable-readers' },
-];
+function loadProductsFromJson(): ScrapedProduct[] {
+  const filePath = path.resolve(__dirname, '../../../../../scripts/scraped-data/products.json');
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Products file not found: ${filePath}. Run 'npx tsx scripts/scrape-fn-tech.ts' first.`);
+  }
+  return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+}
 
 function downloadImage(url: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {
@@ -61,7 +54,6 @@ function downloadImage(url: string): Promise<Buffer> {
 
 export default factories.createCoreController('api::product.product', ({ strapi }) => ({
   async find(ctx) {
-    // Use strapi.db.query to ensure all scalar fields (like imageUrl) are returned
     const { locale, populate } = ctx.query;
 
     const entities = await strapi.db.query('api::product.product').findMany({
@@ -69,7 +61,7 @@ export default factories.createCoreController('api::product.product', ({ strapi 
         locale: locale || 'en',
         publishedAt: { $notNull: true },
       },
-      populate: populate || ['images', 'category'],
+      populate: populate || ['images', 'category', 'tags'],
       orderBy: { updatedAt: 'desc' },
     });
 
@@ -82,7 +74,7 @@ export default factories.createCoreController('api::product.product', ({ strapi 
 
     const entity = await strapi.db.query('api::product.product').findOne({
       where: { slug, locale: locale || 'en' },
-      populate: ['category', 'specs', 'images'],
+      populate: ['category', 'specs', 'images', 'tags'],
     });
 
     if (!entity) {
@@ -97,7 +89,7 @@ export default factories.createCoreController('api::product.product', ({ strapi 
     const { locale } = ctx.query;
 
     const category = await strapi.db.query('api::product-category.product-category').findOne({
-      where: { slug: categorySlug, locale: locale || 'en' },
+      where: { slug: categorySlug, locale: locale || 'en', publishedAt: { $notNull: true } },
     });
 
     if (!category) {
@@ -119,84 +111,111 @@ export default factories.createCoreController('api::product.product', ({ strapi 
       return { data: null, error: `Products already exist (${existingCount}). Skipping import.` };
     }
 
-    const results: { created: number; failed: number; categories: string[] } = { created: 0, failed: 0, categories: [] };
-
-    // Create categories
-    for (const cat of CATEGORIES) {
-      const existing = await strapi.db.query('api::product-category.product-category').findOne({
-        where: { slug: cat.slug },
-      });
-      if (existing) {
-        results.categories.push(existing.slug);
-        continue;
-      }
-
-      const category = await strapi.documents('api::product-category.product-category').create({
-        data: { name: cat.name, slug: cat.slug },
-      });
-      results.categories.push(category.slug);
+    let products: ScrapedProduct[];
+    try {
+      products = loadProductsFromJson();
+    } catch (err: any) {
+      return ctx.badRequest(err.message);
     }
 
-    // Create products
-    for (const product of PRODUCTS) {
+    const results: { created: number; failed: number; errors: string[] } = {
+      created: 0, failed: 0, errors: [],
+    };
+
+    for (const product of products) {
       try {
-        const slug = product.name
-          .toLowerCase()
-          .replace(/[^a-z0-9\u4e00-\u9fff]+/g, '-')
-          .replace(/-+/g, '-')
-          .replace(/^-|-$/g, '');
+        // Find category by scraped subcategory name
+        const category = await strapi.db.query('api::product-category.product-category').findOne({
+          where: { name: product.subcategory || product.category },
+        });
 
-        const model = product.name.match(/^([A-Z0-9]+)/)?.[1] || '';
-
-        // Download and upload image
-        let imageConnect: number[] = [];
-        try {
-          const filename = product.imageUrl.split('/').pop() || 'image.jpg';
-          const buffer = await downloadImage(product.imageUrl);
-
-          const uploaded = await strapi.plugin('upload').services.upload.upload({
-            data: {},
-            files: {
-              name: filename,
-              type: 'image/jpeg',
-              size: buffer.length,
-              path: './',
-              stream: Readable.from(buffer),
-            },
-          });
-
-          if (Array.isArray(uploaded)) {
-            imageConnect = uploaded.map((f: any) => f.id);
-          } else if (uploaded) {
-            imageConnect = [(uploaded as any).id];
-          }
-        } catch (err: any) {
-          console.log(`  Image failed for ${product.name}: ${err.message}`);
+        if (!category) {
+          results.failed++;
+          results.errors.push(
+            `No category found for: ${product.name} (subcategory: ${product.subcategory})`
+          );
+          continue;
         }
 
-        // Find category documentId
-        const category = await strapi.db.query('api::product-category.product-category').findOne({
-          where: { slug: product.category },
-        });
+        // Download and upload images (up to 5)
+        let imageConnect: number[] = [];
+        for (const imgUrl of product.images.slice(0, 5)) {
+          try {
+            const filename = imgUrl.split('/').pop() || 'image.jpg';
+            const buffer = await downloadImage(imgUrl);
+            const uploaded = await strapi.plugin('upload').services.upload.upload({
+              data: {},
+              files: {
+                name: filename,
+                type: 'image/jpeg',
+                size: buffer.length,
+                path: './',
+                stream: Readable.from(buffer),
+              },
+            });
+            if (Array.isArray(uploaded)) {
+              imageConnect.push(...uploaded.map((f: any) => f.id));
+            } else if (uploaded) {
+              imageConnect.push((uploaded as any).id);
+            }
+          } catch {
+            // Image failed, continue
+          }
+        }
+
+        // Clean description: collapse whitespace
+        const cleanDesc = product.description.replace(/\s+/g, ' ').trim();
+
+        // Parse and filter specs — remove navigation/category keys
+        let specsRaw: Record<string, string>;
+        try {
+          specsRaw = JSON.parse(product.specsRaw);
+        } catch {
+          specsRaw = {};
+        }
+
+        const skipKeys = new Set([
+          '购买人', '属性', '会员级别', '购买时间',
+          '多功能手持终端', '多功能工业平板', '便携式RFID读写器',
+          '高频系列RFID读写器', '超高频系列RFID读写器', '工业协议网关控制器',
+          '有源系列RFID读写器', '低频系列RFID读写器', 'RFID集成产品',
+          'RFID工业载码体', 'RFID耐高温标签', 'RFID抗金属标签',
+          'RFID易碎防转移标签', '智能卡与不干胶标签', '其他特种标签', '有源电子标签',
+          '智能制造', '仓储物流', '档案图书', '资产巡检',
+          '防伪追溯', '连锁零售', '智慧城市', '智能柜体',
+        ]);
+
+        const specItems = Object.entries(specsRaw)
+          .filter(([k]) => !skipKeys.has(k) && k.length < 40)
+          .map(([label, value]) => ({ name: label.trim(), value: value.trim() }))
+          .filter((s) => s.name.length > 0 && s.value.length > 0);
 
         await strapi.documents('api::product.product').create({
           data: {
             name: product.name,
-            slug,
-            description: `${product.name}\n\n工业级${model || 'RFID'}设备，适用于工业自动化场景。`,
-            category: category?.documentId,
-            imageUrl: product.imageUrl,
+            slug: product.slug,
+            description: cleanDesc || product.name,
+            category: category.documentId,
+            imageUrl: product.mainImage,
             images: imageConnect,
+            rfidFrequency: (product.frequency as any) || undefined,
+            os: (product.os as any) || undefined,
+            features: product.features.filter((f) => f.length > 5),
+            connectivity: product.connectivity,
+            seoTitle: product.seoTitle,
+            seoKeywords: product.seoKeywords,
+            specs: specItems,
           },
+          status: 'published',
         });
 
         results.created++;
       } catch (err: any) {
         results.failed++;
-        console.error(`Failed: ${product.name}`, err.message);
+        results.errors.push(`${product.name}: ${err.message}`);
       }
 
-      await new Promise(r => setTimeout(r, 200));
+      await new Promise((r) => setTimeout(r, 300));
     }
 
     return { data: results };
@@ -209,6 +228,123 @@ export default factories.createCoreController('api::product.product', ({ strapi 
     });
 
     return { data: products };
+  },
+
+  async cleanup(ctx) {
+    const { confirm } = ctx.query;
+
+    if (confirm !== 'yes') {
+      return { error: 'Add ?confirm=yes to execute cleanup' };
+    }
+
+    const results = {
+      duplicatesDeleted: 0,
+      slugsFixed: 0,
+      published: 0,
+      errors: [] as string[],
+    };
+
+    try {
+      // 1. Get all products
+      const allProducts = await strapi.db.query('api::product.product').findMany({
+        populate: ['category'],
+        orderBy: { id: 'asc' },
+      });
+
+      // 2. Group by documentId + locale to find duplicates
+      const grouped: Record<string, number[]> = {};
+      for (const p of allProducts) {
+        const key = `${p.documentId}_${p.locale}`;
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(p.id);
+      }
+
+      // 3. Delete duplicates (keep lowest id)
+      const duplicates = Object.entries(grouped).filter(([_, ids]) => ids.length > 1);
+      for (const [key, ids] of duplicates) {
+        const keepId = ids[0];
+        const deleteIds = ids.slice(1);
+        for (const delId of deleteIds) {
+          try {
+            await strapi.db.query('api::product.product').delete({ where: { id: delId } });
+            results.duplicatesDeleted++;
+          } catch (err: any) {
+            results.errors.push(`Failed to delete id=${delId}: ${err.message}`);
+          }
+        }
+      }
+
+      // 4. Fix empty slugs - use direct SQL update for uid fields
+      const emptySlugProducts = await strapi.db.query('api::product.product').findMany({
+        where: {
+          $or: [{ slug: null }, { slug: '' }],
+        },
+      });
+
+      for (const p of emptySlugProducts) {
+        try {
+          const baseSlug = p.name
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .substring(0, 50);
+
+          let slug = baseSlug;
+          let counter = 1;
+          const existing = await strapi.db.query('api::product.product').findOne({
+            where: { slug, id: { $ne: p.id } },
+          });
+          while (existing) {
+            slug = `${baseSlug}-${counter}`;
+            counter++;
+          }
+
+          // Direct SQL query to bypass uid field validation (SQLite/Knex)
+          const knex = strapi.db.connection;
+          await knex('products').where('id', p.id).update({ slug });
+          results.slugsFixed++;
+        } catch (err: any) {
+          results.errors.push(`Failed to fix slug for id=${p.id}: ${err.message}`);
+        }
+      }
+
+      // 5. Publish products with category
+      const unpublished = await strapi.db.query('api::product.product').findMany({
+        where: {
+          publishedAt: null,
+          category: { $notNull: true },
+          slug: { $notNull: true },
+        },
+      });
+
+      for (const p of unpublished) {
+        try {
+          await strapi.db.query('api::product.product').update({
+            where: { id: p.id },
+            data: { publishedAt: new Date().toISOString() },
+          });
+          results.published++;
+        } catch (err: any) {
+          results.errors.push(`Failed to publish id=${p.id}: ${err.message}`);
+        }
+      }
+
+      // 6. Final stats
+      const finalProducts = await strapi.db.query('api::product.product').findMany({
+        where: { publishedAt: { $notNull: true } },
+      });
+
+      return {
+        success: true,
+        results,
+        finalStats: {
+          totalPublished: finalProducts.length,
+        },
+      };
+    } catch (err: any) {
+      return { success: false, error: err.message, results };
+    }
   },
 
   async translate(ctx) {

@@ -511,6 +511,7 @@ export interface ApiApplicationCategoryApplicationCategory
       Schema.Attribute.Private;
     description: Schema.Attribute.RichText;
     icon: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -851,52 +852,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     seoTitle: Schema.Attribute.String;
     slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
     specs: Schema.Attribute.Component<'shared.spec-item', true>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiRfidTagCategoryRfidTagCategory
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'rfid_tag_categories';
-  info: {
-    description: 'RFID tag category for organizing electronic tag products';
-    displayName: 'RFID Tag Category';
-    pluralName: 'rfid-tag-categories';
-    singularName: 'rfid-tag-category';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    children: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::rfid-tag-category.rfid-tag-category'
-    >;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.RichText;
-    image: Schema.Attribute.Media<'images'>;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::rfid-tag-category.rfid-tag-category'
-    >;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
-    parent: Schema.Attribute.Relation<
-      'manyToOne',
-      'api::rfid-tag-category.rfid-tag-category'
-    >;
-    publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
-    sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    tags: Schema.Attribute.Component<'shared.tag-item', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -923,7 +879,7 @@ export interface ApiRfidTagRfidTag extends Struct.CollectionTypeSchema {
     applicationScenarios: Schema.Attribute.RichText;
     category: Schema.Attribute.Relation<
       'manyToOne',
-      'api::rfid-tag-category.rfid-tag-category'
+      'api::product-category.product-category'
     >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1487,7 +1443,6 @@ declare module '@strapi/strapi' {
       'api::page.page': ApiPagePage;
       'api::product-category.product-category': ApiProductCategoryProductCategory;
       'api::product.product': ApiProductProduct;
-      'api::rfid-tag-category.rfid-tag-category': ApiRfidTagCategoryRfidTagCategory;
       'api::rfid-tag.rfid-tag': ApiRfidTagRfidTag;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
