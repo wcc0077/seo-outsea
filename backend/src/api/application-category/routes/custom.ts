@@ -25,6 +25,12 @@ export default {
       config: { auth: false },
     },
     {
+      method: 'GET',
+      path: '/application-categories/cleanup',
+      handler: 'application-category.cleanup',
+      config: { auth: false },
+    },
+    {
       method: 'POST',
       path: '/application-categories/translate',
       handler: 'application-category.translate',

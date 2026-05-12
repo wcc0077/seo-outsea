@@ -25,19 +25,13 @@ export default {
         // ── Applications list ──
         if (ctx.path === '/api/applications') {
           const { locale } = ctx.query;
-          const results = await strapi.db.query('api::application.application').findMany({
-            where: { locale: locale || 'en', publishedAt: { $notNull: true } },
-            populate: ['category', 'images'],
-            orderBy: { createdAt: 'desc' },
+          // Use strapi.documents() which properly handles media relations
+          const results = await strapi.documents('api::application.application').findMany({
+            filters: { locale: locale || 'en' },
+            populate: { images: true, category: true },
+            status: 'published',
           });
-          // Deduplicate by documentId
-          const seen = new Set();
-          const unique = results.filter(r => {
-            if (seen.has(r.documentId)) return false;
-            seen.add(r.documentId);
-            return true;
-          });
-          ctx.body = { data: unique };
+          ctx.body = { data: results };
           ctx.status = 200;
           return;
         }

@@ -1,0 +1,110 @@
+[
+  {
+    "name": "智能移动终端",
+    "slug": "smart-mobile-terminals",
+    "parent": null,
+    "sortOrder": 1
+  },
+  {
+    "name": "多功能手持终端",
+    "slug": "handheld-terminals",
+    "parent": "smart-mobile-terminals",
+    "sortOrder": 0
+  },
+  {
+    "name": "多功能工业平板",
+    "slug": "industrial-tablets",
+    "parent": "smart-mobile-terminals",
+    "sortOrder": 0
+  },
+  {
+    "name": "便携式RFID读写器",
+    "slug": "portable-rfid-readers",
+    "parent": "smart-mobile-terminals",
+    "sortOrder": 0
+  },
+  {
+    "name": "RFID读写器",
+    "slug": "rfid-readers",
+    "parent": null,
+    "sortOrder": 2
+  },
+  {
+    "name": "高频系列RFID读写器",
+    "slug": "hf-rfid-readers",
+    "parent": "rfid-readers",
+    "sortOrder": 0
+  },
+  {
+    "name": "超高频系列RFID读写器",
+    "slug": "uhf-rfid-readers",
+    "parent": "rfid-readers",
+    "sortOrder": 0
+  },
+  {
+    "name": "工业协议网关控制器",
+    "slug": "protocol-gateway-controllers",
+    "parent": "rfid-readers",
+    "sortOrder": 0
+  },
+  {
+    "name": "有源系列RFID读写器",
+    "slug": "active-rfid-readers",
+    "parent": "rfid-readers",
+    "sortOrder": 0
+  },
+  {
+    "name": "低频系列RFID读写器",
+    "slug": "lf-rfid-readers",
+    "parent": "rfid-readers",
+    "sortOrder": 0
+  },
+  {
+    "name": "RFID集成产品",
+    "slug": "rfid-integrated-products",
+    "parent": "rfid-readers",
+    "sortOrder": 0
+  },
+  {
+    "name": "RFID电子标签",
+    "slug": "rfid-tags",
+    "parent": null,
+    "sortOrder": 3
+  },
+  {
+    "name": "RFID耐高温标签",
+    "slug": "high-temperature-tags",
+    "parent": "rfid-tags",
+    "sortOrder": 0
+  },
+  {
+    "name": "RFID抗金属标签",
+    "slug": "anti-metal-tags",
+    "parent": "rfid-tags",
+    "sortOrder": 0
+  },
+  {
+    "name": "RFID易碎防转移标签",
+    "slug": "fragile-tamper-proof-tags",
+    "parent": "rfid-tags",
+    "sortOrder": 0
+  },
+  {
+    "name": "智能卡与不干胶标签",
+    "slug": "smart-card-sticker-tags",
+    "parent": "rfid-tags",
+    "sortOrder": 0
+  },
+  {
+    "name": "其他特种标签",
+    "slug": "other-special-tags",
+    "parent": "rfid-tags",
+    "sortOrder": 0
+  },
+  {
+    "name": "有源电子标签",
+    "slug": "active-tags",
+    "parent": "rfid-tags",
+    "sortOrder": 0
+  }
+]

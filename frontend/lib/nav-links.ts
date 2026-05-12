@@ -1,5 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import { getApplicationCategories } from '@/lib/strapi';
+import { getProductCategories, getApplicationCategories } from '@/lib/strapi';
 
 type NavItem = {
   label: string;
@@ -12,24 +12,37 @@ export async function getNavLinks(locale: string): Promise<NavItem[]> {
   const news = await getTranslations({ locale, namespace: 'News' });
   const about = await getTranslations({ locale, namespace: 'About' });
 
-  // Fetch application categories dynamically from Strapi
-  const appCategories = await getApplicationCategories(locale).catch(() => []);
+  // Fetch categories dynamically from Strapi
+  const [productCategories, appCategories] = await Promise.all([
+    getProductCategories(locale).catch(() => []),
+    getApplicationCategories(locale).catch(() => []),
+  ]);
+
+  // Top-level product categories (parent is null)
+  const productTopLevel = productCategories
+    .filter((c) => !c.parent)
+    .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
   return [
     {
       label: t('products'),
       href: '/products',
-      children: [
-        { label: t('smartMobileTerminals'), href: '/products' },
-        { label: t('rfidReaders'), href: '/products' },
-        { label: t('rfidTags'), href: '/products' },
-      ],
+      children: productTopLevel.length > 0
+        ? productTopLevel.map((cat) => ({
+            label: cat.name,
+            href: `/products/category/${cat.slug}`,
+          }))
+        : [
+            { label: t('smartMobileTerminals'), href: '/products' },
+            { label: t('rfidReaders'), href: '/products' },
+            { label: t('rfidTags'), href: '/products' },
+          ],
     },
     {
       label: t('applications'),
       href: '/applications',
       children: appCategories.length > 0
-        ? appCategories.map(cat => ({
+        ? appCategories.map((cat) => ({
             label: cat.name,
             href: `/applications/category/${cat.slug}`,
           }))

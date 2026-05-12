@@ -14,7 +14,6 @@ export const TRANSLATABLE_FIELDS: TranslateFieldMap = {
   application: ['name', 'description', 'useCase'],
   'application-category': ['name', 'description'],
   'rfid-tag': ['name', 'description', 'applicationScenarios'],
-  'rfid-tag-category': ['name', 'description'],
   'about-page': ['title', 'content'],
 };
 

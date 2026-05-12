@@ -1,7 +1,36 @@
 import https from 'https';
 import http from 'http';
 import { Readable } from 'stream';
+import fs from 'fs';
+import path from 'path';
 import { factories } from '@strapi/strapi';
+
+interface ScrapedRfidTag {
+  name: string;
+  model: string;
+  slug: string;
+  description: string;
+  tagType: string;
+  frequency: string;
+  category: string;
+  parentCategory: string;
+  subcategory: string;
+  specsRaw: string;
+  specsText: string;
+  mainImage: string;
+  images: string[];
+  seoTitle: string;
+  seoKeywords: string;
+  url: string;
+}
+
+function loadRfidTagsFromJson(): ScrapedRfidTag[] {
+  const filePath = path.resolve(__dirname, '../../../../../scripts/scraped-data/rfid-tags.json');
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`RFID tags file not found: ${filePath}. Run 'npx tsx scripts/scrape-fn-tech.ts' first.`);
+  }
+  return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+}
 
 function downloadImage(url: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {
@@ -22,33 +51,6 @@ function downloadImage(url: string): Promise<Buffer> {
   });
 }
 
-// RFID Tag products scraped from fn-tech.com and knowledge base
-const RFID_TAGS = [
-  // 工业载码体
-  { name: '工业载码体 HT001', model: 'HT001', tagType: 'carrier' as const, frequency: 'HF' as const, description: '工业级RFID载码体，适用于高温、高湿、高腐蚀等恶劣工业环境。采用特种工程塑料封装，具有优异的物理和化学性能。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_wdek.jpg' },
-  { name: '工业载码体 HT002', model: 'HT002', tagType: 'carrier' as const, frequency: 'HF' as const, description: '高性能工业载码体，专为工业自动化产线设计，支持高速读取和写入。适用于半导体制造、光伏电池片生产等精密制造场景。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/2_jkc0.jpg' },
-  // 耐高温标签
-  { name: '耐高温RFID标签 HT201', model: 'HT201', tagType: 'high-temp' as const, frequency: 'HF' as const, description: '耐高温RFID标签，可在200°C以上高温环境下正常工作，适用于光伏电池片制造、SMT回流焊等高温工艺。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/4_ib9i.jpg' },
-  { name: '耐高温RFID载码体 HT202', model: 'HT202', tagType: 'high-temp' as const, frequency: 'HF' as const, description: '太阳能光伏专用耐高温RFID载码体，可承受光伏电池片制造过程中的高温工艺，实现全流程追溯。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/4_ib9i.jpg' },
-  { name: '耐高温RFID载码体 HT712', model: 'HT712', tagType: 'high-temp' as const, frequency: 'HF' as const, description: '高频工业级耐高温RFID载码体，适用于SMT产线、回流焊等高温场景，工作温度范围-40°C ~ +250°C。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/2_jkc0.jpg' },
-  // 抗金属标签
-  { name: '抗金属标签 HT401', model: 'HT401', tagType: 'anti-metal' as const, frequency: 'HF' as const, description: '高频抗金属标签，可在金属表面正常工作，适用于金属工具、设备、模具等资产管理场景。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_wdek.jpg' },
-  { name: '抗金属标签 UT501', model: 'UT501', tagType: 'anti-metal' as const, frequency: 'UHF' as const, description: '超高频抗金属标签，远距离读取，适用于金属容器、托盘、货架等物流仓储场景。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/3_6s14.jpg' },
-  { name: '抗金属标签 UT502', model: 'UT502', tagType: 'anti-metal' as const, frequency: 'UHF' as const, description: '超高频柔性抗金属标签，可弯曲贴合弧形金属表面，适用于金属管道、气瓶、刀具等异形金属表面标识。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/3_6s14.jpg' },
-  // 易碎防转移标签
-  { name: '易碎防转移标签 FT101', model: 'FT101', tagType: 'flexible' as const, frequency: 'HF' as const, description: '易碎防转移标签，一旦粘贴即无法完整移除，适用于防伪溯源、质保封条、门票等场景。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/4_ib9i.jpg' },
-  { name: '易碎防转移标签 FT102', model: 'FT102', tagType: 'flexible' as const, frequency: 'UHF' as const, description: '超高频易碎防转移标签，远距离防伪溯源，适用于酒类、药品、奢侈品等高价值商品的防伪管理。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/4_ib9i.jpg' },
-  // 智能卡与不干胶标签
-  { name: 'RFID智能卡 CT301', model: 'CT301', tagType: 'card' as const, frequency: 'HF' as const, description: '标准RFID智能卡，兼容ISO14443A协议，适用于门禁、考勤、会员管理等场景。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_wdek.jpg' },
-  { name: 'RFID不干胶标签 LT302', model: 'LT302', tagType: 'card' as const, frequency: 'UHF' as const, description: '超高频不干胶标签，可批量打印和粘贴，适用于物流标签、仓储管理、零售商品标识等场景。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/3_6s14.jpg' },
-  // 其他特种标签
-  { name: 'RFID钥匙扣 KF401', model: 'KF401', tagType: 'key-fob' as const, frequency: 'HF' as const, description: 'RFID钥匙扣标签，便于随身携带，适用于门禁、考勤、巡检等场景。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_wdek.jpg' },
-  { name: 'RFID腕带 WB402', model: 'WB402', tagType: 'wristband' as const, frequency: 'HF' as const, description: 'RFID腕带标签，适用于人员识别、医疗管理、活动门票等场景，佩戴舒适，防水耐用。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_wdek.jpg' },
-  // 有源电子标签
-  { name: '有源RFID标签 AT501', model: 'AT501', tagType: 'custom' as const, frequency: 'active' as const, description: '有源RFID标签，自带电池，远距离识别，适用于资产追踪、车辆管理、人员定位等远距离应用场景。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_wdek.jpg' },
-  { name: '有源RFID标签 AT502', model: 'AT502', tagType: 'custom' as const, frequency: 'active' as const, description: '有源RFID标签，超长寿命设计，电池寿命3年以上，适用于智慧城市、车辆管理、小区安防等场景。', imageUrl: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_wdek.jpg' },
-];
-
 export default factories.createCoreController('api::rfid-tag.rfid-tag', ({ strapi }) => ({
   async import(ctx) {
     const existingCount = await strapi.db.query('api::rfid-tag.rfid-tag').count();
@@ -56,58 +58,94 @@ export default factories.createCoreController('api::rfid-tag.rfid-tag', ({ strap
       return { data: null, error: `RFID tags already exist (${existingCount}). Skipping import.` };
     }
 
-    const results: { created: number; failed: number; errors: string[] } = { created: 0, failed: 0, errors: [] };
+    let tags: ScrapedRfidTag[];
+    try {
+      tags = loadRfidTagsFromJson();
+    } catch (err: any) {
+      return ctx.badRequest(err.message);
+    }
 
-    for (const tag of RFID_TAGS) {
+    // Filter out reader products mistakenly listed as tags (e.g., D1604)
+    const readerNamePattern = /(读写器|读写模块|网关控制器|读写)/;
+    const filteredTags = tags.filter((t) => !readerNamePattern.test(t.name));
+
+    const results: { created: number; failed: number; errors: string[] } = {
+      created: 0, failed: 0, errors: [],
+    };
+
+    for (const tag of filteredTags) {
       try {
-        const slug = `${tag.model.toLowerCase()}-${tag.tagType}-${tag.frequency.toLowerCase()}`;
+        // Find category by scraped subcategory name
+        const category = await strapi.db.query('api::product-category.product-category').findOne({
+          where: { name: tag.subcategory || tag.category },
+        });
 
-        // Download and upload image
-        let imageConnect: number[] = [];
-        try {
-          const filename = tag.imageUrl.split('/').pop() || 'image.jpg';
-          const buffer = await downloadImage(tag.imageUrl);
-
-          const uploaded = await strapi.plugin('upload').services.upload.upload({
-            data: {},
-            files: {
-              name: filename,
-              type: 'image/jpeg',
-              size: buffer.length,
-              path: './',
-              stream: Readable.from(buffer),
-            },
-          });
-
-          if (Array.isArray(uploaded)) {
-            imageConnect = uploaded.map((f: any) => f.id);
-          } else if (uploaded) {
-            imageConnect = [(uploaded as any).id];
-          }
-        } catch {
-          // Image failed, continue without image
+        if (!category) {
+          results.failed++;
+          results.errors.push(
+            `No category found for: ${tag.name} (subcategory: ${tag.subcategory})`
+          );
+          continue;
         }
+
+        // Download and upload images (up to 3)
+        let imageConnect: number[] = [];
+        for (const imgUrl of tag.images.slice(0, 3)) {
+          try {
+            const filename = imgUrl.split('/').pop() || 'image.jpg';
+            const buffer = await downloadImage(imgUrl);
+            const uploaded = await strapi.plugin('upload').services.upload.upload({
+              data: {},
+              files: {
+                name: filename,
+                type: 'image/jpeg',
+                size: buffer.length,
+                path: './',
+                stream: Readable.from(buffer),
+              },
+            });
+            if (Array.isArray(uploaded)) {
+              imageConnect.push(...uploaded.map((f: any) => f.id));
+            } else if (uploaded) {
+              imageConnect.push((uploaded as any).id);
+            }
+          } catch {
+            // Image failed, continue
+          }
+        }
+
+        // Clean description
+        const cleanDesc = tag.description
+          .replace(/\s+/g, ' ')
+          .trim();
+
+        // Extract model from name if not present
+        const model = tag.model || tag.name.match(/^([A-Z0-9]+)/)?.[1] || '';
 
         await strapi.documents('api::rfid-tag.rfid-tag').create({
           data: {
             name: tag.name,
-            model: tag.model,
-            slug,
-            tagType: tag.tagType,
-            frequency: tag.frequency,
-            description: tag.description,
+            model,
+            slug: tag.slug,
+            description: cleanDesc || tag.name,
+            tagType: tag.tagType as any,
+            frequency: tag.frequency as any,
+            category: category.documentId,
+            imageUrl: tag.mainImage,
             images: imageConnect,
-            imageUrl: tag.imageUrl,
+            seoTitle: tag.seoTitle,
+            seoKeywords: tag.seoKeywords,
           },
           status: 'published',
         });
+
         results.created++;
-      } catch (err: unknown) {
+      } catch (err: any) {
         results.failed++;
-        const msg = err instanceof Error ? err.message : 'Unknown error';
-        results.errors.push(`${tag.name}: ${msg}`);
+        results.errors.push(`${tag.name}: ${err.message}`);
       }
-      await new Promise(r => setTimeout(r, 200));
+
+      await new Promise((r) => setTimeout(r, 300));
     }
 
     return { data: results };
@@ -145,8 +183,8 @@ export default factories.createCoreController('api::rfid-tag.rfid-tag', ({ strap
     const { slug } = ctx.params;
     const { locale, page = '1', pageSize = '12' } = ctx.query;
 
-    const category = await strapi.db.query('api::rfid-tag-category.rfid-tag-category').findOne({
-      where: { slug, locale: locale || 'en' },
+    const category = await strapi.db.query('api::product-category.product-category').findOne({
+      where: { slug, locale: locale || 'en', publishedAt: { $notNull: true } },
     });
 
     if (!category) {
@@ -154,7 +192,7 @@ export default factories.createCoreController('api::rfid-tag.rfid-tag', ({ strap
     }
 
     const entities = await strapi.db.query('api::rfid-tag.rfid-tag').findMany({
-      where: { category: category.documentId, locale: locale || 'en' },
+      where: { category: category.id, locale: locale || 'en' },
       populate: ['images', 'category'],
       orderBy: 'name',
     });
@@ -233,5 +271,86 @@ export default factories.createCoreController('api::rfid-tag.rfid-tag', ({ strap
       failed: errors.length,
       errors,
     };
+  },
+
+  async cleanup(ctx) {
+    const { confirm } = ctx.query;
+
+    if (confirm !== 'yes') {
+      return { error: 'Add ?confirm=yes to execute cleanup' };
+    }
+
+    const results = {
+      duplicatesDeleted: 0,
+      published: 0,
+      errors: [] as string[],
+    };
+
+    try {
+      // 1. Get all RFID tags
+      const allTags = await strapi.db.query('api::rfid-tag.rfid-tag').findMany({
+        populate: ['category'],
+        orderBy: { id: 'asc' },
+      });
+
+      // 2. Group by documentId + locale to find duplicates
+      const grouped: Record<string, number[]> = {};
+      for (const t of allTags) {
+        const key = `${t.documentId}_${t.locale}`;
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(t.id);
+      }
+
+      // 3. Delete duplicates (keep lowest id)
+      const duplicates = Object.entries(grouped).filter(([_, ids]) => ids.length > 1);
+      for (const [key, ids] of duplicates) {
+        const keepId = ids[0];
+        const deleteIds = ids.slice(1);
+        for (const delId of deleteIds) {
+          try {
+            await strapi.db.query('api::rfid-tag.rfid-tag').delete({ where: { id: delId } });
+            results.duplicatesDeleted++;
+          } catch (err: any) {
+            results.errors.push(`Failed to delete id=${delId}: ${err.message}`);
+          }
+        }
+      }
+
+      // 4. Publish tags with category
+      const unpublished = await strapi.db.query('api::rfid-tag.rfid-tag').findMany({
+        where: {
+          publishedAt: null,
+          category: { $notNull: true },
+          slug: { $notNull: true },
+        },
+      });
+
+      for (const t of unpublished) {
+        try {
+          await strapi.db.query('api::rfid-tag.rfid-tag').update({
+            where: { id: t.id },
+            data: { publishedAt: new Date().toISOString() },
+          });
+          results.published++;
+        } catch (err: any) {
+          results.errors.push(`Failed to publish id=${t.id}: ${err.message}`);
+        }
+      }
+
+      // 5. Final stats
+      const finalTags = await strapi.db.query('api::rfid-tag.rfid-tag').findMany({
+        where: { publishedAt: { $notNull: true } },
+      });
+
+      return {
+        success: true,
+        results,
+        finalStats: {
+          totalPublished: finalTags.length,
+        },
+      };
+    } catch (err: any) {
+      return { success: false, error: err.message, results };
+    }
   },
 }));

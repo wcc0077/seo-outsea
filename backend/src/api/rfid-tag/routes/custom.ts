@@ -25,6 +25,12 @@ export default {
       config: { auth: false },
     },
     {
+      method: 'GET',
+      path: '/rfid-tags/cleanup',
+      handler: 'rfid-tag.cleanup',
+      config: { auth: false },
+    },
+    {
       method: 'POST',
       path: '/rfid-tags/translate',
       handler: 'rfid-tag.translate',

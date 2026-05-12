@@ -130,4 +130,85 @@ export default factories.createCoreController('api::application.application', ({
       errors,
     };
   },
+
+  async cleanup(ctx) {
+    const { confirm } = ctx.query;
+
+    if (confirm !== 'yes') {
+      return { error: 'Add ?confirm=yes to execute cleanup' };
+    }
+
+    const results = {
+      duplicatesDeleted: 0,
+      published: 0,
+      errors: [] as string[],
+    };
+
+    try {
+      // 1. Get all applications
+      const allApps = await strapi.db.query('api::application.application').findMany({
+        populate: ['category'],
+        orderBy: { id: 'asc' },
+      });
+
+      // 2. Group by documentId + locale to find duplicates
+      const grouped: Record<string, number[]> = {};
+      for (const app of allApps) {
+        const key = `${app.documentId}_${app.locale}`;
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(app.id);
+      }
+
+      // 3. Delete duplicates (keep lowest id)
+      const duplicates = Object.entries(grouped).filter(([_, ids]) => ids.length > 1);
+      for (const [key, ids] of duplicates) {
+        const keepId = ids[0];
+        const deleteIds = ids.slice(1);
+        for (const delId of deleteIds) {
+          try {
+            await strapi.db.query('api::application.application').delete({ where: { id: delId } });
+            results.duplicatesDeleted++;
+          } catch (err: any) {
+            results.errors.push(`Failed to delete id=${delId}: ${err.message}`);
+          }
+        }
+      }
+
+      // 4. Publish applications with category and slug
+      const unpublished = await strapi.db.query('api::application.application').findMany({
+        where: {
+          publishedAt: null,
+          category: { $notNull: true },
+          slug: { $notNull: true },
+        },
+      });
+
+      for (const app of unpublished) {
+        try {
+          await strapi.db.query('api::application.application').update({
+            where: { id: app.id },
+            data: { publishedAt: new Date().toISOString() },
+          });
+          results.published++;
+        } catch (err: any) {
+          results.errors.push(`Failed to publish id=${app.id}: ${err.message}`);
+        }
+      }
+
+      // 5. Final stats
+      const finalApps = await strapi.db.query('api::application.application').findMany({
+        where: { publishedAt: { $notNull: true } },
+      });
+
+      return {
+        success: true,
+        results,
+        finalStats: {
+          totalPublished: finalApps.length,
+        },
+      };
+    } catch (err: any) {
+      return { success: false, error: err.message, results };
+    }
+  },
 }));

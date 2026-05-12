@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { ProductCategoryData, ProductData, ApplicationCategoryData, RfidTagData } from '@/lib/strapi';
 
 type NavItem = {
   label: string;
@@ -12,64 +13,20 @@ type NavItem = {
 interface MegaMenuProps {
   navLinks: NavItem[];
   locale: string;
+  productCategories: ProductCategoryData[];
+  products: ProductData[];
+  appCategories: ApplicationCategoryData[];
+  rfidTags: RfidTagData[];
 }
 
 const HEADER_HEIGHT = 72;
 
-// ── Product data with images ──
-
-type ProductEntry = { name: string; slug: string; image: string };
-
-const PRODUCT_CATEGORIES: Record<string, { spec: string; products: ProductEntry[] }> = {
-  'hf-rfid-readers': {
-    spec: '13.56MHz · IO-LINK / ModbusTCP',
-    products: [
-      { name: 'D1338T 工业级高频网口读写器', slug: 'd1338t-hf-ethernet-reader', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_p6nq.jpg' },
-      { name: 'D1609 & D1339 系列工业级高频读写器', slug: 'd1609-d1339-series', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/2_yhtq.jpg' },
-      { name: 'D1646T ModbusTCP 齐平式高频RFID读写器', slug: 'd1646t-modbus-tcp', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/4_3ji7.jpg' },
-      { name: 'D1621系列 IO-LINK高频RFID读写器', slug: 'd1621-io-link', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/3_nuqm.jpg' },
-    ],
-  },
-  'uhf-rfid-readers': {
-    spec: '860-960MHz · Long Range',
-    products: [
-      { name: 'D2184B 高性能四通道UHF读写器', slug: 'd2184b-quad-channel', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2184B_x6b5.jpg' },
-      { name: 'D2480系列 工业超高频RFID读写器', slug: 'd2480-series', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2480B_4f8u.jpg' },
-      { name: 'D2188BL 超高频多通道读写器', slug: 'd2188bl-multi-channel', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2188.jpg' },
-      { name: 'D2180U 超高频桌面读写器', slug: 'd2180u-desktop', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2180U.jpg' },
-    ],
-  },
-  'handheld-terminals': {
-    spec: 'Android · Industrial Grade',
-    products: [
-      { name: 'M12 安卓手持终端', slug: 'm12-android-terminal', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_7bkj.jpg' },
-      { name: 'M11 工业级手持终端', slug: 'm11-industrial', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/M11_lnf7.jpg' },
-      { name: 'N60 智能打印手持终端', slug: 'n60-print-terminal', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/11_vljy.jpg' },
-      { name: 'M11 工业级安卓条码手持终端', slug: 'm11-barcode', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/M11.png' },
-    ],
-  },
-  'industrial-tablets': {
-    spec: 'Fixed Mount · Edge Computing',
-    products: [
-      { name: 'P01 多功能工业平板', slug: 'p01-industrial-tablet', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_hd05.jpg' },
-    ],
-  },
-  'portable-readers': {
-    spec: 'Bluetooth · UHF Scanner',
-    products: [
-      { name: 'T01 蓝牙UHF扫描仪', slug: 't01-bluetooth-uhf', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_xz3s_ou59.jpg' },
-      { name: 'T02 蓝牙UHF扫描仪', slug: 't02-bluetooth-uhf', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_jxgj_0wo1.jpg' },
-      { name: 'T03 蓝牙UHF扫描仪', slug: 't03-bluetooth-uhf', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/t03.png' },
-    ],
-  },
-};
-
-// Sub-category slugs for each top-level product group
-const PRODUCT_SUB_CATEGORIES: Record<string, string[]> = {
-  'smart-mobile-terminals': ['handheld-terminals', 'industrial-tablets', 'portable-readers'],
-  'rfid-readers': ['hf-rfid-readers', 'uhf-rfid-readers'],
-  'rfid-tags': [], // RFID tags page handles this separately
-};
+function getStrapiImageUrl(url: string | undefined): string | null {
+  if (!url) return null;
+  if (url.startsWith('http')) return url;
+  const base = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+  return `${base}${url}`;
+}
 
 function getCategoryIcon(path: string): React.ReactNode {
   // Top-level: Smart Mobile Terminals — handheld device icon
@@ -138,7 +95,7 @@ function getCategoryIcon(path: string): React.ReactNode {
 
 // ── Main MegaMenu ──
 
-export default function MegaMenu({ navLinks, locale }: MegaMenuProps) {
+export default function MegaMenu({ navLinks, locale, productCategories, products, appCategories, rfidTags }: MegaMenuProps) {
   const [activeKey, setActiveKey] = useState<string | null>(null);
   const leaveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -216,9 +173,9 @@ export default function MegaMenu({ navLinks, locale }: MegaMenuProps) {
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             {activeNavItem.href === '/products' ? (
-              <ProductsMegaMenu items={activeNavItem.children} locale={locale} />
+              <ProductsMegaMenu items={activeNavItem.children} locale={locale} productCategories={productCategories} products={products} rfidTags={rfidTags} />
             ) : activeNavItem.href === '/applications' ? (
-              <ApplicationsMegaMenu items={activeNavItem.children} locale={locale} />
+              <ApplicationsMegaMenu items={activeNavItem.children} locale={locale} appCategories={appCategories} />
             ) : activeNavItem.href === '/about' ? (
               <AboutMegaMenu items={activeNavItem.children} locale={locale} />
             ) : activeNavItem.href === '/support' ? (
@@ -237,24 +194,70 @@ export default function MegaMenu({ navLinks, locale }: MegaMenuProps) {
    Products: 3-column layout with sub-category cards
    ──────────────────────────────────────────────── */
 
-function ProductsMegaMenu({ items, locale }: { items: NonNullable<NavItem['children']>; locale: string }) {
-  const [activeSlug, setActiveSlug] = useState<string>('smart-mobile-terminals');
+function ProductsMegaMenu({
+  items,
+  locale,
+  productCategories,
+  products,
+  rfidTags,
+}: {
+  items: NonNullable<NavItem['children']>;
+  locale: string;
+  productCategories: ProductCategoryData[];
+  products: ProductData[];
+  rfidTags: RfidTagData[];
+}) {
+  const [activeSlug, setActiveSlug] = useState<string>('');
 
-  const navToSlug = (label: string): string => {
-    const lower = label.toLowerCase();
-    if (lower.includes('smart mobile') || lower.includes('移动终端')) return 'smart-mobile-terminals';
-    if (lower.includes('rfid reader') || lower.includes('读写器')) return 'rfid-readers';
-    if (lower.includes('rfid tag') || lower.includes('标签')) return 'rfid-tags';
-    return '';
-  };
+  // Extract slug from href (e.g. "/products/category/smart-mobile-terminals")
+  const hrefToSlug = (href: string): string => href.split('/').pop() || '';
 
-  const subSlugs = PRODUCT_SUB_CATEGORIES[activeSlug] || [];
-  const activeProducts: { product: ProductEntry; category: string }[] = [];
-  for (const sub of subSlugs) {
-    for (const product of (PRODUCT_CATEGORIES[sub]?.products ?? [])) {
-      activeProducts.push({ product, category: sub });
+  useEffect(() => {
+    if (items[0]) {
+      setActiveSlug(hrefToSlug(items[0].href));
     }
-  }
+  }, [items]);
+
+  // Find the active top-level category from Strapi data
+  const activeTopCategory = productCategories.find(
+    (c) => !c.parent && c.slug === activeSlug
+  );
+
+  // Find child categories belonging to the active top-level category
+  const childCategories = activeTopCategory
+    ? productCategories.filter(
+        (c) => c.parent?.documentId === activeTopCategory.documentId
+      )
+    : [];
+
+  // Find products belonging to those child categories (up to 8)
+  const childSlugs = new Set(childCategories.map((c) => c.slug));
+
+  // If active category is rfid-tags, use RFID tags; otherwise use products
+  const isRfidTagsCategory = activeSlug === 'rfid-tags';
+
+  // Deduplicate RFID tags by slug first
+  const seenRfidSlugs = new Set<string>();
+  const uniqueRfidTags = rfidTags.filter((t) => {
+    if (seenRfidSlugs.has(t.slug)) return false;
+    seenRfidSlugs.add(t.slug);
+    return true;
+  });
+
+  const activeProducts = isRfidTagsCategory
+    ? uniqueRfidTags
+        .filter((t) => t.category && childSlugs.has(t.category.slug))
+        .slice(0, 8)
+        .map((t) => ({
+          name: t.name,
+          slug: t.slug,
+          images: t.images,
+          imageUrl: t.imageUrl,
+          category: t.category,
+        }))
+    : products
+        .filter((p) => p.category && childSlugs.has(p.category.slug))
+        .slice(0, 8);
 
   return (
     <div className="flex gap-8">
@@ -265,7 +268,7 @@ function ProductsMegaMenu({ items, locale }: { items: NonNullable<NavItem['child
         </div>
         <div className="flex flex-col border-l border-neutral-700/50">
           {items.map((item) => {
-            const slug = navToSlug(item.label);
+            const slug = hrefToSlug(item.href);
             const isActive = slug === activeSlug;
             return (
               <Link
@@ -306,17 +309,11 @@ function ProductsMegaMenu({ items, locale }: { items: NonNullable<NavItem['child
         <div className="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-4">
           热门产品
         </div>
-        {activeSlug === 'rfid-tags' ? (
-          <div className="flex items-center justify-center h-64 text-neutral-500 text-sm">
-            <Link href={`/${locale}/rfid-tags`} className="text-primary-400 hover:underline">
-              前往 RFID 标签页面 →
-            </Link>
-          </div>
-        ) : activeProducts.length === 0 ? (
+        {activeProducts.length === 0 ? (
           <div className="flex items-center justify-center h-64 text-neutral-500 text-sm">暂无产品</div>
         ) : (
           <div className="grid grid-cols-4 gap-3">
-            {activeProducts.map(({ product, category }) => (
+            {activeProducts.map((product) => (
               <Link
                 key={product.slug}
                 href={`/${locale}/products/${product.slug}`}
@@ -324,7 +321,7 @@ function ProductsMegaMenu({ items, locale }: { items: NonNullable<NavItem['child
               >
                 <div className="aspect-[4/3] bg-neutral-800 overflow-hidden relative">
                   <img
-                    src={product.image}
+                    src={getStrapiImageUrl(product.images?.[0]?.url || product.imageUrl) || ''}
                     alt={product.name}
                     className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-110"
                     loading="lazy"
@@ -349,74 +346,10 @@ function ProductsMegaMenu({ items, locale }: { items: NonNullable<NavItem['child
    Applications: Left sidebar nav + Right image cards
    ──────────────────────────────────────────────── */
 
-type ApplicationEntry = { title: string; image: string };
-
-const APPLICATION_CATEGORIES: Record<string, ApplicationEntry> = {
-  '智能智造': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_0cw9.jpg',
-    title: '智能智造',
-  },
-  '仓储物流': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_ehv8.png',
-    title: '仓储物流',
-  },
-  '档案图书': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/5.webp',
-    title: '档案图书',
-  },
-  '资产巡检': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_5oov_u61r.jpg',
-    title: '资产巡检',
-  },
-  '防伪追溯': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1458614250_kwa3.jpg',
-    title: '防伪追溯',
-  },
-  '连锁零售': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_dfym_3f0c.jpg',
-    title: '连锁零售',
-  },
-  '智慧城市': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/jucg.png',
-    title: '智慧城市',
-  },
-  '智能柜体': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1458617833_oq6g.jpg',
-    title: '智能柜体',
-  },
-  'Smart Manufacturing': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_0cw9.jpg',
-    title: 'Smart Manufacturing',
-  },
-  'Warehouse & Logistics': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_ehv8.png',
-    title: 'Warehouse & Logistics',
-  },
-  'Archive & Library': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/5.webp',
-    title: 'Archive & Library',
-  },
-  'Asset Inspection': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_5oov_u61r.jpg',
-    title: 'Asset Inspection',
-  },
-  'Anti-counterfeit & Traceability': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1458614250_kwa3.jpg',
-    title: 'Anti-counterfeit & Traceability',
-  },
-  'Retail & Supply Chain': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_dfym_3f0c.jpg',
-    title: 'Retail & Supply Chain',
-  },
-  'Smart City': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/jucg.png',
-    title: 'Smart City',
-  },
-  'Smart Cabinet': {
-    image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1458617833_oq6g.jpg',
-    title: 'Smart Cabinet',
-  },
-};
+function getAppImage(appCategories: ApplicationCategoryData[], label: string): string | null {
+  const cat = appCategories.find((c) => c.name === label);
+  return getStrapiImageUrl(cat?.image?.url) || null;
+}
 
 function getAppIcon(label: string): React.ReactNode {
   // Smart Manufacturing — factory/gear icon
@@ -521,21 +454,16 @@ function getAppIcon(label: string): React.ReactNode {
   );
 }
 
-function ApplicationsMegaMenu({ items, locale }: { items: NonNullable<NavItem['children']>; locale: string }) {
+function ApplicationsMegaMenu({ items, locale, appCategories }: { items: NonNullable<NavItem['children']>; locale: string; appCategories: ApplicationCategoryData[] }) {
   const [activeLabel, setActiveLabel] = useState<string>(items[0]?.label ?? '');
 
   const activeItem = items.find(item => item.label === activeLabel);
   const activeHref = activeItem?.href ?? `/applications`;
 
-  const appData = APPLICATION_CATEGORIES[activeLabel] || Object.values(APPLICATION_CATEGORIES)[0];
+  const activeImage = getAppImage(appCategories, activeLabel);
+  const fallbackImage = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23222%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2214%22%3ENo Image%3C/text%3E%3C/svg%3E';
 
-  const allOthers = items
-    .filter((item) => item.label !== activeLabel)
-    .map((item) => ({
-      item,
-      entry: APPLICATION_CATEGORIES[item.label] || Object.values(APPLICATION_CATEGORIES)[0],
-    }));
-
+  const allOthers = items.filter((item) => item.label !== activeLabel);
   const leftCard = allOthers[0];
   const rightCards = allOthers.slice(1, 4);
 
@@ -586,12 +514,18 @@ function ApplicationsMegaMenu({ items, locale }: { items: NonNullable<NavItem['c
               href={`/${locale}${activeHref}`}
               className="group flex-[3] relative rounded-2xl overflow-hidden border border-neutral-700/30 bg-neutral-800/30 hover:border-primary-500/20 transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/10 min-h-0"
             >
-              <img
-                src={appData.image}
-                alt={appData.title}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                loading="lazy"
-              />
+              {activeImage ? (
+                <img
+                  src={activeImage}
+                  alt={activeLabel}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="absolute inset-0 bg-neutral-800 flex items-center justify-center">
+                  <span className="text-neutral-600 text-sm">{activeLabel}</span>
+                </div>
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-900/30 to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute bottom-0 left-0 right-0 p-5">
@@ -600,7 +534,7 @@ function ApplicationsMegaMenu({ items, locale }: { items: NonNullable<NavItem['c
                     Featured
                   </span>
                 </div>
-                <div className="text-base font-bold text-white">{appData.title}</div>
+                <div className="text-base font-bold text-white">{activeLabel}</div>
                 <div className="text-xs text-neutral-400 mt-1">RFID智能解决方案</div>
               </div>
             </Link>
@@ -608,18 +542,18 @@ function ApplicationsMegaMenu({ items, locale }: { items: NonNullable<NavItem['c
             {/* Secondary card */}
             {leftCard && (
               <Link
-                href={`/${locale}${leftCard.item.href}`}
+                href={`/${locale}${leftCard.href}`}
                 className="group flex-1 relative rounded-xl overflow-hidden border border-neutral-700/30 bg-neutral-800/30 hover:border-primary-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/5 min-h-0"
               >
                 <img
-                  src={leftCard.entry.image}
-                  alt={leftCard.entry.title}
+                  src={getAppImage(appCategories, leftCard.label) || fallbackImage}
+                  alt={leftCard.label}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-3">
-                  <div className="text-[12px] font-medium text-white/90">{leftCard.entry.title}</div>
+                  <div className="text-[12px] font-medium text-white/90">{leftCard.label}</div>
                 </div>
               </Link>
             )}
@@ -629,22 +563,22 @@ function ApplicationsMegaMenu({ items, locale }: { items: NonNullable<NavItem['c
           <div className="w-1/2 flex flex-col gap-3">
             {rightCards.map((card, idx) => (
               <Link
-                key={card.item.label}
-                href={`/${locale}${card.item.href}`}
+                key={card.label}
+                href={`/${locale}${card.href}`}
                 className={`group flex-1 relative rounded-xl overflow-hidden border border-neutral-700/30 bg-neutral-800/30 hover:border-primary-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/5 min-h-0 ${
                   idx === 0 ? 'hover:ring-1 hover:ring-primary-500/20' : ''
                 }`}
               >
                 <img
-                  src={card.entry.image}
-                  alt={card.entry.title}
+                  src={getAppImage(appCategories, card.label) || fallbackImage}
+                  alt={card.label}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-neutral-950/10 to-transparent" />
                 <div className="absolute inset-0 flex items-start p-3">
                   <span className="inline-block px-2 py-0.5 text-[10px] font-semibold text-neutral-300/80 bg-neutral-900/60 backdrop-blur-sm rounded-md border border-neutral-600/30">
-                    {card.entry.title}
+                    {card.label}
                   </span>
                 </div>
               </Link>

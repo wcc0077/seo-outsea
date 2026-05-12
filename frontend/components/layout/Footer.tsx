@@ -8,43 +8,6 @@ interface FooterProps {
   currentYear: number;
 }
 
-// Hardcoded fallback product columns for when Strapi is unavailable
-const FALLBACK_PRODUCT_COLUMNS: Array<{ name: string; slug: string; children: Array<{ name: string; slug: string }> }> = [
-  {
-    name: '智能移动终端',
-    slug: 'mobile-devices',
-    children: [
-      { name: '多功能手持终端', slug: 'handheld-terminals' },
-      { name: '多功能工业平板', slug: 'industrial-tablets' },
-      { name: '便携式RFID读写器', slug: 'portable-readers' },
-    ],
-  },
-  {
-    name: 'RFID读写器',
-    slug: 'rfid-readers',
-    children: [
-      { name: '工业读写器', slug: 'industrial-readers' },
-      { name: '超高频读写器', slug: 'uhf-readers' },
-      { name: '高频读写器', slug: 'hf-readers' },
-      { name: '有源读写器', slug: 'active-readers' },
-      { name: '模块集成', slug: 'module-integration' },
-    ],
-  },
-  {
-    name: 'RFID电子标签',
-    slug: 'rfid-tags',
-    children: [
-      { name: 'RFID工业载体', slug: 'industrial-carriers' },
-      { name: 'RFID耐温标签', slug: 'high-temp-tags' },
-      { name: 'RFID抗金属标签', slug: 'metal-tags' },
-      { name: 'RFID易碎转移标签', slug: 'tamper-evident-tags' },
-      { name: '智能卡与不干胶标签', slug: 'smart-card-labels' },
-      { name: '其他特种标签', slug: 'other-special-tags' },
-      { name: '有源电子标签', slug: 'active-tags' },
-    ],
-  },
-];
-
 export default async function Footer({ global, locale, currentYear }: FooterProps) {
   const contact = global?.contactInfo;
   const t = await getTranslations({ locale, namespace: 'Footer' });
@@ -56,11 +19,8 @@ export default async function Footer({ global, locale, currentYear }: FooterProp
   // Filter only published categories (Strapi returns both draft + published)
   const published = allCategories.filter((c) => c.publishedAt !== null);
 
-  // Footer product columns: only top-level categories
-  const footerProductSlugs = ['mobile-devices', 'rfid-readers', 'rfid-tags'];
-  const productTopLevel = published
-    .filter((c) => !c.parent && footerProductSlugs.includes(c.slug))
-    .sort((a, b) => footerProductSlugs.indexOf(a.slug) - footerProductSlugs.indexOf(b.slug));
+  // Top-level categories: parent is null
+  const topLevel = published.filter((c) => !c.parent);
 
   // Group children by their parent's documentId
   const childMap = new Map<string, typeof published>();
@@ -71,9 +31,6 @@ export default async function Footer({ global, locale, currentYear }: FooterProp
       childMap.get(parentId)!.push(cat);
     }
   }
-
-  // Use Strapi data if top-level categories exist, otherwise fallback
-  const useFallbackProducts = productTopLevel.length === 0;
 
   return (
     <footer className="bg-neutral-950 text-neutral-400 relative overflow-hidden">
@@ -105,21 +62,16 @@ export default async function Footer({ global, locale, currentYear }: FooterProp
             )}
           </div>
 
-          {/* Product category columns from Strapi or fallback */}
-          {(useFallbackProducts ? FALLBACK_PRODUCT_COLUMNS : productTopLevel).map((category) => {
-            const isFallback = useFallbackProducts;
-            const docId = isFallback ? null : (category as ProductCategoryData).documentId;
-            const children = isFallback
-              ? (category as typeof FALLBACK_PRODUCT_COLUMNS[0]).children
-              : (docId ? childMap.get(docId) : []) || [];
-            const name = isFallback ? (category as typeof FALLBACK_PRODUCT_COLUMNS[0]).name : (category as ProductCategoryData).name;
-            const slug = isFallback ? (category as typeof FALLBACK_PRODUCT_COLUMNS[0]).slug : (category as ProductCategoryData).slug;
+          {/* Product category columns from Strapi */}
+          {topLevel.map((category) => {
+            const docId = category.documentId;
+            const children = childMap.get(docId) || [];
             return (
-              <div key={slug}>
-                <h3 className="text-white font-semibold mb-4 font-display text-sm">{name}</h3>
+              <div key={category.slug}>
+                <h3 className="text-white font-semibold mb-4 font-display text-sm">{category.name}</h3>
                 <ul className="space-y-2.5 text-sm">
-                  {(children as Array<{ name: string; slug: string }>).length > 0
-                    ? (children as Array<{ name: string; slug: string }>).map((child) => (
+                  {children.length > 0
+                    ? children.map((child) => (
                         <li key={child.slug}>
                           <Link href={`/${locale}/products/category/${child.slug}`} className="hover:text-primary-400 transition-colors break-all">
                             {child.name}
@@ -128,8 +80,8 @@ export default async function Footer({ global, locale, currentYear }: FooterProp
                       ))
                     : (
                       <li>
-                        <Link href={`/${locale}/products/category/${slug}`} className="hover:text-primary-400 transition-colors">
-                          {name}
+                        <Link href={`/${locale}/products/category/${category.slug}`} className="hover:text-primary-400 transition-colors">
+                          {category.name}
                         </Link>
                       </li>
                     )}
@@ -142,26 +94,13 @@ export default async function Footer({ global, locale, currentYear }: FooterProp
           <div>
             <h3 className="text-white font-semibold mb-4 font-display text-sm">{t('applications')}</h3>
             <ul className="space-y-2.5 text-sm">
-              {appCategories.length > 0
-                ? appCategories.map((cat: ApplicationCategoryData) => (
-                    <li key={cat.id}>
-                      <Link href={`/${locale}/applications/category/${cat.slug}`} className="hover:text-primary-400 transition-colors">
-                        {cat.name}
-                      </Link>
-                    </li>
-                  ))
-                : (
-                  <>
-                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('manufacturing')}</Link></li>
-                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('logistics')}</Link></li>
-                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('archiveLibrary')}</Link></li>
-                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('assetInspection')}</Link></li>
-                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('antiCounterfeit')}</Link></li>
-                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('retailSupplyChain')}</Link></li>
-                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('smartCity')}</Link></li>
-                    <li><Link href={`/${locale}/applications`} className="hover:text-primary-400 transition-colors">{t('smartCabinet')}</Link></li>
-                  </>
-                )}
+              {appCategories.map((cat: ApplicationCategoryData) => (
+                <li key={cat.slug}>
+                  <Link href={`/${locale}/applications/category/${cat.slug}`} className="hover:text-primary-400 transition-colors">
+                    {cat.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

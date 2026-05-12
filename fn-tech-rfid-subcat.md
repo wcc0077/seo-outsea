@@ -1,0 +1,374 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e5]:
+      - list [ref=e9]:
+        - listitem [ref=e10]:
+          - link "关于孚恩" [ref=e11] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/about-us.html
+        - listitem [ref=e12]:
+          - link "智能移动终端" [ref=e13] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/mobile.html
+        - listitem [ref=e14]:
+          - link "RFID读写器" [ref=e15] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid.html
+        - listitem [ref=e16]:
+          - link "RFID电子标签" [ref=e17] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag.html
+        - listitem [ref=e18]:
+          - link "行业应用" [ref=e19] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application.html
+        - listitem [ref=e20]:
+          - link "技术支持" [ref=e21] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/support.html
+        - listitem [ref=e22]:
+          - link "联系我们" [ref=e23] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/contact.html
+      - link "上海孚恩电子科技有限公司" [ref=e27] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/index.html
+        - img "上海孚恩电子科技有限公司" [ref=e28]
+      - generic [ref=e45]:
+        - generic [ref=e48]:
+          - link "网站首页" [ref=e50] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/
+          - text: ">>"
+          - link "RFID读写器" [ref=e52] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid/2.html
+        - strong [ref=e56]: 当前位置：
+        - generic [ref=e61]:
+          - textbox [ref=e63]: 请输入关键字
+          - generic [ref=e65] [cursor=pointer]: 搜索
+      - generic [ref=e67]:
+        - generic [ref=e69]:
+          - generic [ref=e70]:
+            - term [ref=e71]: "RFID识别:"
+            - definition [ref=e72]:
+              - link "不限" [ref=e73] [cursor=pointer]:
+                - /url: "#none"
+              - link "UHF（860~960MHz）" [ref=e74] [cursor=pointer]:
+                - /url: "#none"
+              - link "HF（13.56MHz）" [ref=e75] [cursor=pointer]:
+                - /url: "#none"
+              - link "LF（125KHz)" [ref=e76] [cursor=pointer]:
+                - /url: "#none"
+              - link "LF（134.2KHz）" [ref=e77] [cursor=pointer]:
+                - /url: "#none"
+              - link "VHF(2.45GHz)" [ref=e78] [cursor=pointer]:
+                - /url: "#none"
+          - generic [ref=e79]:
+            - term [ref=e80]: "产品功能:"
+            - definition [ref=e81]:
+              - link "不限" [ref=e82] [cursor=pointer]:
+                - /url: "#none"
+              - link "条码扫描" [ref=e83] [cursor=pointer]:
+                - /url: "#none"
+              - link "二代证" [ref=e84] [cursor=pointer]:
+                - /url: "#none"
+              - link "打印" [ref=e85] [cursor=pointer]:
+                - /url: "#none"
+              - link "指纹识别" [ref=e86] [cursor=pointer]:
+                - /url: "#none"
+              - link "摄像头" [ref=e87] [cursor=pointer]:
+                - /url: "#none"
+              - link "GNSS定位" [ref=e88] [cursor=pointer]:
+                - /url: "#none"
+              - link "PSAM" [ref=e89] [cursor=pointer]:
+                - /url: "#none"
+          - generic [ref=e90]:
+            - term [ref=e91]: "传输方式:"
+            - definition [ref=e92]:
+              - link "不限" [ref=e93] [cursor=pointer]:
+                - /url: "#none"
+              - link "4G全网通" [ref=e94] [cursor=pointer]:
+                - /url: "#none"
+              - link "WIFI" [ref=e95] [cursor=pointer]:
+                - /url: "#none"
+              - link "蓝牙" [ref=e96] [cursor=pointer]:
+                - /url: "#none"
+              - link "TCP/IP" [ref=e97] [cursor=pointer]:
+                - /url: "#none"
+              - link "RS232" [ref=e98] [cursor=pointer]:
+                - /url: "#none"
+              - link "RS485" [ref=e99] [cursor=pointer]:
+                - /url: "#none"
+              - link "USB" [ref=e100] [cursor=pointer]:
+                - /url: "#none"
+              - link "IO-Link" [ref=e101] [cursor=pointer]:
+                - /url: "#none"
+              - link "POE" [ref=e102] [cursor=pointer]:
+                - /url: "#none"
+          - generic [ref=e103]:
+            - term [ref=e104]: "操作系统:"
+            - definition [ref=e105]:
+              - link "不限" [ref=e106] [cursor=pointer]:
+                - /url: "#none"
+              - link "Android" [ref=e107] [cursor=pointer]:
+                - /url: "#none"
+              - link "Windows" [ref=e108] [cursor=pointer]:
+                - /url: "#none"
+              - link "其它" [ref=e109] [cursor=pointer]:
+                - /url: "#none"
+        - generic [ref=e110]:
+          - list:
+            - listitem [ref=e111]:
+              - link "E1698-I系列 网关控制器" [ref=e113] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/rfid_more/E1698-I.html
+                - img "E1698-I系列 网关控制器" [ref=e114]
+              - generic [ref=e115]:
+                - paragraph [ref=e116]:
+                  - link "E1698-I系列 网关控制器" [ref=e117] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/rfid_more/E1698-I.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e118]:
+              - link "D2184B 高性能四通道UHF读写器" [ref=e120] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/rfid_more/368.html
+                - img "D2184B 高性能四通道UHF读写器" [ref=e121]
+              - generic [ref=e122]:
+                - paragraph [ref=e123]:
+                  - link "D2184B 高性能四通道UHF读写器" [ref=e124] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/rfid_more/368.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e125]:
+              - link "D1338T 工业级高频网口读写器" [ref=e127] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/rfid_more/428.html
+                - img "D1338T 工业级高频网口读写器" [ref=e128]
+              - generic [ref=e129]:
+                - paragraph [ref=e130]:
+                  - link "D1338T 工业级高频网口读写器" [ref=e131] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/rfid_more/428.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e132]:
+              - link "D2480系列 工业超高频RFID读写器" [ref=e134] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/rfid_more/364.html
+                - img "D2480系列 工业超高频RFID读写器" [ref=e135]
+              - generic [ref=e136]:
+                - paragraph [ref=e137]:
+                  - link "D2480系列 工业超高频RFID读写器" [ref=e138] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/rfid_more/364.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e139]:
+              - link "E1698-II系列 IO-Link网关控制器" [ref=e141] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/rfid_more/433.html
+                - img "E1698-II系列 IO-Link网关控制器" [ref=e142]
+              - generic [ref=e143]:
+                - paragraph [ref=e144]:
+                  - link "E1698-II系列 IO-Link网关控制器" [ref=e145] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/rfid_more/433.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e146]:
+              - link "D1609 & D1339系列工业级高频读写器" [ref=e148] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/rfid_more/429.html
+                - img "D1609 & D1339系列工业级高频读写器" [ref=e149]
+              - generic [ref=e150]:
+                - paragraph [ref=e151]:
+                  - link "D1609 & D1339系列工业级高频读写器" [ref=e152] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/rfid_more/429.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e153]:
+              - link "D1612 工业级高频读写器" [ref=e155] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/rfid_more/430.html
+                - img "D1612 工业级高频读写器" [ref=e156]
+              - generic [ref=e157]:
+                - paragraph [ref=e158]:
+                  - link "D1612 工业级高频读写器" [ref=e159] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/rfid_more/430.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e160]:
+              - link "D1621系列 IO-LINK高频RFID读写器" [ref=e162] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/rfid_more/431.html
+                - img "D1621系列 IO-LINK高频RFID读写器" [ref=e163]
+              - generic [ref=e164]:
+                - paragraph [ref=e165]:
+                  - link "D1621系列 IO-LINK高频RFID读写器" [ref=e166] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/rfid_more/431.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e167]:
+              - link "D1646T ModbusTCP 工业齐平式高频RFID读写器" [ref=e169] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/rfid_more/432.html
+                - img "D1646T ModbusTCP 工业齐平式高频RFID读写器" [ref=e170]
+              - generic [ref=e171]:
+                - paragraph [ref=e172]:
+                  - link "D1646T ModbusTCP 工业齐平式高频RFID读写器" [ref=e173] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/rfid_more/432.html
+                - paragraph
+                - paragraph
+                - paragraph
+          - generic [ref=e174]:
+            - generic [ref=e175]: "1"
+            - link "2" [ref=e176] [cursor=pointer]:
+              - /url: "###2"
+            - link "3" [ref=e177] [cursor=pointer]:
+              - /url: "###3"
+            - link "4" [ref=e178] [cursor=pointer]:
+              - /url: "###4"
+            - link "末页 >>" [ref=e179] [cursor=pointer]:
+              - /url: "###4"
+    - generic [ref=e182]:
+      - generic [ref=e184]:
+        - paragraph [ref=e185]: 微
+        - paragraph [ref=e186]: 信
+        - paragraph [ref=e187]: 公
+        - paragraph [ref=e188]: 众
+        - paragraph [ref=e189]: 号
+      - img [ref=e193]
+      - img [ref=e203]
+      - list [ref=e207]:
+        - listitem [ref=e208]:
+          - link "孚恩简介" [ref=e209] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/about-us.html
+        - listitem [ref=e210]:
+          - link "公司实景" [ref=e211] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/scenery.html
+        - listitem [ref=e212]:
+          - link "发展历史" [ref=e213] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/history.html
+        - listitem [ref=e214]:
+          - link "荣誉资质" [ref=e215] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/qualification.html
+        - listitem [ref=e216]:
+          - link "新闻中心" [ref=e217] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/news.html
+      - link "RFID读写器" [ref=e220] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/rfid.html
+      - list [ref=e224]:
+        - listitem [ref=e225]:
+          - link "多功能手持终端" [ref=e226] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/mobile/5.html
+        - listitem [ref=e227]:
+          - link "多功能工业平板" [ref=e228] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/mobile/6.html
+        - listitem [ref=e229]:
+          - link "便携式RFID读写器" [ref=e230] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/mobile/7.html
+      - link "RFID电子标签" [ref=e233] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/frid-tag.html
+      - list [ref=e237]:
+        - listitem [ref=e238]:
+          - link "工业读写器" [ref=e239] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid/8.html
+        - listitem [ref=e240]:
+          - link "超高频读写器" [ref=e241] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid/9.html
+        - listitem [ref=e242]:
+          - link "高频读写器" [ref=e243] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e244]:
+          - link "有源读写器" [ref=e245] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid/11.html
+        - listitem [ref=e246]:
+          - link "模块集成" [ref=e247] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid/28.html
+      - link "行业应用" [ref=e250] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/application.html
+      - list [ref=e254]:
+        - listitem [ref=e255]:
+          - link "RFID工业载码体" [ref=e256] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag_more/380.html
+        - listitem [ref=e257]:
+          - link "RFID耐高温标签" [ref=e258] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/13.html
+        - listitem [ref=e259]:
+          - link "RFID抗金属标签" [ref=e260] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/14.html
+        - listitem [ref=e261]:
+          - link "RFID易碎防转移标签" [ref=e262] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/15.html
+        - listitem [ref=e263]:
+          - link "智能卡与不干胶标签" [ref=e264] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/16.html
+        - listitem [ref=e265]:
+          - link "其他特种标签" [ref=e266] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/17.html
+        - listitem [ref=e267]:
+          - link "有源电子标签" [ref=e268] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/18.html
+      - link "技术支持" [ref=e271] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/support.html
+      - list [ref=e275]:
+        - listitem [ref=e276]:
+          - link "智能智造" [ref=e277] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/20.html
+        - listitem [ref=e278]:
+          - link "仓储物流" [ref=e279] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/21.html
+        - listitem [ref=e280]:
+          - link "档案图书" [ref=e281] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/22.html
+        - listitem [ref=e282]:
+          - link "资产巡检" [ref=e283] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/23.html
+        - listitem [ref=e284]:
+          - link "防伪追溯" [ref=e285] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/24.html
+        - listitem [ref=e286]:
+          - link "连锁零售" [ref=e287] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/25.html
+        - listitem [ref=e288]:
+          - link "智慧城市" [ref=e289] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/26.html
+        - listitem [ref=e290]:
+          - link "智能柜体" [ref=e291] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/27.html
+      - link "联系我们" [ref=e294] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/contact.html
+      - list [ref=e298]:
+        - listitem [ref=e299]:
+          - link "产品支持" [ref=e300] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e301]:
+          - link "服务支持" [ref=e302] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/service.html
+        - listitem [ref=e303]:
+          - link "常见问题" [ref=e304] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e305]:
+          - link "知识分享" [ref=e306] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/sharing.html
+      - link "智能移动终端" [ref=e309] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/mobile.html
+      - link "关于孚恩" [ref=e312] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/about-us.html
+      - generic [ref=e314]:
+        - generic [ref=e315]: 地址：上海市闵行区新骏环路588弄23幢401室（4-5层）
+        - generic [ref=e316]: 电话：021-5432 6377
+        - generic [ref=e317]: 邮箱：sales@fn-tech.com
+        - generic [ref=e319]:
+          - text: 网站备案号：
+          - link "沪ICP备15029430号" [ref=e320] [cursor=pointer]:
+            - /url: https://beian.miit.gov.cn/
+        - link "沪公网安备31011202005682号" [ref=e323] [cursor=pointer]:
+          - /url: https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011202005682
+  - insertion:
+    - generic [ref=e325]:
+      - generic [ref=e326]:
+        - generic [ref=e329]: 在线咨询
+        - generic [ref=e330] [cursor=pointer]: 智能手持终端
+        - generic [ref=e331] [cursor=pointer]: 工业平板
+        - generic [ref=e332] [cursor=pointer]: RFID读写器
+        - generic [ref=e333] [cursor=pointer]: RFID电子标签
+        - generic [ref=e334] [cursor=pointer]: 应用解决方案
+      - generic:
+        - paragraph [ref=e335] [cursor=pointer]:
+          - generic [ref=e337]: 可以介绍下你们的产品么？
+        - paragraph [ref=e338] [cursor=pointer]:
+          - generic [ref=e340]: 你们能提供解决方案吗？
+        - paragraph [ref=e341] [cursor=pointer]:
+          - generic [ref=e343]: 你们各地有办事处么？
+    - generic [ref=e348]:
+      - generic [ref=e350]: 欢迎来到孚恩科技，请问有什么可以帮您？
+      - generic [ref=e352] [cursor=pointer]: 在线咨询

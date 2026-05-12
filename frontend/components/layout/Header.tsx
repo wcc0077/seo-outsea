@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Navbar from './Navbar';
 import MegaMenu from './MegaMenu';
 import LanguageSwitcher from './LanguageSwitcher';
+import { ProductCategoryData, ProductData, ApplicationCategoryData, RfidTagData } from '@/lib/strapi';
 
 type NavItem = {
   label: string;
@@ -15,9 +16,13 @@ interface HeaderProps {
   navLinks: NavItem[];
   locale: string;
   noBorder?: boolean;
+  productCategories: ProductCategoryData[];
+  products: ProductData[];
+  appCategories: ApplicationCategoryData[];
+  rfidTags: RfidTagData[];
 }
 
-export default function Header({ siteName, logoUrl, navLinks, locale, noBorder }: HeaderProps) {
+export default function Header({ siteName, logoUrl, navLinks, locale, noBorder, productCategories, products, appCategories, rfidTags }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50">
       {/* Main header bar */}
@@ -37,7 +42,14 @@ export default function Header({ siteName, logoUrl, navLinks, locale, noBorder }
             </Link>
 
             {/* Desktop Navigation */}
-            <MegaMenu navLinks={navLinks} locale={locale} />
+            <MegaMenu
+              navLinks={navLinks}
+              locale={locale}
+              productCategories={productCategories}
+              products={products}
+              appCategories={appCategories}
+              rfidTags={rfidTags}
+            />
 
             {/* Language Switcher + Mobile Menu */}
             <div className="flex items-center gap-3">

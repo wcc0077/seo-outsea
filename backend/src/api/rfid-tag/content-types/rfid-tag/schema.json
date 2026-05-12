@@ -56,7 +56,7 @@
     "category": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::rfid-tag-category.rfid-tag-category"
+      "target": "api::product-category.product-category"
     },
     "specs": {
       "type": "component",

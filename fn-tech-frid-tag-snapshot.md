@@ -1,0 +1,370 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e5]:
+      - list [ref=e9]:
+        - listitem [ref=e10]:
+          - link "关于孚恩" [ref=e11] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/about-us.html
+        - listitem [ref=e12]:
+          - link "智能移动终端" [ref=e13] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/mobile.html
+        - listitem [ref=e14]:
+          - link "RFID读写器" [ref=e15] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid.html
+        - listitem [ref=e16]:
+          - link "RFID电子标签" [ref=e17] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag.html
+        - listitem [ref=e18]:
+          - link "行业应用" [ref=e19] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application.html
+        - listitem [ref=e20]:
+          - link "技术支持" [ref=e21] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/support.html
+        - listitem [ref=e22]:
+          - link "联系我们" [ref=e23] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/contact.html
+      - link "上海孚恩电子科技有限公司" [ref=e27] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/index.html
+        - img "上海孚恩电子科技有限公司" [ref=e28]
+      - generic [ref=e45]:
+        - generic [ref=e48]:
+          - link "网站首页" [ref=e50] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/
+          - text: ">>"
+          - link "RFID电子标签" [ref=e52] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag.html
+        - strong [ref=e56]: 当前位置：
+        - generic [ref=e61]:
+          - textbox [ref=e63]: 请输入关键字
+          - generic [ref=e65] [cursor=pointer]: 搜索
+      - generic [ref=e67]:
+        - generic [ref=e69]:
+          - generic [ref=e70]:
+            - term [ref=e71]: "RFID识别:"
+            - definition [ref=e72]:
+              - link "不限" [ref=e73] [cursor=pointer]:
+                - /url: "#none"
+              - link "UHF（860~960MHz）" [ref=e74] [cursor=pointer]:
+                - /url: "#none"
+              - link "HF（13.56MHz）" [ref=e75] [cursor=pointer]:
+                - /url: "#none"
+              - link "LF（125KHz)" [ref=e76] [cursor=pointer]:
+                - /url: "#none"
+              - link "LF（134.2KHz）" [ref=e77] [cursor=pointer]:
+                - /url: "#none"
+              - link "VHF(2.45GHz)" [ref=e78] [cursor=pointer]:
+                - /url: "#none"
+          - generic [ref=e79]:
+            - term [ref=e80]: "产品功能:"
+            - definition [ref=e81]:
+              - link "不限" [ref=e82] [cursor=pointer]:
+                - /url: "#none"
+              - link "条码扫描" [ref=e83] [cursor=pointer]:
+                - /url: "#none"
+              - link "二代证" [ref=e84] [cursor=pointer]:
+                - /url: "#none"
+              - link "打印" [ref=e85] [cursor=pointer]:
+                - /url: "#none"
+              - link "指纹识别" [ref=e86] [cursor=pointer]:
+                - /url: "#none"
+              - link "摄像头" [ref=e87] [cursor=pointer]:
+                - /url: "#none"
+              - link "GNSS定位" [ref=e88] [cursor=pointer]:
+                - /url: "#none"
+              - link "PSAM" [ref=e89] [cursor=pointer]:
+                - /url: "#none"
+          - generic [ref=e90]:
+            - term [ref=e91]: "传输方式:"
+            - definition [ref=e92]:
+              - link "不限" [ref=e93] [cursor=pointer]:
+                - /url: "#none"
+              - link "4G全网通" [ref=e94] [cursor=pointer]:
+                - /url: "#none"
+              - link "WIFI" [ref=e95] [cursor=pointer]:
+                - /url: "#none"
+              - link "蓝牙" [ref=e96] [cursor=pointer]:
+                - /url: "#none"
+              - link "TCP/IP" [ref=e97] [cursor=pointer]:
+                - /url: "#none"
+              - link "RS232" [ref=e98] [cursor=pointer]:
+                - /url: "#none"
+              - link "RS485" [ref=e99] [cursor=pointer]:
+                - /url: "#none"
+              - link "USB" [ref=e100] [cursor=pointer]:
+                - /url: "#none"
+              - link "IO-Link" [ref=e101] [cursor=pointer]:
+                - /url: "#none"
+              - link "POE" [ref=e102] [cursor=pointer]:
+                - /url: "#none"
+          - generic [ref=e103]:
+            - term [ref=e104]: "操作系统:"
+            - definition [ref=e105]:
+              - link "不限" [ref=e106] [cursor=pointer]:
+                - /url: "#none"
+              - link "Android" [ref=e107] [cursor=pointer]:
+                - /url: "#none"
+              - link "Windows" [ref=e108] [cursor=pointer]:
+                - /url: "#none"
+              - link "其它" [ref=e109] [cursor=pointer]:
+                - /url: "#none"
+        - generic [ref=e110]:
+          - list:
+            - listitem [ref=e111]:
+              - link "UT601 柔性可打印抗金属标签" [ref=e113] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/frid-tag_more/358.html
+                - img "UT601 柔性可打印抗金属标签" [ref=e114]
+              - generic [ref=e115]:
+                - paragraph [ref=e116]:
+                  - link "UT601 柔性可打印抗金属标签" [ref=e117] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/frid-tag_more/358.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e118]:
+              - link "HT202 不干胶14443高频太阳能光伏标签" [ref=e120] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/frid-tag_more/375.html
+                - img "HT202 不干胶14443高频太阳能光伏标签" [ref=e121]
+              - generic [ref=e122]:
+                - paragraph [ref=e123]:
+                  - link "HT202 不干胶14443高频太阳能光伏标签" [ref=e124] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/frid-tag_more/375.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e125]:
+              - link "HT203 不干胶高频抗金属标签" [ref=e127] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/frid-tag_more/376.html
+                - img "HT203 不干胶高频抗金属标签" [ref=e128]
+              - generic [ref=e129]:
+                - paragraph [ref=e130]:
+                  - link "HT203 不干胶高频抗金属标签" [ref=e131] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/frid-tag_more/376.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e132]:
+              - link "HT401 滴胶14443高频抗金属标签" [ref=e134] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/frid-tag_more/377.html
+                - img "HT401 滴胶14443高频抗金属标签" [ref=e135]
+              - generic [ref=e136]:
+                - paragraph [ref=e137]:
+                  - link "HT401 滴胶14443高频抗金属标签" [ref=e138] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/frid-tag_more/377.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e139]:
+              - link "HT412 滴胶15693餐盘标签" [ref=e141] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/frid-tag_more/378.html
+                - img "HT412 滴胶15693餐盘标签" [ref=e142]
+              - generic [ref=e143]:
+                - paragraph [ref=e144]:
+                  - link "HT412 滴胶15693餐盘标签" [ref=e145] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/frid-tag_more/378.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e146]:
+              - link "HT711 耐高温15693 PPS洗衣标签" [ref=e148] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/frid-tag_more/379.html
+                - img "HT711 耐高温15693 PPS洗衣标签" [ref=e149]
+              - generic [ref=e150]:
+                - paragraph [ref=e151]:
+                  - link "HT711 耐高温15693 PPS洗衣标签" [ref=e152] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/frid-tag_more/379.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e153]:
+              - link "HT712 耐高温15693高频工业标签" [ref=e155] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/frid-tag_more/380.html
+                - img "HT712 耐高温15693高频工业标签" [ref=e156]
+              - generic [ref=e157]:
+                - paragraph [ref=e158]:
+                  - link "HT712 耐高温15693高频工业标签" [ref=e159] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/frid-tag_more/380.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e160]:
+              - link "UT201 超高频不干胶标签" [ref=e162] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/frid-tag_more/381.html
+                - img "UT201 超高频不干胶标签" [ref=e163]
+              - generic [ref=e164]:
+                - paragraph [ref=e165]:
+                  - link "UT201 超高频不干胶标签" [ref=e166] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/frid-tag_more/381.html
+                - paragraph
+                - paragraph
+                - paragraph
+            - listitem [ref=e167]:
+              - link "UT203 超高频易碎防转移标签" [ref=e169] [cursor=pointer]:
+                - /url: https://www.fn-tech.com/frid-tag_more/382.html
+                - img "UT203 超高频易碎防转移标签" [ref=e170]
+              - generic [ref=e171]:
+                - paragraph [ref=e172]:
+                  - link "UT203 超高频易碎防转移标签" [ref=e173] [cursor=pointer]:
+                    - /url: https://www.fn-tech.com/frid-tag_more/382.html
+                - paragraph
+                - paragraph
+                - paragraph
+          - generic [ref=e174]:
+            - generic [ref=e175]: "1"
+            - link "2" [ref=e176] [cursor=pointer]:
+              - /url: "###2"
+            - link "末页 >>" [ref=e177] [cursor=pointer]:
+              - /url: "###2"
+    - generic [ref=e180]:
+      - generic [ref=e182]:
+        - paragraph [ref=e183]: 微
+        - paragraph [ref=e184]: 信
+        - paragraph [ref=e185]: 公
+        - paragraph [ref=e186]: 众
+        - paragraph [ref=e187]: 号
+      - img [ref=e191]
+      - img [ref=e201]
+      - list [ref=e205]:
+        - listitem [ref=e206]:
+          - link "孚恩简介" [ref=e207] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/about-us.html
+        - listitem [ref=e208]:
+          - link "公司实景" [ref=e209] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/scenery.html
+        - listitem [ref=e210]:
+          - link "发展历史" [ref=e211] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/history.html
+        - listitem [ref=e212]:
+          - link "荣誉资质" [ref=e213] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/qualification.html
+        - listitem [ref=e214]:
+          - link "新闻中心" [ref=e215] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/news.html
+      - link "RFID读写器" [ref=e218] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/rfid.html
+      - list [ref=e222]:
+        - listitem [ref=e223]:
+          - link "多功能手持终端" [ref=e224] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/mobile/5.html
+        - listitem [ref=e225]:
+          - link "多功能工业平板" [ref=e226] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/mobile/6.html
+        - listitem [ref=e227]:
+          - link "便携式RFID读写器" [ref=e228] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/mobile/7.html
+      - link "RFID电子标签" [ref=e231] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/frid-tag.html
+      - list [ref=e235]:
+        - listitem [ref=e236]:
+          - link "工业读写器" [ref=e237] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid/8.html
+        - listitem [ref=e238]:
+          - link "超高频读写器" [ref=e239] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid/9.html
+        - listitem [ref=e240]:
+          - link "高频读写器" [ref=e241] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e242]:
+          - link "有源读写器" [ref=e243] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid/11.html
+        - listitem [ref=e244]:
+          - link "模块集成" [ref=e245] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/rfid/28.html
+      - link "行业应用" [ref=e248] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/application.html
+      - list [ref=e252]:
+        - listitem [ref=e253]:
+          - link "RFID工业载码体" [ref=e254] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag_more/380.html
+        - listitem [ref=e255]:
+          - link "RFID耐高温标签" [ref=e256] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/13.html
+        - listitem [ref=e257]:
+          - link "RFID抗金属标签" [ref=e258] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/14.html
+        - listitem [ref=e259]:
+          - link "RFID易碎防转移标签" [ref=e260] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/15.html
+        - listitem [ref=e261]:
+          - link "智能卡与不干胶标签" [ref=e262] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/16.html
+        - listitem [ref=e263]:
+          - link "其他特种标签" [ref=e264] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/17.html
+        - listitem [ref=e265]:
+          - link "有源电子标签" [ref=e266] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/frid-tag/18.html
+      - link "技术支持" [ref=e269] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/support.html
+      - list [ref=e273]:
+        - listitem [ref=e274]:
+          - link "智能智造" [ref=e275] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/20.html
+        - listitem [ref=e276]:
+          - link "仓储物流" [ref=e277] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/21.html
+        - listitem [ref=e278]:
+          - link "档案图书" [ref=e279] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/22.html
+        - listitem [ref=e280]:
+          - link "资产巡检" [ref=e281] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/23.html
+        - listitem [ref=e282]:
+          - link "防伪追溯" [ref=e283] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/24.html
+        - listitem [ref=e284]:
+          - link "连锁零售" [ref=e285] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/25.html
+        - listitem [ref=e286]:
+          - link "智慧城市" [ref=e287] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/26.html
+        - listitem [ref=e288]:
+          - link "智能柜体" [ref=e289] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/application/27.html
+      - link "联系我们" [ref=e292] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/contact.html
+      - list [ref=e296]:
+        - listitem [ref=e297]:
+          - link "产品支持" [ref=e298] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e299]:
+          - link "服务支持" [ref=e300] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/service.html
+        - listitem [ref=e301]:
+          - link "常见问题" [ref=e302] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e303]:
+          - link "知识分享" [ref=e304] [cursor=pointer]:
+            - /url: https://www.fn-tech.com/sharing.html
+      - link "智能移动终端" [ref=e307] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/mobile.html
+      - link "关于孚恩" [ref=e310] [cursor=pointer]:
+        - /url: https://www.fn-tech.com/about-us.html
+      - generic [ref=e312]:
+        - generic [ref=e313]: 地址：上海市闵行区新骏环路588弄23幢401室（4-5层）
+        - generic [ref=e314]: 电话：021-5432 6377
+        - generic [ref=e315]: 邮箱：sales@fn-tech.com
+        - generic [ref=e317]:
+          - text: 网站备案号：
+          - link "沪ICP备15029430号" [ref=e318] [cursor=pointer]:
+            - /url: https://beian.miit.gov.cn/
+        - link "沪公网安备31011202005682号" [ref=e321] [cursor=pointer]:
+          - /url: https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011202005682
+  - insertion:
+    - generic [ref=e323]:
+      - generic [ref=e324]:
+        - generic [ref=e327]: 在线咨询
+        - generic [ref=e328] [cursor=pointer]: 智能手持终端
+        - generic [ref=e329] [cursor=pointer]: 工业平板
+        - generic [ref=e330] [cursor=pointer]: RFID读写器
+        - generic [ref=e331] [cursor=pointer]: RFID电子标签
+        - generic [ref=e332] [cursor=pointer]: 应用解决方案
+      - generic:
+        - paragraph [ref=e333] [cursor=pointer]:
+          - generic [ref=e335]: 可以介绍下你们的产品么？
+        - paragraph [ref=e336] [cursor=pointer]:
+          - generic [ref=e338]: 你们能提供解决方案吗？
+        - paragraph [ref=e339] [cursor=pointer]:
+          - generic [ref=e341]: 你们各地有办事处么？
+    - generic [ref=e346]:
+      - generic [ref=e348]: 欢迎来到孚恩科技，请问有什么可以帮您？
+      - generic [ref=e350] [cursor=pointer]: 在线咨询

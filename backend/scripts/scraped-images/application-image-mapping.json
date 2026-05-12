@@ -1,0 +1,142 @@
+[
+  {
+    "applicationSlug": "rfid-cnc-tool-management",
+    "category": "smart-manufacturing",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\smart-manufacturing.jpg"
+  },
+  {
+    "applicationSlug": "rfid-garment-production-line",
+    "category": "smart-manufacturing",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\smart-manufacturing.jpg"
+  },
+  {
+    "applicationSlug": "rfid-fiber-optic-data-center",
+    "category": "smart-manufacturing",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\smart-manufacturing.jpg"
+  },
+  {
+    "applicationSlug": "rfid-auto-manufacturing-system",
+    "category": "smart-manufacturing",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\smart-manufacturing.jpg"
+  },
+  {
+    "applicationSlug": "rfid-motor-production-line",
+    "category": "smart-manufacturing",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\smart-manufacturing.jpg"
+  },
+  {
+    "applicationSlug": "rfid-solar-crystal-pulling-factory",
+    "category": "smart-manufacturing",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\smart-manufacturing.jpg"
+  },
+  {
+    "applicationSlug": "rfid-solar-cell-traceability",
+    "category": "smart-manufacturing",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\smart-manufacturing.jpg"
+  },
+  {
+    "applicationSlug": "rfid-solar-slicing-traceability",
+    "category": "smart-manufacturing",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\smart-manufacturing.jpg"
+  },
+  {
+    "applicationSlug": "rfid-solar-crystal-pulling-traceability",
+    "category": "smart-manufacturing",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\smart-manufacturing.jpg"
+  },
+  {
+    "applicationSlug": "rfid-agv-rgv-smart-logistics",
+    "category": "warehouse-logistics",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\warehouse-logistics.jpg"
+  },
+  {
+    "applicationSlug": "rfid-auto-parts-logistics",
+    "category": "warehouse-logistics",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\warehouse-logistics.jpg"
+  },
+  {
+    "applicationSlug": "rfid-forklift-logistics-port",
+    "category": "warehouse-logistics",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\warehouse-logistics.jpg"
+  },
+  {
+    "applicationSlug": "rfid-warehouse-logistics-management",
+    "category": "warehouse-logistics",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\warehouse-logistics.jpg"
+  },
+  {
+    "applicationSlug": "rfid-warehouse-logistics-application",
+    "category": "warehouse-logistics",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\warehouse-logistics.jpg"
+  },
+  {
+    "applicationSlug": "rfid-cement-outbound-transport",
+    "category": "warehouse-logistics",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\warehouse-logistics.jpg"
+  },
+  {
+    "applicationSlug": "rfid-duoyun-smart-library",
+    "category": "archive-library",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\archive-library.jpg"
+  },
+  {
+    "applicationSlug": "rfid-mobile-engineering-vehicle-tools",
+    "category": "asset-inspection",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\asset-inspection.jpg"
+  },
+  {
+    "applicationSlug": "rfid-power-grid-asset-lifecycle",
+    "category": "asset-inspection",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\asset-inspection.jpg"
+  },
+  {
+    "applicationSlug": "wuhan-chutian-weibao-finance-escort",
+    "category": "asset-inspection",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\asset-inspection.jpg"
+  },
+  {
+    "applicationSlug": "rfid-pharma-anti-counterfeit",
+    "category": "anti-counterfeit",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\anti-counterfeit.jpg"
+  },
+  {
+    "applicationSlug": "rfid-pork-meat-traceability",
+    "category": "anti-counterfeit",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\anti-counterfeit.jpg"
+  },
+  {
+    "applicationSlug": "rfid-garment-logistics-retail",
+    "category": "retail-supply-chain",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\retail-supply-chain.jpg"
+  },
+  {
+    "applicationSlug": "rfid-unmanned-retail",
+    "category": "retail-supply-chain",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\retail-supply-chain.jpg"
+  },
+  {
+    "applicationSlug": "rfid-vehicle-management",
+    "category": "smart-city",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\smart-city.jpg"
+  },
+  {
+    "applicationSlug": "smart-residential-ev-anti-theft",
+    "category": "smart-city",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\smart-city.jpg"
+  },
+  {
+    "applicationSlug": "rfid-entertainment-technology",
+    "category": "smart-city",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\smart-city.jpg"
+  },
+  {
+    "applicationSlug": "rfid-vehicle-positioning-speed",
+    "category": "smart-city",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\smart-city.jpg"
+  },
+  {
+    "applicationSlug": "smart-cabinet-rfid-solution",
+    "category": "smart-cabinet",
+    "imagePath": "C:\\Users\\cheng\\Desktop\\seo-outsea\\backend\\scripts\\scraped-images\\smart-cabinet.jpg"
+  }
+]

@@ -16,5 +16,5 @@
     "noImplicitThis": true
   },
   "include": ["./", "./**/*.ts", "./**/*.js", "src/**/*.json"],
-  "exclude": ["node_modules/", "build/", "dist/", ".tmp/"]
+  "exclude": ["node_modules/", "build/", "dist/", ".tmp/", "scripts/"]
 }

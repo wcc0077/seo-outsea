@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getProductCategoryBySlug, getProductsByCategory, ProductData } from '@/lib/strapi';
+import { getProductCategoryBySlug, getProductsByCategory, ProductData, getRfidTags, getRfidTagsByCategory } from '@/lib/strapi';
 import Link from 'next/link';
 import Card from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
@@ -13,17 +13,51 @@ interface CategoryPageProps {
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { locale, slug } = await params;
 
-  const [category, products] = await Promise.all([
+  const [category, products, rfidTags] = await Promise.all([
     getProductCategoryBySlug(slug, locale),
     getProductsByCategory(slug, locale).catch(() => []),
+    getRfidTagsByCategory(slug, locale).catch(() => []),
   ]);
 
   if (!category) {
     notFound();
   }
 
+  // Map RFID tags to ProductData shape for unified rendering
+  const mappedRfidTags: ProductData[] = rfidTags.map(tag => ({
+    name: tag.name,
+    slug: tag.slug,
+    description: tag.description,
+    specs: tag.specs || [],
+    images: tag.images || [],
+    imageUrl: tag.imageUrl || '',
+    category: tag.category ? {
+      name: tag.category.name,
+      slug: tag.category.slug,
+      description: tag.category.description || '',
+      sortOrder: 0,
+      documentId: tag.category.documentId || tag.category.slug,
+    } : undefined,
+    rfidFrequency: (() => {
+      const f = tag.frequency?.toLowerCase();
+      if (f === 'uhf') return 'uhf';
+      if (f === 'hf') return 'hf';
+      if (f === 'lf') return 'lf-125khz';
+      return null;
+    })() as ProductData['rfidFrequency'],
+    features: [],
+    connectivity: [],
+    os: null,
+    seoTitle: tag.seoTitle || '',
+    seoDescription: tag.seoDescription || '',
+    seoKeywords: tag.seoKeywords || '',
+  }));
+
+  // Merge products and RFID tags
+  const allProducts = [...products, ...mappedRfidTags];
+
   // Deduplicate by slug
-  const uniqueProducts = products.filter((p, idx, arr) => arr.findIndex(x => x.slug === p.slug) === idx);
+  const uniqueProducts = allProducts.filter((p, idx, arr) => arr.findIndex(x => x.slug === p.slug) === idx);
 
   return (
     <div className="py-20 bg-gradient-to-b from-neutral-50 to-white min-h-screen">
