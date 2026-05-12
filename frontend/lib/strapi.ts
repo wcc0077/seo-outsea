@@ -1,6 +1,15 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
 const STRAPI_TOKEN = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN || '';
 
+export const REVALIDATE_TIMES = {
+  products: 3600,      // 1 hour
+  applications: 3600,   // 1 hour
+  news: 300,           // 5 minutes
+  about: 86400,        // 24 hours
+  faq: 3600,           // 1 hour
+  default: 3600,        // 1 hour default
+} as const;
+
 interface FetchOptions {
   cache?: RequestCache;
   next?: { revalidate?: number; tags?: string[] };
@@ -170,7 +179,7 @@ export interface ProductData {
 }
 
 export async function getProducts(locale: string): Promise<ProductData[]> {
-  const res = await fetchApi<{ data: ProductData[] }>('/api/products', { locale });
+  const res = await fetchApi<{ data: ProductData[] }>('/api/products', { locale }, { next: { revalidate: REVALIDATE_TIMES.products } });
 
   // Filter published products and deduplicate by documentId
   const published = res.data.filter((p) => p.publishedAt !== null && p.slug);
@@ -223,7 +232,7 @@ export async function getApplications(locale: string): Promise<ApplicationData[]
   const res = await fetchApi<{ data: ApplicationData[] }>('/api/applications', {
     locale,
     populate: 'images,category',
-  }, { next: { revalidate: 60 } }); // Revalidate every 60 seconds
+  }, { next: { revalidate: REVALIDATE_TIMES.applications } });
 
   // Deduplicate by documentId to handle Strapi i18n duplicates
   const seen = new Set<string>();
@@ -324,7 +333,8 @@ interface NewsPaginationMeta {
 export async function getPublishedNews(locale: string, page = 1, pageSize = 10): Promise<{ data: NewsData[]; meta: NewsPaginationMeta }> {
   const res = await fetchApi<{ data: NewsData[]; meta: NewsPaginationMeta }>(
     '/api/news/published',
-    { locale, page: String(page), pageSize: String(pageSize) }
+    { locale, page: String(page), pageSize: String(pageSize) },
+    { next: { revalidate: REVALIDATE_TIMES.news } }
   );
   return res;
 }
@@ -444,7 +454,7 @@ export interface AboutPageData {
 
 export async function getAboutPageBySlug(slug: string, locale: string): Promise<AboutPageData | null> {
   try {
-    const res = await fetchApi<{ data: AboutPageData }>(`/api/about-pages/by-slug/${slug}`, { locale });
+    const res = await fetchApi<{ data: AboutPageData }>(`/api/about-pages/by-slug/${slug}`, { locale }, { next: { revalidate: REVALIDATE_TIMES.about } });
     return res.data;
   } catch {
     return null;
@@ -472,7 +482,7 @@ export async function getFAQArticles(locale: string, category?: string): Promise
   const params: Record<string, string> = { locale, pageSize: '20' };
   if (category) params.category = category;
   const res = await fetchApi<{ data: FAQArticleData[] }>('/api/faq/knowledge', params, {
-    cache: 'no-store',
+    next: { revalidate: REVALIDATE_TIMES.faq },
   });
   return res.data;
 }
