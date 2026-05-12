@@ -4,8 +4,8 @@ export const SEO_CONFIG = {
   siteName: 'FN Tech',
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://fn-tech.com',
   defaultLocale: 'en',
-  supportedLocales: ['en', 'zh'] as const,
-  localesWithRegion: ['en-US', 'zh-CN'] as const,
+  supportedLocales: ['en', 'zh', 'fr', 'de', 'es', 'ru'] as const,
+  localesWithRegion: ['en-US', 'zh-CN', 'fr-FR', 'de-DE', 'es-ES', 'ru-RU'] as const,
 } as const;
 
 export const SITEMAP_CONFIG = {

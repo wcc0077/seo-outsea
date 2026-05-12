@@ -12,6 +12,16 @@ import { getNavLinks } from '@/lib/nav-links';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
+// Locale to OpenGraph locale mapping
+const LOCALE_TO_OG_LOCALE: Record<string, string> = {
+  en: 'en_US',
+  zh: 'zh_CN',
+  fr: 'fr_FR',
+  de: 'de_DE',
+  es: 'es_ES',
+  ru: 'ru_RU',
+};
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
 
@@ -44,7 +54,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     },
     openGraph: {
       type: 'website',
-      locale: locale === 'en' ? 'en_US' : 'zh_CN',
+      locale: LOCALE_TO_OG_LOCALE[locale] || 'en_US',
       siteName: SEO_CONFIG.siteName,
       title: SEO_CONFIG.siteName,
       description: 'FN Tech - Industrial RFID Hardware Solutions Provider',
@@ -109,12 +119,66 @@ export default async function LocaleLayout({
 
   const currentYear = new Date().getFullYear();
 
+  // JSON-LD Structured Data for Organization and WebSite
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${SEO_CONFIG.siteUrl}/#organization`,
+    name: 'FN Tech',
+    url: SEO_CONFIG.siteUrl,
+    logo: globalData?.logo?.url ? getStrapiImageUrl(globalData.logo.url) : undefined,
+    sameAs: [
+      'https://www.linkedin.com/company/fn-tech',
+      'https://twitter.com/fntech',
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'National 863 Software Incubator Base, Caohejing Pujiang Hi-Tech Park',
+        addressLocality: 'Shanghai',
+        addressRegion: 'Shanghai',
+        addressCountry: 'CN',
+      },
+      areaServed: 'Worldwide',
+    },
+  };
+
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SEO_CONFIG.siteUrl}/#website`,
+    name: 'FN Tech',
+    description: 'Industrial RFID Hardware Solutions Provider',
+    url: SEO_CONFIG.siteUrl,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${SEO_CONFIG.siteUrl}/${locale}/products?search={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  };
+
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
-      <LocaleSetter locale={locale} />
-      <HeaderWrapper {...headerProps} />
-      <main className="flex-1">{children}</main>
-      <Footer global={globalData} locale={locale} currentYear={currentYear} />
-    </NextIntlClientProvider>
+    <html lang={locale}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+      </head>
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        <LocaleSetter locale={locale} />
+        <HeaderWrapper {...headerProps} />
+        <main className="flex-1">{children}</main>
+        <Footer global={globalData} locale={locale} currentYear={currentYear} />
+      </NextIntlClientProvider>
+    </html>
   );
 }
