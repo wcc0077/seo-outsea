@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getStrapiImageUrl, ApplicationData } from '@/lib/strapi';
 import Card from '@/components/ui/Card';
 
@@ -28,11 +29,13 @@ export default function ApplicationShowcase({ title, applications, locale }: App
             <Link key={app.slug} href={`/${locale}/applications/${app.slug}`}>
               <Card className="h-full">
                 {app.images?.[0] && (
-                  <div className="relative overflow-hidden">
-                    <img
+                  <div className="relative overflow-hidden h-52">
+                    <Image
                       src={getStrapiImageUrl(app.images[0].url) || '/placeholder.png'}
                       alt={app.name}
-                      className="w-full h-52 object-cover transition-transform duration-500 hover:scale-105"
+                      fill
+                      className="object-cover transition-transform duration-500 hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/10 to-transparent" />
                   </div>

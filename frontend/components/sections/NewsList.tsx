@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getStrapiImageUrl, NewsData } from '@/lib/strapi';
 import Card from '@/components/ui/Card';
 
@@ -33,11 +34,13 @@ export default function NewsList({ title, news, locale }: NewsListProps) {
             <Link key={item.slug} href={`/${locale}/news/${item.slug}`}>
               <Card className="h-full">
                 {item.coverImage && (
-                  <div className="relative overflow-hidden">
-                    <img
+                  <div className="relative overflow-hidden h-52">
+                    <Image
                       src={getStrapiImageUrl(item.coverImage.url) || '/placeholder.png'}
                       alt={item.coverImage.alternativeText || item.title}
-                      className="w-full h-52 object-cover transition-transform duration-500 hover:scale-105"
+                      fill
+                      className="object-cover transition-transform duration-500 hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/10 to-transparent" />
                   </div>

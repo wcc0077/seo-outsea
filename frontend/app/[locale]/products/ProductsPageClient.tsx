@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Card from '@/components/ui/Card';
 import { getStrapiImageUrl, ProductData, ProductCategoryData } from '@/lib/strapi';
 
@@ -250,7 +251,7 @@ export default function ProductsPageClient({ products, categories, locale }: Pro
                   >
                     <div className="w-10 h-10 rounded-lg overflow-hidden bg-neutral-100 flex-shrink-0 flex items-center justify-center">
                       {product.imageUrl ? (
-                        <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
+                        <Image src={product.imageUrl} alt={product.name} fill className="object-cover" />
                       ) : (
                         <svg className="w-5 h-5 text-neutral-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -307,10 +308,12 @@ export default function ProductsPageClient({ products, categories, locale }: Pro
                   <div className="relative overflow-hidden bg-gradient-to-br from-neutral-50 to-neutral-100 aspect-[4/3]">
                     {(product.images?.[0] || product.imageUrl) ? (
                       <>
-                        <img
+                        <Image
                           src={product.imageUrl || getStrapiImageUrl(product.images?.[0]?.url) || '/placeholder.png'}
                           alt={product.images?.[0]?.alternativeText || product.name}
-                          className="w-full h-full object-contain p-5 transition-transform duration-500 group-hover:scale-110"
+                          fill
+                          className="object-contain p-5 transition-transform duration-500 group-hover:scale-110"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </>

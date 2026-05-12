@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getStrapiImageUrl, ProductData } from '@/lib/strapi';
 import Card from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
@@ -28,11 +29,13 @@ export default function ProductGrid({ title, products, locale }: ProductGridProp
             <Link key={product.slug} href={`/${locale}/products/${product.slug}`}>
               <Card className="h-full">
                 {(product.images?.[0] || product.imageUrl) && (
-                  <div className="relative overflow-hidden">
-                    <img
+                  <div className="relative overflow-hidden h-52">
+                    <Image
                       src={product.imageUrl || getStrapiImageUrl(product.images[0].url) || '/placeholder.png'}
                       alt={product.images?.[0]?.alternativeText || product.name}
-                      className="w-full h-52 object-cover transition-transform duration-500 hover:scale-105"
+                      fill
+                      className="object-cover transition-transform duration-500 hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     {/* Subtle overlay gradient */}
                     <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/10 to-transparent" />
