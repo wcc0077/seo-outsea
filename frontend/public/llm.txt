@@ -1,104 +1,132 @@
-# FN Tech — Industrial RFID Hardware Solutions Provider
-# 上海孚恩电子科技有限公司
+# FN Tech — Industrial RFID Hardware Solutions
+# 上海孚恩电子科技有限公司 | Shanghai Fuen Electronic Technology Co., Ltd.
 
 ## Company Overview
 
-FN Tech (Shanghai Fuen Electronic Technology Co., Ltd.) is a professional RFID and IoT technology company established in 2006. Located in Shanghai's Caohejing Pujiang Hi-Tech Park, the company specializes in RFID hardware R&D, manufacturing, and IoT solutions.
+FN Tech is a professional RFID (Radio Frequency Identification) and IoT (Internet of Things) hardware company established in 2006. Headquartered in Shanghai, China, the company specializes in the R&D, manufacturing, and sales of industrial RFID identification equipment and IoT solutions.
 
-**Key Facts:**
-- Founded: 2006
-- Registered Capital: 20.02 million RMB
-- Facility: 3,000+ sqm R&D and production base
-- Intellectual Property: 70+ patents and certifications
-- R&D Team: 60%+ with Master's degrees, 15+ years average industry experience
+**Key Company Facts:**
+| Metric | Value |
+|--------|-------|
+| Founded | 2006 |
+| Registered Capital | 20.02 million RMB |
+| R&D & Production Facility | 3,000+ sqm |
+| Location | National 863 Software Incubator Base, Caohejing Pujiang Hi-Tech Park, Shanghai |
+| Intellectual Property | 70+ patents and certifications |
+| R&D Team | 60%+ with Master's degrees, 15+ years average industry experience |
+
+**Certifications:** ISO 9001 Quality Management System, CE certification for EU exports
 
 ## Core Products
 
-### RFID Readers
-- Fixed RFID Readers (UHF/HF)
-- Handheld RFID Readers
-- Industrial RFID Readers (IO-Link, ModbusTCP, Ethernet support)
+### 1. Smart Mobile Terminals (智能移动终端)
+- **Handheld Terminals** — Industrial Android PDAs with barcode/RFID dual-mode scanning
+- **Industrial Tablets** — Rugged tablets for field data collection
+- **Portable RFID Readers** — Mobile RFID readers for on-site operations
 
-### RFID Tags & Labels
-- UHF RFID Tags
-- HF RFID Tags
-- Anti-counterfeit RFID Tags
-- Warehouse/Logistics RFID Tags
+### 2. RFID Readers (RFID读写器)
+- **HF RFID Readers** (13.56 MHz) — High-frequency readers for proximity identification
+- **UHF RFID Readers** (860-960 MHz) — Ultra-high-frequency readers for long-range reading
+- **LF RFID Readers** (125 kHz, 134 kHz) — Low-frequency readers for industrial environments
+- **Active RFID Readers** — Long-range active tag readers
+- **Protocol Gateway Controllers** — IO-Link, ModbusTCP, Ethernet/IP industrial protocol converters
+- **Integrated RFID Products** — Complete RFID reading solutions
 
-### Handheld Terminals
-- Android Industrial PDAs
-- Barcode + RFID Dual-mode Devices
-- Bluetooth RFID Scanners
+### 3. RFID Tags & Labels (RFID电子标签)
+- **High Temperature Tags** — Tags rated for extreme heat environments (automotive, manufacturing)
+- **Anti-Metal Tags** — On-metal RFID tags with enhanced read performance
+- **Fragile Tamper-Proof Tags** — Security tags for anti-counterfeit applications
+- **Smart Cards & Sticker Labels** — Paper labels, PVC cards, adhesive tags
+- **Active Electronic Tags** — Battery-assisted tags for extended range
 
-### Antennas & Modules
-- High-performance RFID Antennas
-- RFID Reader Modules
-- Custom RFID Solutions
+### 4. RFID Antennas & Modules
+- High-performance RFID antennas for various application scenarios
+- RFID reader modules for integration
 
-## Applications & Industries
-
-FN Tech serves multiple industries with RFID solutions:
-
-- **Smart Manufacturing** — Production tracking, quality control
-- **Warehouse & Logistics** — Inventory management, asset tracking
-- **Retail & Supply Chain** — Stock management, anti-counterfeit
-- **Smart Cabinet** — Asset management, access control
-- **Archive & Library** — Document tracking, asset management
-- **Asset Inspection** — Equipment verification, maintenance tracking
-- **Anti-counterfeit** — Product authentication, brand protection
-- **Smart City** — Urban infrastructure management
-
-## Technical Capabilities
-
-### Full-Stack R&D
-- Chip selection and circuit design
-- Firmware development
-- Antenna design
-- Application software development
-
-### Industry Protocols
-- IO-Link
-- ModbusTCP
-- Ethernet/IP
-- RS485/RS232
-
-### RFID Frequencies
+### Supported RFID Frequencies
 - UHF (860-960 MHz)
 - HF (13.56 MHz)
 - LF (125 kHz, 134 kHz)
 - VHF
 
-## Product Categories (English)
+### Industrial Communication Protocols
+IO-Link, ModbusTCP, Ethernet/IP, RS485, RS232
 
-1. RFID Readers — Fixed and handheld readers for industrial use
-2. RFID Tags — Electronic tags for asset tracking
-3. Handheld Terminals — Mobile computers with RFID/barcode scanning
-4. RFID Antennas — High-performance reading antennas
-5. Industrial IoT — Complete solutions for manufacturing and logistics
+## Industry Applications
 
-## Quality & Certifications
+FN Tech RFID solutions serve 8 major industry verticals:
 
-- ISO 9001 Quality Management System
-- 70+ intellectual property rights
-- CE certification for EU exports
-- Full testing environment and production line
+| Industry | Chinese | Application Scenarios |
+|----------|---------|----------------------|
+| Smart Manufacturing | 智能制造 | Production tracking, quality control, process optimization |
+| Warehouse & Logistics | 仓储物流 | Inventory management, asset tracking, supply chain visibility |
+| Archive & Library | 档案图书 | Document tracking, library management, asset management |
+| Asset Inspection | 资产巡检 | Equipment verification, maintenance tracking, compliance |
+| Anti-Counterfeit | 防伪追溯 | Product authentication, brand protection, traceability |
+| Retail Supply Chain | 连锁零售 | Stock management, inventory accuracy, loss prevention |
+| Smart City | 智慧城市 | Urban infrastructure management, public asset tracking |
+| Smart Cabinet | 智能柜体 | Access control, asset management, inventory monitoring |
+
+## Product Categories (English Names)
+
+### By Function
+1. **RFID Readers** — Fixed and handheld readers for industrial automation
+2. **RFID Tags** — Electronic tags for asset tracking and identification
+3. **Handheld Terminals** — Mobile computers with data collection capabilities
+4. **RFID Antennas** — High-performance reading antennas
+5. **Industrial IoT Gateways** — Protocol converters for Industry 4.0
+
+### By Frequency
+1. **UHF Products** — Ultra-high frequency for logistics and supply chain
+2. **HF Products** — High frequency for access control and payment
+3. **LF Products** — Low frequency for industrial and animal identification
+4. **Active Products** — Long-range tracking and monitoring
+
+## Technical Strengths
+
+### Full-Stack R&D Capabilities
+- Chip selection and circuit design
+- Firmware and embedded software development
+- Antenna design and optimization
+- Application software development
+- Complete testing and quality control
+
+### Quality Assurance
+- Complete RFID testing environment
+- Professional production line
+- ISO 9001 certified quality management
+- CE certification for international markets
+
+## Global Reach
+
+FN Tech serves customers worldwide with:
+- Products exported to EU, Southeast Asia, Middle East, and other regions
+- Multi-language support: English (en) and Chinese (zh)
+- Technical documentation in multiple languages
 
 ## Contact Information
 
-- Headquarters: Shanghai, China
-- Location: National 863 Software Incubator Base, Caohejing Pujiang Hi-Tech Park, Minhang District, Shanghai
-- Website: https://fn-tech.com
-- Languages: English (en), Chinese (zh)
+| Item | Details |
+|------|---------|
+| Company | Shanghai Fuen Electronic Technology Co., Ltd. |
+| Address | National 863 Software Incubator Base, Caohejing Pujiang Hi-Tech Park, Minhang District, Shanghai |
+| Website | https://fn-tech.com |
+| Email | info@fn-tech.com (inferred) |
+| Phone | Available via website contact form |
 
-## Sitemap Reference
+## For Complete Product & Application Data
 
-For complete product and application listings, see:
-- /en/products — Product catalog
-- /en/applications — Industry solutions
-- /en/about — Company information
-- /sitemap.xml — Full site index
+For detailed product listings and application case studies:
+- Products: https://fn-tech.com/en/products
+- Applications: https://fn-tech.com/en/applications
+- Full site index: https://fn-tech.com/sitemap.xml
+
+## Data Format Note
+
+This document contains structured company and product summary data optimized for AI/LLM processing. For detailed specifications, pricing, and technical documentation, please visit the official website or contact the company directly.
 
 ---
 
-Last Updated: 2026-05-13
-This document summarizes key company information for AI and LLM processing.
+**Document Version:** 1.1
+**Last Updated:** 2026-05-13
+**Data Sources:** Company official website, Strapi CMS database, product documentation
