@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import Image from 'next/image';
 
 interface CertificateLightboxProps {
   src: string;
@@ -37,7 +38,9 @@ export default function CertificateLightbox({ src, alt, onClose }: CertificateLi
         </svg>
       </button>
       <div className="max-h-[90vh] max-w-[90vw] p-4" onClick={(e) => e.stopPropagation()}>
-        <img src={src} alt={alt} className="max-h-[85vh] max-w-full object-contain rounded-lg shadow-2xl" />
+        <div className="relative max-h-[85vh] max-w-full rounded-lg shadow-2xl overflow-hidden">
+          <Image src={src} alt={alt} fill className="object-contain" />
+        </div>
         <p className="text-center text-sm text-neutral-400 mt-4">{alt}</p>
       </div>
     </div>,

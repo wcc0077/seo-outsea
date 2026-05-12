@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { getProductCategoryBySlug, getProductsByCategory, ProductData, getRfidTags, getRfidTagsByCategory } from '@/lib/strapi';
 import Link from 'next/link';
 import Card from '@/components/ui/Card';
@@ -86,11 +87,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   <div className="relative overflow-hidden bg-gradient-to-br from-neutral-50 to-neutral-100 aspect-[4/3]">
                     {(product.images?.[0] || product.imageUrl) ? (
                       <>
-                        <img
-                          src={product.imageUrl || getStrapiImageUrl(product.images[0].url) || '/placeholder.png'}
-                          alt={product.images?.[0]?.alternativeText || product.name}
-                          className="w-full h-full object-contain p-6 transition-transform duration-500 group-hover:scale-110"
-                        />
+                        <div className="absolute inset-0">
+                          <Image
+                            src={product.imageUrl || getStrapiImageUrl(product.images[0].url) || '/placeholder.png'}
+                            alt={product.images?.[0]?.alternativeText || product.name}
+                            fill
+                            className="object-contain p-6 transition-transform duration-500 group-hover:scale-110"
+                          />
+                        </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </>
                     ) : (

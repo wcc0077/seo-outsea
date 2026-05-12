@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { getRfidTagCategoryBySlug, getRfidTagsByCategory, RfidTagData, RfidTagCategoryData } from '@/lib/strapi';
 import Link from 'next/link';
 import Card from '@/components/ui/Card';
@@ -49,11 +50,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <Link key={tag.slug} href={`/${locale}/rfid-tags/${tag.slug}`}>
                 <Card className="h-full">
                   {(tag.images?.[0] || tag.imageUrl) && (
-                    <div className="relative overflow-hidden">
-                      <img
+                    <div className="relative overflow-hidden h-52">
+                      <Image
                         src={tag.imageUrl || getStrapiImageUrl(tag.images[0].url) || '/placeholder.png'}
                         alt={tag.images?.[0]?.alternativeText || tag.name}
-                        className="w-full h-52 object-cover transition-transform duration-500 hover:scale-105"
+                        fill
+                        className="object-cover transition-transform duration-500 hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/10 to-transparent" />
                     </div>

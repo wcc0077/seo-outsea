@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import Navbar from './Navbar';
 import MegaMenu from './MegaMenu';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -32,7 +33,9 @@ export default function Header({ siteName, logoUrl, navLinks, locale, noBorder, 
             {/* Logo */}
             <Link href={`/${locale}`} className="flex items-center gap-2.5 group">
               {logoUrl ? (
-                <img src={logoUrl} alt={siteName} className="h-8 w-auto" />
+                <div className="relative h-8 w-auto">
+                  <Image src={logoUrl} alt={siteName} fill className="object-contain" />
+                </div>
               ) : (
                 <span className="text-xl font-bold text-white tracking-tight">
                   {siteName}

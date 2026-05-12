@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { getNewsBySlug, NewsData } from '@/lib/strapi';
 import { getStrapiImageUrl } from '@/lib/strapi';
 import JsonLd from '@/components/seo/JsonLd';
@@ -39,11 +40,12 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
           </header>
 
           {news.coverImage && (
-            <div className="rounded-2xl overflow-hidden shadow-lg shadow-neutral-900/10 mb-8">
-              <img
+            <div className="rounded-2xl overflow-hidden shadow-lg shadow-neutral-900/10 mb-8 relative h-[360px]">
+              <Image
                 src={getStrapiImageUrl(news.coverImage.url) || '/placeholder.png'}
                 alt={news.coverImage.alternativeText || news.title}
-                className="w-full h-[360px] object-cover"
+                fill
+                className="object-cover"
               />
             </div>
           )}

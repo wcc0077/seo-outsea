@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { getApplicationCategoryBySlug, getApplicationsByCategory, ApplicationData } from '@/lib/strapi';
 import Link from 'next/link';
 import Card from '@/components/ui/Card';
@@ -47,10 +48,11 @@ export default async function AppCategoryPage({ params }: AppCategoryPageProps) 
                 <Card className="h-full group hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-neutral-100">
                   {app.images?.[0] && (
                     <div className="relative overflow-hidden bg-gradient-to-br from-neutral-50 to-neutral-100 aspect-[4/3]">
-                      <img
+                      <Image
                         src={getStrapiImageUrl(app.images[0].url) || '/placeholder.png'}
                         alt={app.images[0].alternativeText || app.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>

@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { getApplicationBySlug } from '@/lib/strapi';
 import { getStrapiImageUrl } from '@/lib/strapi';
 import JsonLd from '@/components/seo/JsonLd';
@@ -30,11 +31,12 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
         </div>
 
         {app.images?.[0] && (
-          <div className="rounded-2xl overflow-hidden shadow-lg shadow-neutral-900/10 mb-8">
-            <img
+          <div className="rounded-2xl overflow-hidden shadow-lg shadow-neutral-900/10 mb-8 relative h-[360px]">
+            <Image
               src={getStrapiImageUrl(app.images[0].url) || '/placeholder.png'}
               alt={app.name}
-              className="w-full h-[360px] object-cover"
+              fill
+              className="object-cover"
             />
           </div>
         )}

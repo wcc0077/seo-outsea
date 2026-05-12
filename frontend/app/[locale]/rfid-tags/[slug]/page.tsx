@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { getRfidTagBySlug, RfidTagData } from '@/lib/strapi';
 import { getStrapiImageUrl } from '@/lib/strapi';
 import Badge from '@/components/ui/Badge';
@@ -29,11 +30,12 @@ export default async function RfidTagDetailPage({ params }: RfidTagDetailPagePro
           {/* Images */}
           <div>
             {(tag.images?.[0] || tag.imageUrl) && (
-              <div className="rounded-2xl overflow-hidden shadow-lg shadow-neutral-900/10">
-                <img
+              <div className="rounded-2xl overflow-hidden shadow-lg shadow-neutral-900/10 relative h-[400px]">
+                <Image
                   src={tag.imageUrl || getStrapiImageUrl(tag.images[0].url) || '/placeholder.png'}
                   alt={tag.images?.[0]?.alternativeText || tag.name}
-                  className="w-full h-[400px] object-cover"
+                  fill
+                  className="object-cover"
                 />
               </div>
             )}
