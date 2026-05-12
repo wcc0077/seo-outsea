@@ -28,17 +28,9 @@ export default function robots(): MetadataRoute.Robots {
     });
   });
 
-  const sitemapUrls = [
-    `${SEO_CONFIG.siteUrl}/sitemap.xml`,
-  ];
-
-  // Add locale-specific sitemaps
-  SEO_CONFIG.supportedLocales.forEach((locale) => {
-    sitemapUrls.push(`${SEO_CONFIG.siteUrl}/sitemap-${locale}.xml`);
-  });
-
+  // Main sitemap index contains all locale-specific sub-sitemaps
   return {
     rules,
-    sitemap: sitemapUrls,
+    sitemap: [`${SEO_CONFIG.siteUrl}/sitemap.xml`],
   };
 }
