@@ -1,9 +1,16 @@
 import { getTranslations } from 'next-intl/server';
-import { getAboutPageBySlug } from '@/lib/strapi';
+import { getPageBySlug, getAboutPageBySlug } from '@/lib/strapi';
+import GenericPage from '@/components/sections/GenericPage';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 
 export default async function AboutCompanyPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+
+  const page = await getPageBySlug('about-company', locale).catch(() => null);
+  if (page) {
+    return <GenericPage params={Promise.resolve({ locale })} slug="about-company" />;
+  }
+
   const strapiData = await getAboutPageBySlug('company-scenery', locale);
   const isZh = locale === 'zh';
 

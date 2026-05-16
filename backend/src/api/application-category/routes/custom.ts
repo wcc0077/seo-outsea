@@ -22,7 +22,7 @@ export default {
       method: 'POST',
       path: '/application-categories/sync',
       handler: 'application-category.sync',
-      config: { auth: false },
+      config: { auth: false }, // auth: false for public routes, token guard in controller
     },
     {
       method: 'GET',

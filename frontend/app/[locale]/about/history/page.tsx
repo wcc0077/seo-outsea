@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
-import { getAboutPageBySlug } from '@/lib/strapi';
+import { getPageBySlug, getAboutPageBySlug } from '@/lib/strapi';
+import GenericPage from '@/components/sections/GenericPage';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 
 interface TimelineEvent {
@@ -11,6 +12,13 @@ interface TimelineEvent {
 
 export default async function AboutHistoryPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+
+  // Progressive migration: try Strapi page first, fall back to hardcoded content
+  const page = await getPageBySlug('about-history', locale).catch(() => null);
+  if (page) {
+    return <GenericPage params={Promise.resolve({ locale })} slug="about-history" />;
+  }
+
   const strapiData = await getAboutPageBySlug('company-history', locale);
   const isZh = locale === 'zh';
 

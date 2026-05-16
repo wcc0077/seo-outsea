@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
-import { getAboutPageBySlug } from '@/lib/strapi';
+import { getPageBySlug, getAboutPageBySlug } from '@/lib/strapi';
+import GenericPage from '@/components/sections/GenericPage';
 import CertificateGallery from '@/components/sections/CertificateGallery';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 
@@ -12,6 +13,13 @@ interface HonorItem {
 
 export default async function AboutHonorsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+
+  // Progressive migration: try Strapi page first, fall back to hardcoded content
+  const page = await getPageBySlug('about-honors', locale).catch(() => null);
+  if (page) {
+    return <GenericPage params={Promise.resolve({ locale })} slug="about-honors" />;
+  }
+
   const strapiData = await getAboutPageBySlug('company-honors', locale);
   const isZh = locale === 'zh';
 

@@ -1,15 +1,23 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
-import { getAboutPageBySlug } from '@/lib/strapi';
+import { getPageBySlug, getAboutPageBySlug, getStats } from '@/lib/strapi';
 import Breadcrumb from '@/components/ui/Breadcrumb';
+import GenericPage from '@/components/sections/GenericPage';
 
 export default async function AboutIntroPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  // Try unified Page content type first
+  const page = await getPageBySlug('about-intro', locale).catch(() => null);
+  if (page) {
+    return <GenericPage params={Promise.resolve({ locale })} slug="about-intro" />;
+  }
+
+  // Fallback: render from AboutPage + hardcoded content
   const t = await getTranslations({ locale, namespace: 'About' });
-
   const strapiData = await getAboutPageBySlug('company-intro', locale);
-
+  const stats = await getStats(locale);
   const isZh = locale === 'zh';
 
   const heroTitle = strapiData?.title || (isZh ? '关于孚恩' : 'About FN Tech');
@@ -346,7 +354,6 @@ The company has a complete RFID testing environment and production line, ensurin
 }
 
 function parseStrapiContent(content: string): Section[] {
-  // Simple markdown heading parser — splits by ## headings
   const parts = content.split(/^## /m).filter(Boolean);
   if (parts.length === 0) return [];
 

@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { getFAQArticles, FAQArticleData } from '@/lib/strapi';
+import { getFAQArticles, getPageBySlug, FAQArticleData } from '@/lib/strapi';
+import GenericPage from '@/components/sections/GenericPage';
 
 const CATEGORY_LABELS: Record<string, string> = {
   faq: 'FAQ',
@@ -10,6 +11,11 @@ const CATEGORY_LABELS: Record<string, string> = {
 
 export default async function SupportPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+
+  const page = await getPageBySlug('support', locale).catch(() => null);
+  if (page) {
+    return <GenericPage params={Promise.resolve({ locale })} slug="support" />;
+  }
 
   const faqArticles = await getFAQArticles(locale).catch(() => []);
   const faqPreview = faqArticles.slice(0, 4);

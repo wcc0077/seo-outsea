@@ -398,6 +398,15 @@ export default factories.createCoreController('api::application-category.applica
   },
 
   async sync(ctx) {
+    // Token guard — destructive endpoint requires API token
+    const authHeader = ctx.request.header('authorization');
+    const token = authHeader?.replace('Bearer ', '') || ctx.query.token;
+    if (!token) {
+      ctx.status = 401;
+      ctx.body = { error: 'Authorization token required' };
+      return;
+    }
+
     const { locale } = ctx.query;
     const targetLocale = locale || 'en';
 
