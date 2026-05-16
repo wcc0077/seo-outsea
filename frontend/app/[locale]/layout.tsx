@@ -162,23 +162,20 @@ export default async function LocaleLayout({
   };
 
   return (
-    <html lang={locale}>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-        />
-      </head>
-      <NextIntlClientProvider locale={locale} messages={messages}>
-        <LocaleSetter locale={locale} />
-        <HeaderWrapper {...headerProps} />
-        <main className="flex-1">{children}</main>
-        <Footer global={globalData} locale={locale} currentYear={currentYear} />
-      </NextIntlClientProvider>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <LocaleSetter locale={locale} />
+      {/* JSON-LD Structured Data - rendered in body, valid per Google guidelines */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
+      <HeaderWrapper {...headerProps} />
+      <main className="flex-1">{children}</main>
+      <Footer global={globalData} locale={locale} currentYear={currentYear} />
+    </NextIntlClientProvider>
   );
 }

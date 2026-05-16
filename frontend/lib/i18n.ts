@@ -16,6 +16,17 @@ export async function loadLocale(locale: string) {
   };
 }
 
-export default getRequestConfig(async ({ locale }) => loadLocale(locale));
+export default getRequestConfig(async ({ requestLocale }) => {
+  const locale = await requestLocale;
+
+  if (!locale || !SUPPORTED_LOCALES.includes(locale)) {
+    notFound();
+  }
+
+  return {
+    locale,
+    messages: (await import(`../messages/${locale}.json`)).default,
+  };
+});
 
 export { SUPPORTED_LOCALES, DEFAULT_LOCALE };
