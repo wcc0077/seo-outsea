@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { getRfidTagBySlug, RfidTagData } from '@/lib/strapi';
-import { getStrapiImageUrl } from '@/lib/strapi';
+import { Metadata } from 'next';
+import { getRfidTagBySlug, getStrapiImageUrl } from '@/lib/strapi';
+import { getTranslations } from 'next-intl/server';
 import Badge from '@/components/ui/Badge';
 import JsonLd from '@/components/seo/JsonLd';
 import Breadcrumb from '@/components/ui/Breadcrumb';
@@ -10,9 +11,32 @@ interface RfidTagDetailPageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
+export async function generateMetadata({ params }: RfidTagDetailPageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const tag = await getRfidTagBySlug(slug, locale).catch(() => null);
+  if (!tag) return {};
+
+  const title = tag.seoTitle || tag.name;
+  const description = tag.seoDescription || tag.description?.slice(0, 160);
+  const imageUrl = tag.images?.[0] ? getStrapiImageUrl(tag.images[0].url) : undefined;
+
+  return {
+    title,
+    description,
+    keywords: tag.seoKeywords,
+   openGraph: {
+      title,
+      description,
+      images: imageUrl ? [{ url: imageUrl }] : undefined,
+      type: 'article',
+    },
+  };
+}
+
 export default async function RfidTagDetailPage({ params }: RfidTagDetailPageProps) {
   const { locale, slug } = await params;
   const tag = await getRfidTagBySlug(slug, locale);
+  const t = await getTranslations({ locale, namespace: 'RfidTagDetail' });
 
   if (!tag) {
     notFound();
@@ -22,7 +46,7 @@ export default async function RfidTagDetailPage({ params }: RfidTagDetailPagePro
     <div className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumb locale={locale} items={[
-          { label: locale === 'zh' ? 'RFID电子标签' : 'RFID Tags', href: `/${locale}/rfid-tags` },
+          { label: t('rfidTags'), href: `/${locale}/rfid-tags` },
           ...(tag.category ? [{ label: tag.category.name, href: `/${locale}/rfid-tags/category/${tag.category.slug}` }] : []),
           { label: tag.name },
         ]} />
@@ -58,7 +82,7 @@ export default async function RfidTagDetailPage({ params }: RfidTagDetailPagePro
             {/* Specs */}
             {tag.specs && tag.specs.length > 0 && (
               <div className="bg-neutral-50 rounded-xl p-6 border border-neutral-200/80 mb-8">
-                <h2 className="text-xl font-semibold text-neutral-900 mb-4 font-display">Specifications</h2>
+                <h2 className="text-xl font-semibold text-neutral-900 mb-4 font-display">{t('specifications')}</h2>
                 <dl className="space-y-2">
                   {tag.specs.map((spec: { name: string; value: string }, i: number) => (
                     <div key={i} className="flex justify-between py-2 border-b border-neutral-200 last:border-0">
@@ -70,10 +94,10 @@ export default async function RfidTagDetailPage({ params }: RfidTagDetailPagePro
               </div>
             )}
 
-            {/* Application Scenarios */}
+            {/* {t('applicationScenarios')} */}
             {tag.applicationScenarios && (
               <div>
-                <h2 className="text-xl font-semibold text-neutral-900 mb-4 font-display">Application Scenarios</h2>
+                <h2 className="text-xl font-semibold text-neutral-900 mb-4 font-display">{t('applicationScenarios')}</h2>
                 <div
                   className="text-neutral-600 prose prose-sm max-w-none"
                   dangerouslySetInnerHTML={{ __html: tag.applicationScenarios }}

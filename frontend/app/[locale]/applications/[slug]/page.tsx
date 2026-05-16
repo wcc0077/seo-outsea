@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { getApplicationBySlug } from '@/lib/strapi';
-import { getStrapiImageUrl } from '@/lib/strapi';
+import { Metadata } from 'next';
+import { getApplicationBySlug, getStrapiImageUrl } from '@/lib/strapi';
+import { getTranslations } from 'next-intl/server';
 import JsonLd from '@/components/seo/JsonLd';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 
@@ -9,9 +10,32 @@ interface ApplicationDetailPageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
+export async function generateMetadata({ params }: ApplicationDetailPageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const app = await getApplicationBySlug(slug, locale).catch(() => null);
+  if (!app) return {};
+
+  const title = app.seoTitle || app.name;
+  const description = app.seoDescription || app.description?.slice(0, 160);
+  const imageUrl = app.images?.[0] ? getStrapiImageUrl(app.images[0].url) : undefined;
+
+  return {
+    title,
+    description,
+    keywords: app.seoKeywords,
+    openGraph: {
+      title,
+      description,
+      images: imageUrl ? [{ url: imageUrl }] : undefined,
+      type: 'article',
+    },
+  };
+}
+
 export default async function ApplicationDetailPage({ params }: ApplicationDetailPageProps) {
   const { locale, slug } = await params;
   const app = await getApplicationBySlug(slug, locale);
+  const t = await getTranslations({ locale, namespace: 'ApplicationsPage' });
 
   if (!app) {
     notFound();
@@ -21,7 +45,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
     <div className="py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumb locale={locale} items={[
-          { label: locale === 'zh' ? '行业应用' : 'Applications', href: `/${locale}/applications` },
+          { label: t('title'), href: `/${locale}/applications` },
           ...(app.category ? [{ label: app.category.name, href: `/${locale}/applications/category/${app.category.slug}` }] : []),
           { label: app.name },
         ]} />

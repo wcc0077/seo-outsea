@@ -159,5 +159,89 @@
     "nationalHotline": "National Hotline",
     "faxShort": "Fax",
     "website": "Website"
+  },
+  "ProductsPage": {
+    "title": "Продукция",
+    "all": "Все",
+    "found": "Найдено продуктов: {count}",
+    "clearFilters": "Сбросить фильтры",
+    "noResults": "Подходящих продуктов не найдено",
+    "clearAll": "Сбросить все фильтры",
+    "frequency": "Частота RFID",
+    "feature": "Функция продукта",
+    "connectivity": "Подключение",
+    "os": "Операционная система",
+    "specifications": "Характеристики",
+    "fullSpecs": "Полные технические характеристики",
+    "rfidFrequency": "Частота RFID",
+    "operatingSystem": "Операционная система",
+    "needConsultation": "Нужна консультация по продукту?",
+    "consultationDesc": "Наша команда экспертов готова предоставить техническую поддержку и решения",
+    "contactUs": "Связаться с нами",
+    "barcodeScan": "Сканер штрих-кода",
+    "idCard": "Удостоверение личности",
+    "print": "Печать",
+    "camera": "Камера",
+    "gnss": "GNSS позиционирование",
+    "psam": "PSAM",
+    "4g": "4G Full-netcom",
+    "wifi": "WiFi",
+    "bluetooth": "Bluetooth",
+    "tcpIp": "TCP/IP",
+    "rs232": "RS232",
+    "rs485": "RS485",
+    "usb": "USB",
+    "ioLink": "IO-Link",
+    "poe": "POE",
+    "other": "Другое"
+  },
+  "ApplicationsPage": {
+    "title": "Отраслевые решения",
+    "subtitle": "Профессиональные RFID-решения для умного производства, логистики и управления активами",
+    "found": "Решений: {count}",
+    "category": "Категория",
+    "learnMore": "Подробнее",
+    "noResults": "Нет решений в этой категории"
+  },
+  "SharingPage": {
+    "title": "База знаний",
+    "subtitle": "Технические руководства, информация о продуктах и отраслевые инсайты",
+    "categories": {
+      "faq": "ЧЗВ",
+      "technical": "Технические принципы",
+      "application": "Отраслевые решения",
+      "guide": "Руководство по выбору"
+    },
+    "relatedArticles": "Похожие статьи",
+    "backToList": "Вернуться к базе знаний"
+  },
+  "Breadcrumb": {
+    "home": "Главная"
+  },
+  "ProductDetail": {
+    "products": "Продукция",
+    "specifications": "Характеристики",
+    "fullSpecs": "Полные технические характеристики",
+    "rfidFrequency": "Частота RFID",
+    "operatingSystem": "Операционная система",
+    "needConsultation": "Нужна консультация по продукту?",
+    "consultationDesc": "Наша команда экспертов готова предоставить техническую поддержку и решения",
+    "contactUs": "Связаться с нами"
+  },
+  "RfidTagDetail": {
+    "rfidTags": "RFID-метки",
+    "specifications": "Характеристики",
+    "applicationScenarios": "Сценарии применения"
+  },
+  "NewsDetail": {
+    "news": "Новости"
+  },
+  "MegaMenu": {
+    "productSeries": "Серии продуктов",
+    "viewAllProducts": "Все продукты",
+    "featuredProducts": "Популярные продукты",
+    "noProducts": "Нет продуктов",
+    "applications": "Отраслевые решения",
+    "rfidSolutions": "Интеллектуальные RFID-решения"
   }
 }

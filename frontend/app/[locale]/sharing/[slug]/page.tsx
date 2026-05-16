@@ -1,126 +1,81 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getFAQArticleBySlug, getFAQArticles, FAQArticleData } from '@/lib/strapi';
+import { getFAQArticleBySlug, getFAQArticles } from '@/lib/strapi';
+import { getTranslations } from 'next-intl/server';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 
-const CATEGORY_LABELS: Record<string, string> = {
-  faq: '常见问题',
-  technical: '技术原理',
-  application: '行业应用',
-  guide: '选购指南',
-};
+interface FAQArticleDetailPageProps {
+  params: Promise<{ locale: string; slug: string }>;
+}
 
-export default async function FAQArticlePage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+export default async function FAQArticleDetailPage({ params }: FAQArticleDetailPageProps) {
   const { locale, slug } = await params;
-
   const article = await getFAQArticleBySlug(slug, locale);
+
   if (!article) {
     notFound();
   }
 
-  // Get related articles (same category, excluding current)
-  const allArticles = await getFAQArticles(locale).catch(() => []);
-  const related = allArticles
-    .filter((a) => a.slug !== slug && a.category === article.category)
-    .slice(0, 3);
+  const t = await getTranslations({ locale, namespace: 'SharingPage' });
+  const relatedArticles = await getFAQArticles(locale).catch(() => []);
 
-  const categoryLabel = CATEGORY_LABELS[article.category] || article.category;
+  const categoryLabel = (cat: string) => {
+    try { return t(`categories.${cat}`); } catch { return cat; }
+  };
 
   return (
-    <div className="py-16 bg-white">
+    <div className="py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Breadcrumb */}
         <Breadcrumb locale={locale} items={[
-          { label: locale === 'zh' ? '技术支持' : 'Support', href: `/${locale}/support` },
-          { label: locale === 'zh' ? '知识分享' : 'Knowledge Base', href: `/${locale}/sharing` },
+          { label: t('title'), href: `/${locale}/sharing` },
           { label: article.title },
         ]} />
 
-        {/* Article Header */}
-        <header className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-sm font-medium bg-primary-100 text-primary-700 px-3 py-1 rounded-full">
-              {categoryLabel}
-            </span>
-            {article.publishDate && (
-              <span className="text-sm text-neutral-400">{article.publishDate}</span>
+        <article className="mt-8">
+          <div className="mb-6">
+            {article.category && (
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800 mb-4">
+                {categoryLabel(article.category)}
+              </span>
             )}
-            {article.author && (
-              <span className="text-sm text-neutral-400">{article.author}</span>
-            )}
+            <h1 className="text-3xl font-bold text-neutral-900">{article.title}</h1>
           </div>
-          <h1 className="text-3xl font-bold text-neutral-900 leading-tight">{article.title}</h1>
-        </header>
 
-        {/* Article Content */}
-        <article className="prose prose-neutral max-w-none mb-12">
-          {article.content.split('\n').map((line, i) => {
-            if (line.startsWith('### ')) {
-              return <h3 key={i} className="text-xl font-semibold text-neutral-900 mt-8 mb-4">{line.replace('### ', '')}</h3>;
-            }
-            if (line.startsWith('## ')) {
-              return <h2 key={i} className="text-2xl font-bold text-neutral-900 mt-10 mb-5">{line.replace('## ', '')}</h2>;
-            }
-            if (line.startsWith('| ')) {
-              // Skip markdown table rows - render as simple text for now
-              return <div key={i} className="text-sm font-mono bg-neutral-50 rounded px-3 py-1.5 my-0.5">{line}</div>;
-            }
-            if (line.startsWith('- ')) {
-              return <li key={i} className="text-neutral-700 ml-4 list-disc">{line.replace('- ', '')}</li>;
-            }
-            if (/^\d+\.\s/.test(line)) {
-              const content = line.replace(/^\d+\.\s/, '');
-              return <li key={i} className="text-neutral-700 ml-4 list-decimal">{content}</li>;
-            }
-            if (line.trim() === '') {
-              return <div key={i} className="h-3" />;
-            }
-            return <p key={i} className="text-neutral-700 leading-relaxed">{line}</p>;
-          })}
+          <div
+            className="prose prose-lg max-w-none"
+            dangerouslySetInnerHTML={{ __html: article.content || '' }}
+          />
         </article>
 
-        {/* Tags */}
-        {article.tags && article.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-12">
-            {article.tags.map((tag) => (
-              <span key={tag} className="text-xs bg-neutral-100 text-neutral-600 px-3 py-1 rounded-full">
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Related Articles */}
-        {related.length > 0 && (
-          <div className="border-t border-neutral-200 pt-10">
-            <h3 className="text-xl font-bold text-neutral-900 mb-6">相关文章</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {related.map((rel) => (
-                <Link
-                  key={rel.slug}
-                  href={`/${locale}/sharing/${rel.slug}`}
-                  className="block rounded-xl p-4 bg-neutral-50 border border-neutral-200 hover:bg-white hover:border-primary-200 hover:shadow-md transition-all"
-                >
-                  <span className="text-xs font-medium bg-neutral-200 text-neutral-700 px-2 py-0.5 rounded-full">
-                    {CATEGORY_LABELS[rel.category] || rel.category}
-                  </span>
-                  <h4 className="font-medium text-neutral-900 mt-2 text-sm line-clamp-2">{rel.title}</h4>
-                </Link>
-              ))}
+        {relatedArticles.length > 1 && (
+          <div className="mt-16 pt-8 border-t border-neutral-200">
+            <h2 className="text-xl font-bold text-neutral-900 mb-6">{t('relatedArticles')}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {relatedArticles
+                .filter((a) => a.slug !== article.slug)
+                .slice(0, 3)
+                .map((related) => (
+                  <Link
+                    key={related.slug}
+                    href={`/${locale}/sharing/${related.slug}`}
+                    className="p-4 rounded-lg border border-neutral-200 hover:border-primary-300 hover:shadow-md transition-all"
+                  >
+                    {related.category && (
+                      <span className="text-xs text-primary-600 font-medium">{categoryLabel(related.category)}</span>
+                    )}
+                    <h3 className="font-medium text-neutral-900 mt-1 line-clamp-2">{related.title}</h3>
+                  </Link>
+                ))}
             </div>
           </div>
         )}
 
-        {/* Back to list */}
-        <div className="mt-12 text-center">
+        <div className="mt-8">
           <Link
             href={`/${locale}/sharing`}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-100 text-neutral-700 rounded-lg font-medium hover:bg-neutral-200 transition-colors"
+            className="text-primary-600 hover:text-primary-500 font-medium text-sm"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-            返回知识分享
+            ← {t('backToList')}
           </Link>
         </div>
       </div>

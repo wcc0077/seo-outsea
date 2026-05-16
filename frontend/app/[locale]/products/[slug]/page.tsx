@@ -1,13 +1,41 @@
 import { notFound } from 'next/navigation';
-import { getProductBySlug, ProductData, ProductTagData } from '@/lib/strapi';
-import { getStrapiImageUrl } from '@/lib/strapi';
+import dynamic from 'next/dynamic';
+import { Metadata } from 'next';
+import { getProductBySlug, ProductTagData, getStrapiImageUrl } from '@/lib/strapi';
+import { getTranslations } from 'next-intl/server';
 import Badge from '@/components/ui/Badge';
 import JsonLd from '@/components/seo/JsonLd';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import ProductImageZoom from '@/components/ui/ProductImageZoom';
+
+const ProductImageZoom = dynamic(() => import('@/components/ui/ProductImageZoom'), {
+  ssr: false,
+  loading: () => <div className="w-80 h-80 bg-neutral-200 rounded-xl animate-pulse" />,
+});
 
 interface ProductDetailPageProps {
   params: Promise<{ locale: string; slug: string }>;
+}
+
+export async function generateMetadata({ params }: ProductDetailPageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const product = await getProductBySlug(slug, locale).catch(() => null);
+  if (!product) return {};
+
+  const title = product.seoTitle || product.name;
+  const description = product.seoDescription || product.description?.replace(/<[^>]*>/g, '').slice(0, 160);
+  const imageUrl = product.imageUrl || getStrapiImageUrl(product.images?.[0]?.url);
+
+  return {
+    title,
+    description,
+    keywords: product.seoKeywords,
+    openGraph: {
+      title,
+      description,
+      images: imageUrl ? [{ url: imageUrl }] : undefined,
+      type: 'article',
+    },
+  };
 }
 
 function getTagColorVariant(color?: string): 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'default' {
@@ -25,6 +53,7 @@ function getTagColorVariant(color?: string): 'primary' | 'success' | 'warning' |
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { locale, slug } = await params;
   const product = await getProductBySlug(slug, locale);
+  const t = await getTranslations({ locale, namespace: 'ProductDetail' });
 
   if (!product) {
     notFound();
@@ -37,13 +66,13 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <Breadcrumb locale={locale} items={[
-          { label: locale === 'zh' ? '产品中心' : 'Products', href: `/${locale}/products` },
+          { label: t('products'), href: `/${locale}/products` },
           ...(product.category ? [{ label: product.category.name, href: `/${locale}/products/category/${product.category.slug}` }] : []),
           { label: product.name },
         ]} />
 
         {/* Main Content */}
-        <div className="mt-8 relative overflow-visible">
+        <article className="mt-8 relative overflow-visible">
           {/* Top Row: Image + Zoom Panel + Product Info */}
           <div className="flex gap-8 items-start">
             {/* Image Section - includes main image + zoom panel */}
@@ -93,7 +122,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               {product.specs && product.specs.length > 0 && (
                 <div className="mt-4 bg-white rounded-2xl shadow-sm border border-neutral-200/60 p-6">
                   <h2 className="text-lg font-semibold text-neutral-900 mb-4">
-                    {locale === 'zh' ? '技术规格' : 'Specifications'}
+                    {t('specifications')}
                   </h2>
                   <dl className="space-y-2">
                     {product.specs.slice(0, 6).map((spec: { name: string; value: string }, i: number) => (
@@ -115,7 +144,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                 <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
-                {locale === 'zh' ? '完整技术规格' : 'Full Technical Specifications'}
+                {t('fullSpecs')}
               </h2>
               <dl className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-3">
                 {product.specs.map((spec: { name: string; value: string }, i: number) => (
@@ -139,7 +168,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                     </svg>
                   </div>
                   <div>
-                    <p className="text-xs text-blue-800 font-medium">{locale === 'zh' ? 'RFID频率' : 'RFID Frequency'}</p>
+                    <p className="text-xs text-blue-800 font-medium">{t('rfidFrequency')}</p>
                     <p className="text-blue-600 font-semibold uppercase">{product.rfidFrequency}</p>
                   </div>
                 </div>
@@ -155,7 +184,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                     </svg>
                   </div>
                   <div>
-                    <p className="text-xs text-neutral-600 font-medium">{locale === 'zh' ? '操作系统' : 'Operating System'}</p>
+                    <p className="text-xs text-neutral-600 font-medium">{t('operatingSystem')}</p>
                     <p className="text-neutral-900 font-semibold capitalize">{product.os}</p>
                   </div>
                 </div>
@@ -166,7 +195,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           {/* Contact CTA */}
           <div className="mt-6 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-6 text-white max-w-md">
             <h3 className="font-semibold text-lg mb-2">
-              {locale === 'zh' ? '需要产品咨询?' : 'Need Product Consultation?'}
+              {t('needConsultation')}
             </h3>
             <p className="text-blue-100 text-sm mb-4">
               {locale === 'zh'
@@ -177,13 +206,13 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               href={`/${locale}/contact`}
               className="inline-flex items-center px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors"
             >
-              {locale === 'zh' ? '联系我们' : 'Contact Us'}
+              {t('contactUs')}
               <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </a>
           </div>
-        </div>
+        </article>
       </div>
 
       <JsonLd

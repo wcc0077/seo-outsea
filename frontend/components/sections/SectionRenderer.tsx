@@ -1,4 +1,5 @@
 import { SectionData, getOffices, getClients, getStats, OfficeData, ClientData, StatData } from '@/lib/strapi';
+import dynamic from 'next/dynamic';
 import HeroSection from './HeroSection';
 import ProductGrid from './ProductGrid';
 import ApplicationShowcase from './ApplicationShowcase';
@@ -7,9 +8,13 @@ import TextImage from './TextImage';
 import StatsSection from './StatsSection';
 import FAQSection from './FAQSection';
 import Spacer from './Spacer';
-import OfficesSection from './OfficesSection';
 import ClientLogos from './ClientLogos';
 import CertificateGallery from './CertificateGallery';
+
+const OfficesSection = dynamic(() => import('./OfficesSection'), {
+  ssr: false,
+  loading: () => <div className="h-96 bg-neutral-100 animate-pulse rounded-xl" />,
+});
 
 interface SectionRendererProps {
   section: SectionData;

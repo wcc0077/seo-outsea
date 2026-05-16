@@ -583,14 +583,66 @@ export async function getStats(locale: string): Promise<StatData[]> {
       { locale },
       { next: { revalidate: REVALIDATE_TIMES.stats } }
     );
-    const seen = new Set<string>();
-    return (data || []).filter((item) => {
-      const key = item.documentId || item.value;
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
+    return deduplicateBy(data || [], (item) => item.documentId || item.value);
   } catch {
     return [];
   }
+}
+
+// ── Shared utilities ──
+
+export function deduplicateBy<T>(items: T[], keyFn: (item: T) => string): T[] {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    const key = keyFn(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+export function mapRfidTagToProduct(tag: RfidTagData): ProductData {
+  const TAG_TYPE_TO_CATEGORY: Record<string, { name: string; slug: string }> = {
+    carrier: { name: 'Industrial Carriers', slug: 'industrial-carriers' },
+    'high-temp': { name: 'High-Temp Tags', slug: 'high-temp-tags' },
+    'anti-metal': { name: 'Anti-Metal Tags', slug: 'anti-metal-tags' },
+    flexible: { name: 'Fragile Tags', slug: 'fragile-tags' },
+    card: { name: 'Cards & Adhesive Tags', slug: 'cards-adhesive-tags' },
+    'key-fob': { name: 'Special Tags', slug: 'special-tags' },
+    wristband: { name: 'Special Tags', slug: 'special-tags' },
+    custom: { name: 'Active Tags', slug: 'active-tags' },
+  };
+
+  const catInfo = TAG_TYPE_TO_CATEGORY[tag.frequency === 'active' ? 'custom' : tag.tagType || ''];
+  const frequency: ProductData['rfidFrequency'] = (() => {
+    const f = tag.frequency?.toLowerCase();
+    if (f === 'uhf') return 'uhf';
+    if (f === 'hf') return 'hf';
+    if (f === 'lf') return 'lf-125khz';
+    return undefined;
+  })();
+
+  return {
+    name: tag.name,
+    slug: tag.slug,
+    description: tag.description,
+    specs: tag.specs || [],
+    images: tag.images || [],
+    imageUrl: tag.imageUrl || '',
+    category: catInfo ? {
+      name: catInfo.name,
+      slug: catInfo.slug,
+      description: '',
+      sortOrder: 0,
+      documentId: catInfo.slug,
+      publishedAt: null,
+    } : undefined,
+    rfidFrequency: frequency,
+    features: [],
+    connectivity: [],
+    os: null,
+    seoTitle: tag.seoTitle || '',
+    seoDescription: tag.seoDescription || '',
+    seoKeywords: tag.seoKeywords || '',
+  };
 }

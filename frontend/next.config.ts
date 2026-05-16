@@ -22,7 +22,13 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '**',
+        hostname: 'fn-tech.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.fn-tech.com',
+        pathname: '/**',
       },
     ],
   },

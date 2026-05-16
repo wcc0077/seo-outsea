@@ -1,7 +1,12 @@
 import { getTranslations } from 'next-intl/server';
-import OfficesSection from '@/components/sections/OfficesSection';
+import dynamic from 'next/dynamic';
 import GenericPage from '@/components/sections/GenericPage';
 import { getPageBySlug, getOffices, getGlobal } from '@/lib/strapi';
+
+const OfficesSection = dynamic(() => import('@/components/sections/OfficesSection'), {
+  ssr: false,
+  loading: () => <div className="h-96 bg-neutral-100 animate-pulse rounded-xl" />,
+});
 
 interface ContactPageProps {
   params: Promise<{

@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   SEO_CONFIG.supportedLocales.forEach((loc) => {
     alternates[loc] = `${SEO_CONFIG.siteUrl}/${loc}`;
   });
-  alternates['x-default'] = SEO_CONFIG.siteUrl;
+  alternates['x-default'] = `${SEO_CONFIG.siteUrl}/en`;
 
   return {
     metadataBase: new URL(SEO_CONFIG.siteUrl),

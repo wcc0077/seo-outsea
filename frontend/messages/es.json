@@ -159,5 +159,89 @@
     "nationalHotline": "National Hotline",
     "faxShort": "Fax",
     "website": "Website"
+  },
+  "ProductsPage": {
+    "title": "Productos",
+    "all": "Todos",
+    "found": "{count} productos encontrados",
+    "clearFilters": "Limpiar filtros",
+    "noResults": "No se encontraron productos",
+    "clearAll": "Limpiar todos los filtros",
+    "frequency": "Frecuencia RFID",
+    "feature": "Función del producto",
+    "connectivity": "Conectividad",
+    "os": "Sistema operativo",
+    "specifications": "Especificaciones",
+    "fullSpecs": "Especificaciones técnicas completas",
+    "rfidFrequency": "Frecuencia RFID",
+    "operatingSystem": "Sistema operativo",
+    "needConsultation": "¿Necesita consulta de producto?",
+    "consultationDesc": "Nuestro equipo de expertos está listo para proporcionar soporte técnico y soluciones",
+    "contactUs": "Contáctenos",
+    "barcodeScan": "Escáner de código de barras",
+    "idCard": "Documento de identidad",
+    "print": "Impresión",
+    "camera": "Cámara",
+    "gnss": "Posicionamiento GNSS",
+    "psam": "PSAM",
+    "4g": "4G Full-netcom",
+    "wifi": "WiFi",
+    "bluetooth": "Bluetooth",
+    "tcpIp": "TCP/IP",
+    "rs232": "RS232",
+    "rs485": "RS485",
+    "usb": "USB",
+    "ioLink": "IO-Link",
+    "poe": "POE",
+    "other": "Otro"
+  },
+  "ApplicationsPage": {
+    "title": "Aplicaciones industriales",
+    "subtitle": "Soluciones RFID profesionales para fabricación inteligente, logística y gestión de activos",
+    "found": "{count} soluciones de aplicación",
+    "category": "Categoría",
+    "learnMore": "Más información",
+    "noResults": "Sin aplicaciones en esta categoría"
+  },
+  "SharingPage": {
+    "title": "Base de conocimientos",
+    "subtitle": "Guías técnicas, conocimiento de productos e información del sector",
+    "categories": {
+      "faq": "FAQ",
+      "technical": "Principios técnicos",
+      "application": "Aplicaciones industriales",
+      "guide": "Guía de compra"
+    },
+    "relatedArticles": "Artículos relacionados",
+    "backToList": "Volver a la base de conocimientos"
+  },
+  "Breadcrumb": {
+    "home": "Inicio"
+  },
+  "ProductDetail": {
+    "products": "Productos",
+    "specifications": "Especificaciones",
+    "fullSpecs": "Especificaciones técnicas completas",
+    "rfidFrequency": "Frecuencia RFID",
+    "operatingSystem": "Sistema operativo",
+    "needConsultation": "¿Necesita consulta de producto?",
+    "consultationDesc": "Nuestro equipo de expertos está listo para proporcionar soporte técnico y soluciones",
+    "contactUs": "Contáctenos"
+  },
+  "RfidTagDetail": {
+    "rfidTags": "Etiquetas RFID",
+    "specifications": "Especificaciones",
+    "applicationScenarios": "Escenarios de aplicación"
+  },
+  "NewsDetail": {
+    "news": "Noticias"
+  },
+  "MegaMenu": {
+    "productSeries": "Series de productos",
+    "viewAllProducts": "Ver todos los productos",
+    "featuredProducts": "Productos destacados",
+    "noProducts": "Sin productos",
+    "applications": "Aplicaciones industriales",
+    "rfidSolutions": "Soluciones RFID inteligentes"
   }
 }

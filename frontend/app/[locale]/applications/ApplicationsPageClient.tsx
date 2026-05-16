@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { getStrapiImageUrl, ApplicationData, ApplicationCategoryData } from '@/lib/strapi';
 
 interface ApplicationsPageClientProps {
@@ -38,6 +39,8 @@ const CATEGORY_GRADIENTS: Record<string, string> = {
 const PAGE_SIZE = 8;
 
 export default function ApplicationsPageClient({ applications, categories, defaultCategory, locale }: ApplicationsPageClientProps) {
+  const t = useTranslations('ApplicationsPage');
+  const tc = useTranslations('Common');
   const [activeCategory, setActiveCategory] = useState<string | null>(defaultCategory);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -65,9 +68,9 @@ export default function ApplicationsPageClient({ applications, categories, defau
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
           <div className="w-12 h-0.5 bg-primary-500 mb-6" />
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">Applications</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">{t('title')}</h1>
           <p className="text-lg text-neutral-300 max-w-2xl">
-            RFID技术在各行各业的深度应用，从智能制造到智慧城市，为您提供完整的行业解决方案。
+            {t('subtitle')}
           </p>
         </div>
       </div>
@@ -100,7 +103,7 @@ export default function ApplicationsPageClient({ applications, categories, defau
           {activeCategory
             ? `${categories.find(c => c.slug === activeCategory)?.name || ''} · `
             : ''}
-          共 <span className="font-semibold text-neutral-900">{filtered.length}</span> 个应用方案
+          {t('found', { count: filtered.length })}
         </p>
       </div>
 
@@ -136,7 +139,7 @@ export default function ApplicationsPageClient({ applications, categories, defau
                           <div className="absolute inset-0 flex items-center justify-center">
                             <div className="text-center">
                               <span className="text-7xl mb-3 block drop-shadow-lg">{icon}</span>
-                              <p className="text-sm text-white/70 font-medium">{app.category?.name || '应用场景'}</p>
+                              <p className="text-sm text-white/70 font-medium">{app.category?.name || t('category')}</p>
                             </div>
                           </div>
                         )}
@@ -164,7 +167,7 @@ export default function ApplicationsPageClient({ applications, categories, defau
                         </p>
 
                         <div className="flex items-center gap-2 text-primary-600 font-medium text-sm group-hover:gap-3 transition-all">
-                          <span>了解详情</span>
+                          <span>{t('learnMore')}</span>
                           <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                           </svg>
@@ -182,9 +185,10 @@ export default function ApplicationsPageClient({ applications, categories, defau
                 {currentPage > 1 && (
                   <button
                     onClick={() => setCurrentPage(p => p - 1)}
+                    aria-label={tc('previous')}
                     className="px-3.5 py-2 text-sm font-medium border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-all text-neutral-700"
                   >
-                    ‹ 上一页
+                    ‹ {tc('previous')}
                   </button>
                 )}
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
@@ -203,9 +207,10 @@ export default function ApplicationsPageClient({ applications, categories, defau
                 {currentPage < totalPages && (
                   <button
                     onClick={() => setCurrentPage(p => p + 1)}
+                    aria-label={tc('next')}
                     className="px-3.5 py-2 text-sm font-medium border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-all text-neutral-700"
                   >
-                    下一页 ›
+                    {tc('next')} ›
                   </button>
                 )}
               </div>
@@ -214,12 +219,12 @@ export default function ApplicationsPageClient({ applications, categories, defau
         ) : (
           <div className="text-center py-20">
             <span className="text-6xl mb-4 block">🔍</span>
-            <p className="text-neutral-500 text-lg">该分类下暂无应用方案</p>
+            <p className="text-neutral-500 text-lg">{t('noResults')}</p>
             <button
               onClick={() => setActiveCategory(null)}
               className="mt-4 text-primary-600 hover:text-primary-500 text-sm font-medium"
             >
-              查看全部方案
+              {t('title')}
             </button>
           </div>
         )}

@@ -12,6 +12,7 @@ const staticPages = [
   { slug: '/support', priority: 0.8, changefreq: 'weekly' as const },
   { slug: '/sharing', priority: 0.8, changefreq: 'weekly' as const },
   { slug: '/contact', priority: 0.9, changefreq: 'monthly' as const },
+  { slug: '/rfid-tags', priority: 0.8, changefreq: 'weekly' as const },
 ];
 
 export default async function sitemapOthers({

@@ -206,5 +206,89 @@
     "nationalHotline": "National Hotline",
     "faxShort": "Fax",
     "website": "Website"
+  },
+  "ProductsPage": {
+    "title": "Products",
+    "all": "All",
+    "found": "Found {count} products",
+    "clearFilters": "Clear Filters",
+    "noResults": "No matching products found",
+    "clearAll": "Clear all filters",
+    "frequency": "RFID Frequency",
+    "feature": "Product Feature",
+    "connectivity": "Connectivity",
+    "os": "Operating System",
+    "specifications": "Specifications",
+    "fullSpecs": "Full Technical Specifications",
+    "rfidFrequency": "RFID Frequency",
+    "operatingSystem": "Operating System",
+    "needConsultation": "Need Product Consultation?",
+    "consultationDesc": "Our expert team is ready to provide technical support and solutions",
+    "contactUs": "Contact Us",
+    "barcodeScan": "Barcode Scan",
+    "idCard": "ID Card",
+    "print": "Print",
+    "camera": "Camera",
+    "gnss": "GNSS Positioning",
+    "psam": "PSAM",
+    "4g": "4G Full-netcom",
+    "wifi": "WiFi",
+    "bluetooth": "Bluetooth",
+    "tcpIp": "TCP/IP",
+    "rs232": "RS232",
+    "rs485": "RS485",
+    "usb": "USB",
+    "ioLink": "IO-Link",
+    "poe": "POE",
+    "other": "Other"
+  },
+  "ApplicationsPage": {
+    "title": "Industry Applications",
+    "subtitle": "Professional RFID solutions for smart manufacturing, logistics, asset management and more",
+    "found": "{count} application solutions",
+    "category": "Category",
+    "learnMore": "Learn More",
+    "noResults": "No applications in this category"
+  },
+  "SharingPage": {
+    "title": "Knowledge Base",
+    "subtitle": "Technical guides, product knowledge, and industry insights",
+    "categories": {
+      "faq": "FAQ",
+      "technical": "Technical Principles",
+      "application": "Industry Applications",
+      "guide": "Buying Guide"
+    },
+    "relatedArticles": "Related Articles",
+    "backToList": "Back to Knowledge Base"
+  },
+  "Breadcrumb": {
+    "home": "Home"
+  },
+  "ProductDetail": {
+    "products": "Products",
+    "specifications": "Specifications",
+    "fullSpecs": "Full Technical Specifications",
+    "rfidFrequency": "RFID Frequency",
+    "operatingSystem": "Operating System",
+    "needConsultation": "Need Product Consultation?",
+    "consultationDesc": "Our expert team is ready to provide technical support and solutions",
+    "contactUs": "Contact Us"
+  },
+  "RfidTagDetail": {
+    "rfidTags": "RFID Tags",
+    "specifications": "Specifications",
+    "applicationScenarios": "Application Scenarios"
+  },
+  "NewsDetail": {
+    "news": "News"
+  },
+  "MegaMenu": {
+    "productSeries": "Product Series",
+    "viewAllProducts": "View All Products",
+    "featuredProducts": "Featured Products",
+    "noProducts": "No products",
+    "applications": "Industry Applications",
+    "rfidSolutions": "RFID Smart Solutions"
   }
 }

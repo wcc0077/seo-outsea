@@ -206,5 +206,89 @@
     "nationalHotline": "全国统一热线",
     "faxShort": "传真",
     "website": "网址"
+  },
+  "ProductsPage": {
+    "title": "产品中心",
+    "all": "不限",
+    "found": "找到 {count} 个产品",
+    "clearFilters": "清除筛选",
+    "noResults": "没有找到匹配的产品",
+    "clearAll": "清除所有筛选条件",
+    "frequency": "RFID识别",
+    "feature": "产品功能",
+    "connectivity": "传输方式",
+    "os": "操作系统",
+    "specifications": "技术规格",
+    "fullSpecs": "完整技术规格",
+    "rfidFrequency": "RFID频率",
+    "operatingSystem": "操作系统",
+    "needConsultation": "需要产品咨询?",
+    "consultationDesc": "我们的专家团队随时为您提供技术支持和解决方案",
+    "contactUs": "联系我们",
+    "barcodeScan": "条码扫描",
+    "idCard": "二代证",
+    "print": "打印",
+    "camera": "摄像头",
+    "gnss": "GNSS定位",
+    "psam": "PSAM",
+    "4g": "4G全网通",
+    "wifi": "WIFI",
+    "bluetooth": "蓝牙",
+    "tcpIp": "TCP/IP",
+    "rs232": "RS232",
+    "rs485": "RS485",
+    "usb": "USB",
+    "ioLink": "IO-Link",
+    "poe": "POE",
+    "other": "其它"
+  },
+  "ApplicationsPage": {
+    "title": "行业应用",
+    "subtitle": "专业的RFID解决方案，适用于智能制造、物流、资产管理等领域",
+    "found": "共 {count} 个应用方案",
+    "category": "应用场景",
+    "learnMore": "了解详情",
+    "noResults": "该分类下暂无应用方案"
+  },
+  "SharingPage": {
+    "title": "知识分享",
+    "subtitle": "技术指南、产品知识和行业洞察",
+    "categories": {
+      "faq": "常见问题",
+      "technical": "技术原理",
+      "application": "行业应用",
+      "guide": "选购指南"
+    },
+    "relatedArticles": "相关文章",
+    "backToList": "返回知识分享"
+  },
+  "Breadcrumb": {
+    "home": "首页"
+  },
+  "ProductDetail": {
+    "products": "产品中心",
+    "specifications": "技术规格",
+    "fullSpecs": "完整技术规格",
+    "rfidFrequency": "RFID频率",
+    "operatingSystem": "操作系统",
+    "needConsultation": "需要产品咨询?",
+    "consultationDesc": "我们的专家团队随时为您提供技术支持和解决方案",
+    "contactUs": "联系我们"
+  },
+  "RfidTagDetail": {
+    "rfidTags": "RFID电子标签",
+    "specifications": "技术规格",
+    "applicationScenarios": "应用场景"
+  },
+  "NewsDetail": {
+    "news": "新闻中心"
+  },
+  "MegaMenu": {
+    "productSeries": "产品系列",
+    "viewAllProducts": "查看全部产品",
+    "featuredProducts": "热门产品",
+    "noProducts": "暂无产品",
+    "applications": "行业应用",
+    "rfidSolutions": "RFID智能解决方案"
   }
 }

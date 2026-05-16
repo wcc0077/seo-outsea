@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ProductCategoryData, ProductData, ApplicationCategoryData, RfidTagData } from '@/lib/strapi';
+import { getStrapiImageUrl, ProductCategoryData, ProductData, ApplicationCategoryData, RfidTagData } from '@/lib/strapi';
 
 type NavItem = {
   label: string;
@@ -20,13 +20,6 @@ interface MegaMenuProps {
 }
 
 const HEADER_HEIGHT = 72;
-
-function getStrapiImageUrl(url: string | undefined): string | null {
-  if (!url) return null;
-  if (url.startsWith('http')) return url;
-  const base = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
-  return `${base}${url}`;
-}
 
 function getCategoryIcon(path: string): React.ReactNode {
   // Top-level: Smart Mobile Terminals — handheld device icon

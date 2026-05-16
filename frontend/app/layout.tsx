@@ -3,14 +3,14 @@ import { Inter, Noto_Sans } from 'next/font/google';
 import './globals.css';
 
 const inter = Inter({
-  subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext', 'greek', 'greek-ext', 'vietnamese'],
+  subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext'],
   variable: '--font-display',
   display: 'swap',
   weight: ['400', '500', '600', '700', '800'],
 });
 
 const notoSans = Noto_Sans({
-  subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext', 'devanagari'],
+  subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext'],
   variable: '--font-body',
   display: 'swap',
   weight: ['300', '400', '500', '600', '700'],

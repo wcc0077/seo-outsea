@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     `${SEO_CONFIG.siteUrl}/${locale}/sitemap-products-${locale}.xml`,
     `${SEO_CONFIG.siteUrl}/${locale}/sitemap-applications-${locale}.xml`,
     `${SEO_CONFIG.siteUrl}/${locale}/sitemap-news-${locale}.xml`,
+    `${SEO_CONFIG.siteUrl}/${locale}/sitemap-rfid-tags-${locale}.xml`,
     `${SEO_CONFIG.siteUrl}/${locale}/sitemap-others-${locale}.xml`,
   ]);
 

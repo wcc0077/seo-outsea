@@ -52,9 +52,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['Outfit', 'system-ui', 'sans-serif'],
-        body: ['Source Sans 3', 'system-ui', 'sans-serif'],
-        sans: ['Source Sans 3', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        body: ['var(--font-body)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-body)', 'system-ui', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-out both',
