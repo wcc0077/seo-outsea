@@ -1,4 +1,4 @@
-import { SectionData } from '@/lib/strapi';
+import { SectionData, getOffices, getClients, getStats, OfficeData, ClientData, StatData } from '@/lib/strapi';
 import HeroSection from './HeroSection';
 import ProductGrid from './ProductGrid';
 import ApplicationShowcase from './ApplicationShowcase';
@@ -7,13 +7,19 @@ import TextImage from './TextImage';
 import StatsSection from './StatsSection';
 import FAQSection from './FAQSection';
 import Spacer from './Spacer';
+import OfficesSection from './OfficesSection';
+import ClientLogos from './ClientLogos';
+import CertificateGallery from './CertificateGallery';
 
 interface SectionRendererProps {
   section: SectionData;
   locale: string;
+  offices?: OfficeData[];
+  clients?: ClientData[];
+  stats?: StatData[];
 }
 
-export default function SectionRenderer({ section, locale }: SectionRendererProps) {
+export default async function SectionRenderer({ section, locale, offices, clients, stats }: SectionRendererProps) {
   switch (section.__component) {
     case 'sections.hero-section':
       return <HeroSection {...(section as unknown as Parameters<typeof HeroSection>[0])} />;
@@ -31,7 +37,7 @@ export default function SectionRenderer({ section, locale }: SectionRendererProp
       return <TextImage {...(section as unknown as Parameters<typeof TextImage>[0])} />;
 
     case 'sections.stats-section':
-      return <StatsSection {...(section as unknown as Parameters<typeof StatsSection>[0])} />;
+      return <StatsSection stats={stats} {...(section as unknown as Parameters<typeof StatsSection>[0])} />;
 
     case 'sections.faq-section':
       return <FAQSection {...(section as unknown as Parameters<typeof FAQSection>[0])} />;
@@ -41,6 +47,34 @@ export default function SectionRenderer({ section, locale }: SectionRendererProp
 
     case 'sections.spacer':
       return <Spacer {...(section as unknown as Parameters<typeof Spacer>[0])} />;
+
+    case 'sections.offices-section': {
+      const sectionOffices = offices ?? await getOffices(locale);
+      const s = section as unknown as Record<string, unknown>;
+      return (
+        <OfficesSection
+          locale={locale}
+          offices={sectionOffices}
+          mapConfig={{
+            centerLat: (s.mapCenterLat as number) ?? 33,
+            centerLng: (s.mapCenterLng as number) ?? 108,
+            zoom: (s.mapZoom as number) ?? 5,
+          }}
+          title={s.title as string | undefined}
+        />
+      );
+    }
+
+    case 'sections.client-logos-section': {
+      const sectionClients = clients ?? await getClients(locale);
+      const s = section as unknown as Record<string, unknown>;
+      return <ClientLogos title={s.title as string | undefined} clients={sectionClients} />;
+    }
+
+    case 'sections.certificate-gallery-section': {
+      const s = section as unknown as Record<string, unknown>;
+      return <CertificateGallery title={s.title as string | undefined} certificates={s.certificates as Array<{ title: string; image?: { url: string }; category?: string }> | undefined} />;
+    }
 
     default:
       return null;

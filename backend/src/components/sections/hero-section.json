@@ -14,6 +14,7 @@
       "allowedTypes": ["images"]
     },
     "ctaLabel": { "type": "string" },
-    "ctaUrl": { "type": "string" }
+    "ctaUrl": { "type": "string" },
+    "products": { "type": "component", "repeatable": true, "component": "shared.product-node" }
   }
 }

@@ -1,0 +1,10 @@
+{
+  "collectionName": "components_shared_certificate_items",
+  "info": { "displayName": "Certificate Item", "icon": "picture", "description": "Certificate or honor image with title and category" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "category": { "type": "enumeration", "enum": ["qualification", "certification", "ip"] }
+  }
+}

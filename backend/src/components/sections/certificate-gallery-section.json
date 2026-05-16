@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_sections_certificate_gallery_sections",
+  "info": { "displayName": "Certificate Gallery Section", "icon": "picture", "description": "Masonry gallery of certificates with lightbox" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "certificates": { "type": "component", "repeatable": true, "component": "shared.certificate-item" }
+  }
+}

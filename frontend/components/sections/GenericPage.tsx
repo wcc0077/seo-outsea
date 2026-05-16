@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getPageBySlug, PageData, SectionData } from '@/lib/strapi';
+import { getPageBySlug, PageData, SectionData, getOffices, getClients, getStats, OfficeData, ClientData, StatData } from '@/lib/strapi';
 import SectionRenderer from '@/components/sections/SectionRenderer';
 
 interface GenericPageProps {
@@ -14,6 +14,16 @@ export default async function GenericPage({ params, slug }: GenericPageProps) {
   if (!page) {
     notFound();
   }
+
+  const needsOffices = page.sections?.some(s => s.__component === 'sections.offices-section');
+  const needsClients = page.sections?.some(s => s.__component === 'sections.client-logos-section');
+  const needsStats = page.sections?.some(s => s.__component === 'sections.stats-section');
+
+  const [offices, clients, stats] = await Promise.all([
+    needsOffices ? getOffices(locale) : Promise.resolve(undefined),
+    needsClients ? getClients(locale) : Promise.resolve(undefined),
+    needsStats ? getStats(locale) : Promise.resolve(undefined),
+  ]);
 
   return (
     <>
@@ -39,7 +49,7 @@ export default async function GenericPage({ params, slug }: GenericPageProps) {
         </section>
       )}
       {page.sections?.map((section: SectionData, index: number) => (
-        <SectionRenderer key={index} section={section} locale={locale} />
+        <SectionRenderer key={index} section={section} locale={locale} offices={offices} clients={clients} stats={stats} />
       ))}
     </>
   );

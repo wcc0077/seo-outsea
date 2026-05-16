@@ -1,10 +1,11 @@
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 import { getAboutPageBySlug } from '@/lib/strapi';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 
 export default async function AboutIntroPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'About' });
 
   const strapiData = await getAboutPageBySlug('company-intro', locale);

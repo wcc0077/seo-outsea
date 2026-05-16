@@ -5,78 +5,22 @@ import { useTranslations } from 'next-intl';
 import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import type { OfficeData } from '@/lib/strapi';
 
-interface OfficeLocation {
-  name: string;
-  nameEn: string;
-  address: string;
-  addressEn: string;
-  phone: string;
-  phone2?: string;
-  fax?: string;
-  email?: string;
-  zipCode?: string;
-  website?: string;
-  lat: number;
-  lng: number;
-  isHQ?: boolean;
+interface MapConfig {
+  centerLat: number;
+  centerLng: number;
+  zoom: number;
 }
 
-const OFFICES: OfficeLocation[] = [
-  {
-    name: '上海总部',
-    nameEn: 'Shanghai Headquarters',
-    address: '上海市闵行区新骏环路588弄23幢东4-5层',
-    addressEn: '4-5F, Bldg 23, Lane 588 Xinjun Huan Rd, Minhang District, Shanghai',
-    phone: '4000-56-5516（物联 物物易联）',
-    phone2: '021-5432-6377',
-    fax: '021-5432-5266',
-    email: 'sales@fn-tech.com',
-    website: 'https://www.fn-tech.com',
-    zipCode: '201112',
-    lat: 31.022,
-    lng: 121.395,
-    isHQ: true,
-  },
-  {
-    name: '山东办',
-    nameEn: 'Shandong Office',
-    address: '济南市高新区会展香格里拉东北塔916号',
-    addressEn: 'Rm 916, NE Tower, Shangri-La Exhibition Center, Hi-Tech Zone, Jinan',
-    phone: '4000-56-5516（物联 物物易联）',
-    lat: 36.6512,
-    lng: 117.1201,
-  },
-  {
-    name: '成都办',
-    nameEn: 'Chengdu Office',
-    address: '成都市武侯区府城大道西段399号7号楼3单元1204室',
-    addressEn: 'Rm 1204, Unit 3, Bldg 7, No. 399 W. Fucheng Ave, Wuhou District, Chengdu',
-    phone: '4000-56-5516（物联 物物易联）',
-    lat: 30.5728,
-    lng: 104.0668,
-  },
-  {
-    name: '长沙办',
-    nameEn: 'Changsha Office',
-    address: '湖南省长沙市岳麓区润嘉公园道B栋14楼',
-    addressEn: '14F, Bldg B, Runjia Park Avenue, Yuelu District, Changsha',
-    phone: '4000-56-5516（物联 物物易联）',
-    lat: 28.228,
-    lng: 112.9388,
-  },
-  {
-    name: '武汉办',
-    nameEn: 'Wuhan Office',
-    address: '武汉市汉阳区蔷薇路泰富城1栋3单元D1212室',
-    addressEn: 'Rm D1212, Unit 3, Bldg 1, Taifu City, Qiangwei Rd, Hanyang District, Wuhan',
-    phone: '4000-56-5516（物联 物物易联）',
-    lat: 30.5928,
-    lng: 114.3055,
-  },
-];
+interface OfficesSectionProps {
+  locale: string;
+  title?: string;
+  offices: OfficeData[];
+  mapConfig: MapConfig;
+}
 
-function HQMarker({ office, isZh }: { office: OfficeLocation; isZh: boolean }) {
+function HQMarker({ office }: { office: OfficeData }) {
   const markerRef = useRef<L.CircleMarker>(null);
 
   useEffect(() => {
@@ -97,23 +41,21 @@ function HQMarker({ office, isZh }: { office: OfficeLocation; isZh: boolean }) {
     >
       <Popup>
         <div className="text-sm">
-          <strong className="text-primary-700">{isZh ? office.name : office.nameEn}</strong>
+          <strong className="text-primary-700">{office.name}</strong>
           <br />
-          <span className="text-neutral-600">{isZh ? office.address : office.addressEn}</span>
+          <span className="text-neutral-600">{office.address}</span>
         </div>
       </Popup>
     </CircleMarker>
   );
 }
 
-function LeafletMap({ locale }: { locale: string }) {
-  const isZh = locale === 'zh';
-
+function LeafletMap({ offices, mapConfig }: { offices: OfficeData[]; mapConfig: MapConfig }) {
   return (
     <div className="rounded-xl overflow-hidden shadow-lg border border-neutral-200">
       <MapContainer
-        center={[33, 108]}
-        zoom={5}
+        center={[mapConfig.centerLat, mapConfig.centerLng]}
+        zoom={mapConfig.zoom}
         scrollWheelZoom={false}
         style={{ height: '420px', width: '100%' }}
       >
@@ -121,12 +63,13 @@ function LeafletMap({ locale }: { locale: string }) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {OFFICES.map((office) =>
-          office.isHQ ? (
-            <HQMarker key={office.name} office={office} isZh={isZh} />
+        {offices.map((office) => {
+          const key = office.documentId || office.name;
+          return office.isHQ ? (
+            <HQMarker key={key} office={office} />
           ) : (
             <CircleMarker
-              key={office.name}
+              key={key}
               center={[office.lat, office.lng]}
               radius={7}
               pathOptions={{
@@ -138,33 +81,32 @@ function LeafletMap({ locale }: { locale: string }) {
             >
               <Popup>
                 <div className="text-sm">
-                  <strong className="text-primary-700">{isZh ? office.name : office.nameEn}</strong>
+                  <strong className="text-primary-700">{office.name}</strong>
                   <br />
-                  <span className="text-neutral-600">{isZh ? office.address : office.addressEn}</span>
+                  <span className="text-neutral-600">{office.address}</span>
                 </div>
               </Popup>
             </CircleMarker>
-          )
-        )}
+          );
+        })}
       </MapContainer>
     </div>
   );
 }
 
-function HQCard({ office, locale }: { office: OfficeLocation; locale: string }) {
+function HQCard({ office }: { office: OfficeData }) {
   const t = useTranslations('ContactPage');
-  const isZh = locale === 'zh';
 
   return (
     <div className="bg-white rounded-xl border border-neutral-200 shadow-sm p-6 h-full flex flex-col justify-between">
       <div>
         <h3 className="text-lg font-bold text-primary-700 mb-4">
-          {isZh ? office.name : office.nameEn}
+          {office.name}
         </h3>
         <div className="space-y-2 text-sm text-neutral-700">
           <div>
             <span className="text-neutral-500">{t('address')}</span>
-            <span>{isZh ? office.address : office.addressEn}</span>
+            <span>{office.address}</span>
           </div>
           {office.zipCode && (
             <div>
@@ -216,20 +158,19 @@ function HQCard({ office, locale }: { office: OfficeLocation; locale: string }) 
   );
 }
 
-function OfficeCard({ office, locale }: { office: OfficeLocation; locale: string }) {
+function OfficeCard({ office }: { office: OfficeData }) {
   const t = useTranslations('ContactPage');
-  const isZh = locale === 'zh';
 
   return (
     <div className="bg-white rounded-xl border border-neutral-200 shadow-sm p-5 h-full flex flex-col justify-between">
       <div>
         <h3 className="text-base font-bold text-primary-700 mb-3">
-          {isZh ? office.name : office.nameEn}
+          {office.name}
         </h3>
         <div className="space-y-2 text-sm text-neutral-700">
           <div>
             <span className="text-neutral-500">{t('address')}</span>
-            <span>{isZh ? office.address : office.addressEn}</span>
+            <span>{office.address}</span>
           </div>
           <div>
             <span className="text-neutral-500">{t('phone')}</span>
@@ -243,30 +184,35 @@ function OfficeCard({ office, locale }: { office: OfficeLocation; locale: string
   );
 }
 
-export default function OfficesSection({ locale }: { locale: string }) {
-  const t = useTranslations('ContactPage');
-  const hq = OFFICES.find((o) => o.isHQ)!;
-  const branches = OFFICES.filter((o) => !o.isHQ);
+export default function OfficesSection({ locale, title, offices, mapConfig }: OfficesSectionProps) {
+  const hq = offices.find((o) => o.isHQ);
+  const branches = offices.filter((o) => !o.isHQ);
 
   return (
     <section className="py-12 bg-neutral-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {title && (
+          <h2 className="text-2xl font-bold text-neutral-900 mb-8">{title}</h2>
+        )}
+
         {/* Office Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
           {/* HQ - spans 2 cols and 2 rows on lg */}
-          <div className="lg:col-span-2 lg:row-span-2">
-            <HQCard office={hq} locale={locale} />
-          </div>
+          {hq && (
+            <div className="lg:col-span-2 lg:row-span-2">
+              <HQCard office={hq} />
+            </div>
+          )}
 
           {/* Branch offices - fill remaining grid */}
           {branches.map((office) => (
-            <OfficeCard key={office.name} office={office} locale={locale} />
+            <OfficeCard key={office.documentId || office.name} office={office} />
           ))}
         </div>
 
         {/* Map with all office markers */}
         <div className="space-y-2">
-          <LeafletMap locale={locale} />
+          <LeafletMap offices={offices} mapConfig={mapConfig} />
         </div>
       </div>
     </section>

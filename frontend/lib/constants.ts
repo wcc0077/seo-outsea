@@ -14,4 +14,7 @@ export const SECTION_COMPONENT_MAP: Record<string, string> = {
   'sections.faq-section': 'FAQSection',
   'sections.contact-form': 'ContactForm',
   'sections.spacer': 'Spacer',
+  'sections.offices-section': 'OfficesSection',
+  'sections.client-logos-section': 'ClientLogos',
+  'sections.certificate-gallery-section': 'CertificateGallery',
 };

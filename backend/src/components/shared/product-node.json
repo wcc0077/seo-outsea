@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_shared_product_nodes",
+  "info": { "displayName": "Product Node", "icon": "grid", "description": "Product thumbnail for AnimatedHero network visualization" },
+  "options": {},
+  "attributes": {
+    "label": { "type": "string", "required": true },
+    "image": { "type": "media", "multiple": false, "required": true, "allowedTypes": ["images"] }
+  }
+}

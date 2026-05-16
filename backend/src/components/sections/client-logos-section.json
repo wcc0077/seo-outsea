@@ -1,0 +1,8 @@
+{
+  "collectionName": "components_sections_client_logos_sections",
+  "info": { "displayName": "Client Logos Section", "icon": "star", "description": "Infinite scroll marquee of client logos" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" }
+  }
+}

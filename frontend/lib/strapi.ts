@@ -7,6 +7,9 @@ export const REVALIDATE_TIMES = {
   news: 300,           // 5 minutes
   about: 86400,        // 24 hours
   faq: 3600,           // 1 hour
+  offices: 86400,      // 24 hours
+  clients: 86400,      // 24 hours
+  stats: 86400,        // 24 hours
   default: 3600,        // 1 hour default
 } as const;
 
@@ -496,5 +499,98 @@ export async function getFAQArticleBySlug(slug: string, locale: string): Promise
     return res.data;
   } catch {
     return null;
+  }
+}
+
+// ---- Offices ----
+
+export interface OfficeData {
+  documentId?: string;
+  name: string;
+  address: string;
+  phone: string;
+  phone2?: string;
+  fax?: string;
+  email?: string;
+  website?: string;
+  zipCode?: string;
+  lat: number;
+  lng: number;
+  isHQ: boolean;
+  sortOrder: number;
+}
+
+// ---- Clients ----
+
+export interface ClientData {
+  documentId?: string;
+  name: string;
+  logo: { url: string };
+  sortOrder: number;
+}
+
+// ---- Stats ----
+
+export interface StatData {
+  documentId?: string;
+  value: string;
+  label: string;
+  sortOrder: number;
+}
+
+export async function getOffices(locale: string): Promise<OfficeData[]> {
+  try {
+    const data = await fetchApi<OfficeData[]>(
+      '/offices/published',
+      { locale },
+      { next: { revalidate: REVALIDATE_TIMES.offices } }
+    );
+    const seen = new Set<string>();
+    return (data || []).filter((item) => {
+      const key = item.documentId || item.name;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  } catch {
+    return [];
+  }
+}
+
+export async function getClients(locale: string): Promise<ClientData[]> {
+  try {
+    const data = await fetchApi<ClientData[]>(
+      '/clients/published',
+      { locale },
+      { next: { revalidate: REVALIDATE_TIMES.clients } }
+    );
+    const seen = new Set<string>();
+    return (data || []).filter((item) => {
+      const key = item.documentId || item.name;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  } catch {
+    return [];
+  }
+}
+
+export async function getStats(locale: string): Promise<StatData[]> {
+  try {
+    const data = await fetchApi<StatData[]>(
+      '/stats/published',
+      { locale },
+      { next: { revalidate: REVALIDATE_TIMES.stats } }
+    );
+    const seen = new Set<string>();
+    return (data || []).filter((item) => {
+      const key = item.documentId || item.value;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  } catch {
+    return [];
   }
 }

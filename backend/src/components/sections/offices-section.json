@@ -1,0 +1,11 @@
+{
+  "collectionName": "components_sections_offices_sections",
+  "info": { "displayName": "Offices Section", "icon": "map", "description": "Office locations with interactive map" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "mapCenterLat": { "type": "float", "default": 33 },
+    "mapCenterLng": { "type": "float", "default": 108 },
+    "mapZoom": { "type": "integer", "default": 5 }
+  }
+}

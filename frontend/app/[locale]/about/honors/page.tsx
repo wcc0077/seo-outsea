@@ -21,20 +21,20 @@ export default async function AboutHonorsPage({ params }: { params: Promise<{ lo
     : 'Authoritative recognition, witnessing FN Tech\'s professionalism and strength';
 
   // Certificate images extracted from fn-tech.com/qualification.html
-  const certificateImages = [
-    { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p6.jpg', alt: isZh ? '高新技术企业证书' : 'High-Tech Enterprise Certificate' },
-    { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/cv5p.png', alt: isZh ? 'ISO9001 质量管理体系认证' : 'ISO9001 Quality Management System' },
-    { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p8.jpg', alt: isZh ? 'ISO14001 环境管理体系认证' : 'ISO14001 Environmental Management System' },
-    { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p9.jpg', alt: isZh ? 'CCC 强制认证' : 'CCC Mandatory Certification' },
-    { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p10.jpg', alt: isZh ? '专精特新中小企业' : 'Specialized & Innovative SME' },
-    { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p1.jpg', alt: isZh ? '科技小巨人培育企业' : 'Sci-Tech Giant Cultivation Enterprise' },
-    { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p2.jpg', alt: isZh ? '双软认证企业' : 'Double-Software Certified Enterprise' },
-    { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p3.jpg', alt: isZh ? '知识产权证书' : 'Intellectual Property Certificate' },
-    { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p11.jpg', alt: isZh ? '质量管理体系认证' : 'Quality Management System Certificate' },
-    { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p12.jpg', alt: isZh ? '环境管理体系认证' : 'Environmental Management System Certificate' },
-    { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p13.jpg', alt: isZh ? '产品认证证书' : 'Product Certification Certificate' },
-    { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1234.png', alt: isZh ? '企业认证资质' : 'Enterprise Qualification Certificate' },
-    { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p4.jpg', alt: isZh ? '行业准入证书' : 'Industry Access Certificate' },
+  const certificates = [
+    { title: isZh ? '高新技术企业证书' : 'High-Tech Enterprise Certificate', image: { url: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p6.jpg' }, category: 'qualification' },
+    { title: isZh ? 'ISO9001 质量管理体系认证' : 'ISO9001 Quality Management System', image: { url: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/cv5p.png' }, category: 'certification' },
+    { title: isZh ? 'ISO14001 环境管理体系认证' : 'ISO14001 Environmental Management System', image: { url: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p8.jpg' }, category: 'certification' },
+    { title: isZh ? 'CCC 强制认证' : 'CCC Mandatory Certification', image: { url: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p9.jpg' }, category: 'certification' },
+    { title: isZh ? '专精特新中小企业' : 'Specialized & Innovative SME', image: { url: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p10.jpg' }, category: 'qualification' },
+    { title: isZh ? '科技小巨人培育企业' : 'Sci-Tech Giant Cultivation Enterprise', image: { url: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p1.jpg' }, category: 'qualification' },
+    { title: isZh ? '双软认证企业' : 'Double-Software Certified Enterprise', image: { url: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p2.jpg' }, category: 'qualification' },
+    { title: isZh ? '知识产权证书' : 'Intellectual Property Certificate', image: { url: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p3.jpg' }, category: 'ip' },
+    { title: isZh ? '质量管理体系认证' : 'Quality Management System Certificate', image: { url: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p11.jpg' }, category: 'certification' },
+    { title: isZh ? '环境管理体系认证' : 'Environmental Management System Certificate', image: { url: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p12.jpg' }, category: 'certification' },
+    { title: isZh ? '产品认证证书' : 'Product Certification Certificate', image: { url: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p13.jpg' }, category: 'certification' },
+    { title: isZh ? '企业认证资质' : 'Enterprise Qualification Certificate', image: { url: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1234.png' }, category: 'qualification' },
+    { title: isZh ? '行业准入证书' : 'Industry Access Certificate', image: { url: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/p4.jpg' }, category: 'qualification' },
   ];
 
   const honorCategories = isZh
@@ -254,11 +254,7 @@ export default async function AboutHonorsPage({ params }: { params: Promise<{ lo
         { label: isZh ? '荣誉资质' : 'Honors & Certifications' },
       ]} />
 
-      <CertificateGallery
-        images={certificateImages}
-        title={isZh ? '资质证书' : 'Qualification Certificates'}
-        titleEn={isZh ? '证书墙' : 'CERTIFICATE GALLERY'}
-      />
+      <CertificateGallery title={isZh ? '资质证书' : 'Qualification Certificates'} certificates={certificates} />
 
       {/* Honors sections */}
       {honors.map((group, groupIdx) => (

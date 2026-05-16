@@ -1,4 +1,4 @@
-import { getPageBySlug, getProducts, getApplications, getPublishedNews } from '@/lib/strapi';
+import { getPageBySlug, getProducts, getApplications, getPublishedNews, getClients } from '@/lib/strapi';
 import HeroSection from '@/components/sections/HeroSection';
 import AnimatedHero from '@/components/sections/AnimatedHero';
 import ProductGrid from '@/components/sections/ProductGrid';
@@ -20,10 +20,11 @@ export default async function HomePage({ params }: HomePageProps) {
   const page = await getPageBySlug('home', locale).catch(() => null);
 
   // Fallback: fetch featured content if no page configured
-  const [products, applications, news] = await Promise.all([
+  const [products, applications, news, clients] = await Promise.all([
     getProducts(locale).catch(() => []),
     getApplications(locale).catch(() => []),
     getPublishedNews(locale, 1, 3).catch(() => ({ data: [], meta: {} })),
+    getClients(locale).catch(() => []),
   ]);
 
   if (!page) {
@@ -43,7 +44,7 @@ export default async function HomePage({ params }: HomePageProps) {
         <ProductGrid title={t('featuredProducts')} products={products} locale={locale} />
         <CompanyStats title={t('statsTitle')} subtitle={t('statsSubtitle')} />
         <ApplicationShowcase title={t('keyApplications')} applications={applications} locale={locale} />
-        <ClientLogos title={t('clientLogosTitle')} />
+        <ClientLogos title={t('clientLogosTitle')} clients={clients} />
         <NewsList title={t('latestNews')} news={news.data} locale={locale} />
       </>
     );

@@ -1,27 +1,16 @@
+import Image from 'next/image';
+import { ClientData } from '@/lib/strapi';
+
 interface ClientLogosProps {
   title?: string;
+  clients?: ClientData[];
 }
 
-const CLIENT_LOGOS = [
-  { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/link1.jpg', alt: 'TCL王牌' },
-  { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/link3.jpg', alt: '北大荒集团' },
-  { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/link2.jpg', alt: '海尔集团' },
-  { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/link4.jpg', alt: '海曼机器人' },
-  { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/link6.jpg', alt: 'ROBAM老板' },
-  { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/link5.jpg', alt: '鲁泰纺织' },
-  { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/link7.jpg', alt: '中华人民共和国商务部' },
-  { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/link8.jpg', alt: '通威新能源' },
-  { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/link9.jpg', alt: '正邦集团' },
-  { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/link10.jpg', alt: '中国神华' },
-  { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/link12.jpg', alt: '中国航天' },
-  { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/link11.jpg', alt: '中国烟草' },
-  { src: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/link13.jpg', alt: '中国银行' },
-];
+export default function ClientLogos({ title, clients = [] }: ClientLogosProps) {
+  if (clients.length === 0) return null;
 
-// Duplicate set for seamless infinite scroll
-const SCROLL_LOGOS = [...CLIENT_LOGOS, ...CLIENT_LOGOS];
+  const scrollLogos = [...clients, ...clients];
 
-export default function ClientLogos({ title }: ClientLogosProps) {
   return (
     <section className="py-20 bg-neutral-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,9 +21,7 @@ export default function ClientLogos({ title }: ClientLogosProps) {
           </div>
         )}
 
-        {/* Infinite scroll marquee */}
         <div className="overflow-hidden relative">
-          {/* Fade edges */}
           <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-neutral-50 to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-neutral-50 to-transparent z-10 pointer-events-none" />
 
@@ -42,15 +29,17 @@ export default function ClientLogos({ title }: ClientLogosProps) {
             className="flex gap-8 animate-marquee"
             style={{ width: 'max-content' }}
           >
-            {SCROLL_LOGOS.map((logo, index) => (
+            {scrollLogos.map((client, index) => (
               <div
-                key={index}
+                key={`${client.documentId || client.name}-${index}`}
                 className="flex-shrink-0 w-[142px] h-[80px] flex items-center justify-center rounded-lg bg-white border border-neutral-200 hover:border-primary-300 transition-colors duration-200"
               >
-                <img
-                  src={logo.src}
-                  alt={logo.alt}
+                <Image
+                  src={client.logo.url}
+                  alt={client.name}
                   className="max-w-[120px] max-h-[60px] object-contain"
+                  width={120}
+                  height={60}
                   loading="lazy"
                 />
               </div>

@@ -1,74 +1,80 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
-import CertificateLightbox from '@/components/ui/CertificateLightbox';
+import { getStrapiImageUrl } from '@/lib/strapi';
 
-interface CertificateImage {
-  src: string;
-  alt: string;
+interface CertificateItem {
+  title: string;
+  image?: { url: string };
+  category?: string;
 }
 
 interface CertificateGalleryProps {
-  images: CertificateImage[];
-  title: string;
-  titleEn: string;
+  title?: string;
+  certificates?: CertificateItem[];
 }
 
-export default function CertificateGallery({ images, title, titleEn }: CertificateGalleryProps) {
-  const [selected, setSelected] = useState<CertificateImage | null>(null);
+const CATEGORY_LABELS: Record<string, string> = {
+  qualification: 'Qualification',
+  certification: 'Certification',
+  ip: 'Intellectual Property',
+};
+
+export default function CertificateGallery({ title, certificates = [] }: CertificateGalleryProps) {
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+
+  const categories = ['all', ...new Set(certificates.map(c => c.category).filter((c): c is string => Boolean(c)))];
+  const filtered = activeCategory === 'all'
+    ? certificates
+    : certificates.filter(c => c.category === activeCategory);
+
+  if (certificates.length === 0) return null;
 
   return (
-    <>
-      <section className="py-20 bg-neutral-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <div className="text-xs font-semibold uppercase tracking-widest text-primary-400 mb-2">
-              {titleEn}
-            </div>
-            <h2 className="text-2xl font-bold text-white">{title}</h2>
-          </div>
-          <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-            {images.map((img, i) => (
+    <section className="py-16 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {title && (
+          <h2 className="text-3xl font-bold text-center mb-8">{title}</h2>
+        )}
+
+        {categories.length > 1 && (
+          <div className="flex justify-center gap-3 mb-10 flex-wrap">
+            {categories.map(cat => (
               <button
-                key={i}
-                onClick={() => setSelected(img)}
-                className="block w-full group rounded-xl overflow-hidden border border-neutral-700/30 bg-neutral-800/30 hover:border-primary-500/30 transition-all duration-300 text-left cursor-pointer"
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  activeCategory === cat
+                    ? 'bg-primary-600 text-white'
+                    : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                }`}
               >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-colors duration-300">
-                    <svg
-                      className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={1.5}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="p-3">
-                  <p className="text-xs text-neutral-400 group-hover:text-primary-400 transition-colors">{img.alt}</p>
-                </div>
+                {cat === 'all' ? 'All' : CATEGORY_LABELS[cat] ?? cat}
               </button>
             ))}
           </div>
-        </div>
-      </section>
+        )}
 
-      {selected && (
-        <CertificateLightbox
-          src={selected.src}
-          alt={selected.alt}
-          onClose={() => setSelected(null)}
-        />
-      )}
-    </>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filtered.map((cert, idx) => (
+            <div key={idx} className="group relative bg-neutral-50 rounded-lg p-4 hover:shadow-md transition-shadow">
+              {cert.image?.url && (
+                <div className="relative aspect-[3/4] mb-3 overflow-hidden rounded">
+                  <Image
+                    src={getStrapiImageUrl(cert.image.url) ?? ''}
+                    alt={cert.title}
+                    fill
+                    className="object-contain group-hover:scale-105 transition-transform"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  />
+                </div>
+              )}
+              <p className="text-sm text-neutral-700 text-center line-clamp-2">{cert.title}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

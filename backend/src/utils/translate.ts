@@ -15,6 +15,7 @@ export const TRANSLATABLE_FIELDS: TranslateFieldMap = {
   'application-category': ['name', 'description'],
   'rfid-tag': ['name', 'description', 'applicationScenarios'],
   'about-page': ['title', 'content'],
+  client: ['name'],
 };
 
 export function buildTranslatePayload(records: Record<string, unknown>[], fields: string[]): Record<string, unknown>[] {

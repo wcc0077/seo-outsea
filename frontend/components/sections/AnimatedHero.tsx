@@ -9,28 +9,12 @@ interface AnimatedHeroProps {
   ctaLabel?: string;
   ctaUrl?: string;
   slogan?: string;
+  nodes?: Array<{ label: string; image: string }>;
 }
-
-type NetworkNode = {
-  id: string;
-  label: string;
-  image: string;
-  radius: number;
-  angle: number;
-};
-
-const NODES: NetworkNode[] = [
-  { id: 'hf', label: '高频读写器', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_p6nq.jpg', radius: 160, angle: 0 },
-  { id: 'uhf', label: '超高频读写器', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2184B_x6b5.jpg', radius: 160, angle: 60 },
-  { id: 'ant', label: '天线系统', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/D2480B_4f8u.jpg', radius: 160, angle: 120 },
-  { id: 'hht', label: '手持终端', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_7bkj.jpg', radius: 160, angle: 180 },
-  { id: 'pad', label: '工业平板', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/1_hd05.jpg', radius: 160, angle: 240 },
-  { id: 'mw', label: '中间件', image: 'https://pmtdb1c40-pic17.websiteonline.cn/upload/4_3ji7.jpg', radius: 160, angle: 300 },
-];
 
 const NODE_SIZE = 96;
 
-export default function AnimatedHero({ title, subtitle, ctaLabel, ctaUrl, slogan }: AnimatedHeroProps) {
+export default function AnimatedHero({ title, subtitle, ctaLabel, ctaUrl, slogan, nodes }: AnimatedHeroProps) {
   const [year, setYear] = useState(0);
   const [hoveredNode, setHoveredNode] = useState<number | null>(null);
   const startedRef = useRef(false);
@@ -56,12 +40,14 @@ export default function AnimatedHero({ title, subtitle, ctaLabel, ctaUrl, slogan
 
   const cx = 240;
   const cy = 220;
+  const nodeRadius = 160;
 
-  function getNodePos(node: NetworkNode) {
-    const rad = (node.angle * Math.PI) / 180;
+  function getNodePos(index: number, total: number) {
+    const angle = (360 / total) * index;
+    const rad = (angle * Math.PI) / 180;
     return {
-      x: Math.round((cx + Math.cos(rad) * node.radius) * 1e6) / 1e6,
-      y: Math.round((cy + Math.sin(rad) * node.radius) * 1e6) / 1e6,
+      x: Math.round((cx + Math.cos(rad) * nodeRadius) * 1e6) / 1e6,
+      y: Math.round((cy + Math.sin(rad) * nodeRadius) * 1e6) / 1e6,
     };
   }
 
@@ -73,9 +59,6 @@ export default function AnimatedHero({ title, subtitle, ctaLabel, ctaUrl, slogan
           <div className="lg:col-span-2 text-white">
             <div className="inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-primary-500/10 border border-primary-400/20 backdrop-blur-sm mb-8">
               <div className="text-2xl font-bold text-primary-400 tabular-nums">{year}<span className="text-primary-300">+</span></div>
-              <div className="text-xs text-neutral-400 leading-tight">
-                年专注<br />RFID领域
-              </div>
             </div>
 
             <div className="w-12 h-0.5 bg-primary-400 mb-8 animate-fade-in" />
@@ -117,6 +100,7 @@ export default function AnimatedHero({ title, subtitle, ctaLabel, ctaUrl, slogan
           </div>
 
           {/* ── Right: RFID network ── */}
+          {nodes && nodes.length > 0 && (
           <div className="lg:col-span-3 relative flex items-center justify-center">
             <svg
               viewBox="0 0 480 440"
@@ -139,8 +123,8 @@ export default function AnimatedHero({ title, subtitle, ctaLabel, ctaUrl, slogan
               </defs>
 
               {/* ── Spokes: center → each node ── */}
-              {NODES.map((node, i) => {
-                const pos = getNodePos(node);
+              {nodes.map((node, i) => {
+                const pos = getNodePos(i, nodes.length);
                 const isHovered = hoveredNode === i;
 
                 return (
@@ -181,13 +165,13 @@ export default function AnimatedHero({ title, subtitle, ctaLabel, ctaUrl, slogan
               </g>
 
               {/* ── Product nodes (flat, no border) ── */}
-              {NODES.map((node, i) => {
-                const pos = getNodePos(node);
+              {nodes.map((node, i) => {
+                const pos = getNodePos(i, nodes.length);
                 const isHovered = hoveredNode === i;
 
                 return (
                   <g
-                    key={node.id}
+                    key={`node-${i}`}
                     className="cursor-pointer"
                     onMouseEnter={() => setHoveredNode(i)}
                     onMouseLeave={() => setHoveredNode(null)}
@@ -224,6 +208,7 @@ export default function AnimatedHero({ title, subtitle, ctaLabel, ctaUrl, slogan
               })}
             </svg>
           </div>
+          )}
         </div>
       </div>
 

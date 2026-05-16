@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import OfficesSection from '@/components/sections/OfficesSection';
+import { getOffices } from '@/lib/strapi';
 
 interface ContactPageProps {
   params: Promise<{
@@ -19,6 +20,7 @@ export async function generateMetadata({ params }: ContactPageProps) {
 export default async function ContactPage({ params }: ContactPageProps) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'ContactPage' });
+  const offices = await getOffices(locale);
 
   return (
     <>
@@ -42,7 +44,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
       </section>
 
       {/* Map & Offices */}
-      <OfficesSection locale={locale} />
+      <OfficesSection locale={locale} offices={offices} mapConfig={{ centerLat: 33, centerLng: 108, zoom: 5 }} />
 
       {/* CTA Section */}
       <section className="py-16 bg-primary-950 text-white text-center">

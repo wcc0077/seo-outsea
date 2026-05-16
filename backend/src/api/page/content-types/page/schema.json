@@ -41,7 +41,10 @@
         "sections.stats-section",
         "sections.faq-section",
         "sections.contact-form",
-        "sections.spacer"
+        "sections.spacer",
+        "sections.offices-section",
+        "sections.client-logos-section",
+        "sections.certificate-gallery-section"
       ]
     },
     "seoTitle": {
